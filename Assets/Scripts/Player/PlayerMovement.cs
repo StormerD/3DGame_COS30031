@@ -83,7 +83,7 @@ public class PlayerMovement : MonoBehaviour, IMover
         }
     }
 
-    public Vector2 GetCurrentDirection() { Debug.LogWarning("Current direction: " + _currentDirection); return _currentDirection; }
+    public Vector2 GetCurrentDirection() => _currentDirection;
 
     public void FreezeActions()
     {
