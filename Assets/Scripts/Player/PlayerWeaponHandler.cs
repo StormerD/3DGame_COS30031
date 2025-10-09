@@ -1,39 +1,43 @@
 using System;
-using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 using static UnityEngine.InputSystem.InputAction;
 
+[RequireComponent(typeof(PlayerMovement), typeof(PlayerInput))]
 public class PlayerWeaponHandler : MonoBehaviour, IFighter
 {
     private GameObject _equippedWeapon;
     private IWeapon _weaponScript;
     public event Action WeaponChanged;
+    private IMover playerMover;
 
     void Start()
     {
-        if (TryGetComponent<PlayerInput>(out PlayerInput inp))
-        {
-            inp.attack.performed += Attack;
-            inp.secondary.performed += Secondary;
-        }
+        PlayerInput inp = GetComponent<PlayerInput>();
+        inp.attack.performed += Attack;
+        inp.secondary.performed += Secondary;
+        playerMover = GetComponent<PlayerMovement>();
+
         if (_equippedWeapon == null)
         {
             if (ActiveGameManager.instance != null && ActiveGameManager.instance.equippedWeapon != null)
             {
                 _equippedWeapon = ActiveGameManager.instance.equippedWeapon;
-                _equippedWeapon.transform.parent = transform;
-                _equippedWeapon.transform.localPosition = Vector2.zero;
+                if (!_equippedWeapon.TryGetComponent(out _weaponScript)) Debug.LogWarning("Equipped weapon missing IWeapon interface");
+                else
+                {
+                    _equippedWeapon.transform.parent = transform;
+                    _equippedWeapon.transform.localPosition = Vector2.zero;
+                    _weaponScript.LinkNewMover(playerMover);
+                }
             }
             if (ActiveGameManager.instance == null && transform.childCount > 0)
             {
-                foreach (Transform t in transform)
+                foreach (Transform t in transform) if (t.TryGetComponent<IWeapon>(out var _))
                 {
-                    if (t.TryGetComponent<IWeapon>(out var _))
-                    {
-                        _equippedWeapon = t.gameObject;
-                        if (!_equippedWeapon.TryGetComponent<IWeapon>(out _weaponScript)) Debug.LogWarning("Equipped weapon does not implement IWeapon interface");
-                        break;
-                    }
+                    _equippedWeapon = t.gameObject;
+                    if (!_equippedWeapon.TryGetComponent(out _weaponScript)) Debug.LogWarning("Equipped weapon does not implement IWeapon interface");
+                    else _weaponScript.LinkNewMover(playerMover);
+                    break;
                 }
             }
         }
@@ -62,7 +66,8 @@ public class PlayerWeaponHandler : MonoBehaviour, IFighter
         }
         _equippedWeapon = Instantiate(to, transform);
         WeaponChanged?.Invoke();
-        if (!_equippedWeapon.TryGetComponent<IWeapon>(out _weaponScript)) Debug.LogWarning("Newly equipped weapon does not implement IWeapon interface");
+        if (!_equippedWeapon.TryGetComponent(out _weaponScript)) Debug.LogWarning("Newly equipped weapon does not implement IWeapon interface");
+        else _weaponScript.LinkNewMover(playerMover);
     }
 
     public string GetEquippedWeapon() => _weaponScript?.GetWeaponData().weaponId;
@@ -76,7 +81,12 @@ public class PlayerWeaponHandler : MonoBehaviour, IFighter
 
     private bool VerifyWeaponScriptSynced()
     {
-        if (_equippedWeapon != null && _weaponScript == null) return _equippedWeapon.TryGetComponent(out _weaponScript);
+        if (_equippedWeapon != null && _weaponScript == null)
+        {
+            bool res = _equippedWeapon.TryGetComponent(out _weaponScript);
+            if (res) _weaponScript.LinkNewMover(playerMover);
+            return res;
+        }
         return _equippedWeapon != null && _weaponScript != null;
     }
 }

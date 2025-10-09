@@ -58,10 +58,15 @@ public class AudioManager : MonoBehaviour
         if (attackClip != null)
             audioSource.PlayOneShot(attackClip);
     }
-    
+
     public void PlayComponentPlaced()
     {
         if (attackClip != null)
             audioSource.PlayOneShot(componentPlaced);
+    }
+
+    public void PlayAudioClip(AudioClip clip)
+    {
+        if (clip != null) audioSource.PlayOneShot(clip);
     }
 }
