@@ -2,7 +2,7 @@ using UnityEngine;
 using static UnityEngine.InputSystem.InputAction;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(PlayerInput))]
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : MonoBehaviour, IMover
 {
     public float playerSpeed = 5f;
     public float dashSpeed = 15f;
@@ -21,12 +21,8 @@ public class PlayerMovement : MonoBehaviour
 
     void Awake()
     {
-        if (!TryGetComponent<PlayerInput>(out _inp)) Debug.LogError("Player GameObject needs a PlayerInput script.");
-        if (!TryGetComponent<Rigidbody2D>(out _rb))
-        {
-            canMove = false;
-            Debug.LogError("Player GameObject needs a Rigidbody2D component.");
-        }
+        _inp = GetComponent<PlayerInput>();
+        _rb = GetComponent<Rigidbody2D>();
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -89,17 +85,12 @@ public class PlayerMovement : MonoBehaviour
 
     public Vector2 GetCurrentDirection() => _currentDirection;
 
-    public void AddImpulseForce(Vector2 force)
-    {
-        _rb.AddForce(force, ForceMode2D.Impulse);
-    }
-
-    private void FreezeActions()
+    public void FreezeActions()
     {
         canMove = false;
     }
 
-    private void UnfreezeActions()
+    public void UnfreezeActions()
     {
         canMove = true;
     }
