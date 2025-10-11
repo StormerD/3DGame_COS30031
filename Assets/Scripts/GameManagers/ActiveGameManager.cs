@@ -7,7 +7,7 @@ using UnityEngine;
 public class ActiveGameManager : MonoBehaviour
 {
     public static ActiveGameManager instance;
-    private const int LAST_LEVEL = 3;
+    private const int LAST_LEVEL = 4;
 
     public int saveSlot;
     public GameObject equippedWeapon;
