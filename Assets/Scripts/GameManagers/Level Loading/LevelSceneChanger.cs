@@ -1,9 +1,7 @@
 using System;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 
-// LevelSceneChangers need to be added to the LevelManager "LevelTransitionSpots" in order to recieve updates about levels
 public class LevelSceneChanger : MonoBehaviour
 {
     public string sceneToLoad;
