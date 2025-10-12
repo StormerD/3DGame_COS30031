@@ -33,9 +33,10 @@ public class PlayerInteract3D : PlayerInteractBase
         interactablesInRange[closest].Interact(this);
         if (interactablesInRange[closest] is IPickupable)
         {
-            if (interactablesInRange[closest] is IItem) TryCarry(interactablesInRange[closest] as IItem);
+            bool shouldRemove = true;
+            if (interactablesInRange[closest] is IItem) shouldRemove = TryCarry(interactablesInRange[closest] as IItem);
             else (interactablesInRange[closest] as IPickupable).Pickup(this);
-            interactablesInRange.Remove(closest);
+            if (shouldRemove) interactablesInRange.Remove(closest);
         }
     }
 
