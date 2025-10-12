@@ -16,8 +16,10 @@ public class PlayerLooter : MonoBehaviour, ILooter
             _currencyRare = ActiveGameManager.instance.rare;
             _currencyMythic = ActiveGameManager.instance.mythic;
         }
-
-        SaveManager.instance.OnSaveDataChanged += SetCurrency;
+        if (SaveManager.instance != null)
+        {
+            SaveManager.instance.OnSaveDataChanged += SetCurrency;   
+        }
     }
 
     public void CollectCurrency(CurrencyType type, int amount = 1)

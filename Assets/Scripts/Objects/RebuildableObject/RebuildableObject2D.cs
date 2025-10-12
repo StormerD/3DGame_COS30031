@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RebuildableObject : MonoBehaviour, IInteractable
+public class RebuildableObject2D : MonoBehaviour, IInteractable
 {
     [TextArea] public string info = "This script creates 'components' in the editor as children of this object, instead of having us create them manually and linking them to this object. To create them, open the context menu (three dots next to script name) and click 'RecreateComponents' at the bottom of the menu. The created objects can be moved to their position freely. Make sure to have put the correct prefab in the prefab component!";
     public int numComponents = 3;
