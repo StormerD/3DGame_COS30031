@@ -408,8 +408,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: quit game
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 9d1040591e7a9d1419b3d2fc09bef650, type: 2}
-  m_sharedMaterial: {fileID: 4759026606815148497, guid: 9d1040591e7a9d1419b3d2fc09bef650, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 0e0333f6e9b334a619c05d1e9de225a1, type: 2}
+  m_sharedMaterial: {fileID: 5275834686372913095, guid: 0e0333f6e9b334a619c05d1e9de225a1, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -544,8 +544,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: You died!
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 9d1040591e7a9d1419b3d2fc09bef650, type: 2}
-  m_sharedMaterial: {fileID: 4759026606815148497, guid: 9d1040591e7a9d1419b3d2fc09bef650, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 0e0333f6e9b334a619c05d1e9de225a1, type: 2}
+  m_sharedMaterial: {fileID: 5275834686372913095, guid: 0e0333f6e9b334a619c05d1e9de225a1, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -732,8 +732,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Play Again?
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 9d1040591e7a9d1419b3d2fc09bef650, type: 2}
-  m_sharedMaterial: {fileID: 4759026606815148497, guid: 9d1040591e7a9d1419b3d2fc09bef650, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 0e0333f6e9b334a619c05d1e9de225a1, type: 2}
+  m_sharedMaterial: {fileID: 5275834686372913095, guid: 0e0333f6e9b334a619c05d1e9de225a1, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

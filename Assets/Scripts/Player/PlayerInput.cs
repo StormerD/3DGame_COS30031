@@ -22,9 +22,12 @@ public class PlayerInput : MonoBehaviour
 
     void Start()
     {
-        pause.performed += PauseWrapper;
-        PauseManager.instance.OnPause += DisableSelectInput; // disables everything except the "pause" action
-        PauseManager.instance.OnUnpause += EnableSelectInput; // vice-versa
+        if(PauseManager.instance != null)
+        {
+            pause.performed += PauseWrapper;
+            PauseManager.instance.OnPause += DisableSelectInput; // disables everything except the "pause" action
+            PauseManager.instance.OnUnpause += EnableSelectInput; // vice-versa
+        }
     }
 
     public void DisableSelectInput()
