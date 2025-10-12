@@ -19,9 +19,12 @@ public class ComponentObject3D : ComponentObjectBase, IInteractable
     
     public override void Pickup(IInteractor interactor)
     {
-
+        gameObject.SetActive(false);
     }
 
     public void EnterInteractZone() => _thisOutlineMaterial.SetFloat("_Enabled", 1);
     public void ExitInteractZone() => _thisOutlineMaterial.SetFloat("_Enabled", 0);
+    private void ChangeOutlineColor(Color color) => _thisOutlineMaterial.SetColor("_OutlineColor", color);
+    public void SetInteractFocus(Color color) => ChangeOutlineColor(color);
+    public void RemoveInteractFocus() => ChangeOutlineColor(new(1, 1, 1));
 }
