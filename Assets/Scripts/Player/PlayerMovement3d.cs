@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody), typeof(PlayerInput))]
-public class PlayerMovement3d : MonoBehaviour, IMover3D
+public class PlayerMovement3D : MonoBehaviour, IMover3D
 {
     public float playerSpeed;
     private Rigidbody _rb;

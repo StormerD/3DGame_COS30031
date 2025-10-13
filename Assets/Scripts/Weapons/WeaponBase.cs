@@ -17,7 +17,7 @@ public abstract class WeaponBase : MonoBehaviour, IWeapon
     public AudioClip secondaryAttack;
     public AudioClip secondaryNotReady;
 
-    private IMover _entityMovement;
+    private IMover2D _entityMovement;
     private float _nextBasicAttackTime = 0;
     private bool _basicReady = true;
     protected bool _doBasicAttack = false; // flag to run attack physics from FixedUpdate()
@@ -52,7 +52,7 @@ public abstract class WeaponBase : MonoBehaviour, IWeapon
         }
     }
 
-    public void LinkNewMover(IMover mover) => _entityMovement = mover;
+    public void LinkNewMover(IMover2D mover) => _entityMovement = mover;
 
     void FixedUpdate()
     {

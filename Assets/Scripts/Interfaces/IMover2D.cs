@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public interface IMover
+public interface IMover2D
 {
     Vector2 GetCurrentDirection();
     void FreezeActions();

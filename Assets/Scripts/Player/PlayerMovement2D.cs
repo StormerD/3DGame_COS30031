@@ -2,7 +2,7 @@ using UnityEngine;
 using static UnityEngine.InputSystem.InputAction;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(PlayerInput))]
-public class PlayerMovement : MonoBehaviour, IMover
+public class PlayerMovement2D : MonoBehaviour, IMover2D
 {
     public float playerSpeed = 5f;
     public float dashSpeed = 15f;

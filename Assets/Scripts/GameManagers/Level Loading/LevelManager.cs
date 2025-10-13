@@ -18,7 +18,7 @@ public class LevelManager : MonoBehaviour
     public List<LevelSceneChanger> levelTransitionSpots;
     public GameObject player;
     private PlayerLooter _pLooter;
-    private PlayerWeaponHandler _pWeaponHandler;
+    private PlayerWeaponHandler2D _pWeaponHandler;
 
     void Awake()
     {

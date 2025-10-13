@@ -16,7 +16,7 @@ public class EnemyMovement : MonoBehaviour
     void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
-        _player = FindFirstObjectByType<PlayerMovement>().transform;
+        _player = FindFirstObjectByType<PlayerMovement2D>().transform;
         OnAttack += () => GetComponent<EnemyAttack>().TryAttackPlayer();
     }
 

@@ -24,7 +24,7 @@ public class SaveManager : MonoBehaviour
 	public GameObject player;
 
 	private PlayerLooter _playerLooter;
-	private PlayerWeaponHandler _playerWeaponHandler;
+	private PlayerWeaponHandler2D _playerWeaponHandler;
 	private SaveData _currentSaveData;
 	private SlotTimesData _slotTimes;
 
@@ -39,8 +39,8 @@ public class SaveManager : MonoBehaviour
 		{
 			instance = this;
 		}
-		if (!player.TryGetComponent<PlayerLooter>(out _playerLooter)) Debug.LogWarning("Save manager needs Player to have PlayerLooter!");
-		if (!player.TryGetComponent<PlayerWeaponHandler>(out _playerWeaponHandler)) Debug.LogWarning("Save manager needs Player to have PlayerWeaponHandler!");
+		if (!player.TryGetComponent(out _playerLooter)) Debug.LogWarning("Save manager needs Player to have PlayerLooter!");
+		if (!player.TryGetComponent(out _playerWeaponHandler)) Debug.LogWarning("Save manager needs Player to have PlayerWeaponHandler!");
 	}
 
 	void Start()

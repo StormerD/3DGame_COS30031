@@ -14,5 +14,5 @@ public interface IWeapon
     void Attack();
     void Secondary();
     WeaponData GetWeaponData();
-    void LinkNewMover(IMover mover);
+    void LinkNewMover(IMover2D mover);
 }
