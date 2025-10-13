@@ -64,6 +64,18 @@ public abstract class PlayerInteractBase : MonoBehaviour, IInteractor
     // to maybe do this via just the looter, and skip the middle step? might have to do some significant refactoring
     public void CollectCurrency(CurrencyType type, int amount) => _playerLooter.CollectCurrency(type, amount);
 
+    protected bool TryCarry(IItem item)
+    {
+        if (!CanCarryMoreItems()) return false; // cannot hold objects when full bag
+
+        item.Pickup(this);
+        AddNewCarry(item);
+        return true;
+    }
+
+    protected bool CanCarryMoreItems() => _carriedItems.Count < maxLoadCarry;
+    protected void AddNewCarry(IItem item) => _carriedItems.Add(item);
+
     #endregion
 
     protected abstract void TryInteract(CallbackContext ctx);

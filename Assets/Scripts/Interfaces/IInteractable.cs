@@ -6,5 +6,7 @@ public interface IInteractable
 {
     void EnterInteractZone() { Debug.Log("Entered Interact Zone."); }
     void ExitInteractZone() { Debug.Log("Exited Interact Zone."); }
+    void SetInteractFocus(Color color) { Debug.Log("Now focused."); }
+    void RemoveInteractFocus() { Debug.Log("No longer focused."); }
     void Interact(IInteractor interactor);
 }

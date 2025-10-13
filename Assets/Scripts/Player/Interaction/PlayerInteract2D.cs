@@ -19,12 +19,10 @@ public class PlayerInteract2D : PlayerInteractBase
 
             iObj.Interact(this);
 
-            if (iObj is IItem)
+            if (iObj is IPickupable)
             {
-                if (_carriedItems.Count >= maxLoadCarry) continue; // cannot hold objects when full bag
-
-                (iObj as IItem).Pickup(this);
-                _carriedItems.Add(iObj as IItem);
+                if (iObj is IItem) TryCarry(iObj as IItem);
+                else (iObj as IPickupable).Pickup(this);
             }
 
             return; // Only handle one object per interact
