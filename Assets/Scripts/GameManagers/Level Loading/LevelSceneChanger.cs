@@ -27,6 +27,15 @@ public class LevelSceneChanger : MonoBehaviour
         sceneEntry.OnEnterLoadZone += Load;
     }
 
+    void Start()
+    {
+        if (LevelManager.instance != null)
+        {
+            LevelManager.instance.OnForgeHasBeenOpened += ForgeHasBeenOpened;
+            LevelManager.instance.OnLevelUnlockChanged += LevelUnlockDataChanged;
+        }
+    }
+
     public void Load()
     {
         if (_levelUnlocked && _canLoad)
@@ -37,7 +46,7 @@ public class LevelSceneChanger : MonoBehaviour
         }
     }
 
-    public void LevelUnlockDataChanged(int furthestUnlocked)
+    private void LevelUnlockDataChanged(int furthestUnlocked)
     {
         // lockedText == null since this script is also used for level loaders to go back home and we don't care if the forge has been opened there
         if (furthestUnlocked >= levelNum && (_forgeOpened || lockedText == null)) _levelUnlocked = true;
@@ -52,9 +61,8 @@ public class LevelSceneChanger : MonoBehaviour
         OnUnlockedChanged?.Invoke(_levelUnlocked);
     }
 
-    public void ForgeHasBeenOpened()
+    private void ForgeHasBeenOpened()
     {
-        Debug.Log("Forge was opened.");
         _forgeOpened = true;
         LevelUnlockDataChanged(_furthestUnlock);
     }
