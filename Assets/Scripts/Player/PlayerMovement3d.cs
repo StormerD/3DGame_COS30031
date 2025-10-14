@@ -13,8 +13,9 @@ public class PlayerMovement3d : MonoBehaviour, IMover3D
 
     private UnityEngine.Rigidbody _rb;
     private PlayerInput _inp;
-    private Vector3 currentVelocity = Vector3.zero;
+    private Vector3 _currentVelocity = Vector3.zero;
     private bool _canMove = true;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -31,31 +32,42 @@ public class PlayerMovement3d : MonoBehaviour, IMover3D
     {
         if (!_canMove) return;
 
-        Vector2 inp = _inp.move.ReadValue<Vector2>();
-        Vector3 inpSwizzle = new(inp.x, _rb.velocity.y, inp.y);
-        Vector3 targetVelocity = inpSwizzle * playerSpeed;
-        Vector3 velocityChange = targetVelocity - currentVelocity;
+        Vector2 inp = _inp.move.ReadValue<Vector2>(); 
+        //Vector3 inpSwizzle = new(inp.x, _rb.velocity.y, inp.y);
+        Vector3 targetVelocity = Vector3.zero;
+
+        if (inp != Vector2.zero)
+        {
+            Transform cam = Camera.main.transform;
+            //The next two lines ensure that checking the direction of the camera is not affected by looking up or down
+            Vector3 camForward = Vector3.ProjectOnPlane(cam.forward, Vector3.up).normalized;
+            Vector3 camRight = Vector3.ProjectOnPlane(cam.right, Vector3.up).normalized;
+            
+            Vector3 movementDirection = camForward * inp.y + camRight * inp.x;
+            movementDirection.Normalize();
+
+            targetVelocity = movementDirection * playerSpeed;
+        } else {
+            Vector3 decelerationForce = -_currentVelocity.normalized * deceleration;
+            _rb.AddForce(decelerationForce, ForceMode.Acceleration);
+        }
+
+        Vector3 velocityChange = targetVelocity - _currentVelocity; // _currentVelocity is originally set to zero and is updating every loop
         Vector3 velocityForce = velocityChange * acceleration;
 
         _rb.AddForce(velocityForce, ForceMode.Acceleration);
 
-        if (inp == Vector2.zero)
-        {
-            Vector3 decelerationForce = -currentVelocity.normalized * deceleration;
-            _rb.AddForce(decelerationForce * Time.fixedDeltaTime, ForceMode.Acceleration);
-        }
-
-        Vector3 horizontalVelocity = new Vector3(_rb.velocity.x, 0, _rb.velocity.z);
+        Vector3 horizontalVelocity = new Vector3(_rb.linearVelocity.x, 0, _rb.linearVelocity.z);
         if (horizontalVelocity.magnitude > maxSpeed)
         {
             horizontalVelocity = horizontalVelocity.normalized * maxSpeed;
-            _rb.velocity = new Vector3(horizontalVelocity.x, _rb.velocity.y, horizontalVelocity.z);
+            _rb.linearVelocity = new Vector3(horizontalVelocity.x, _rb.linearVelocity.y, horizontalVelocity.z);
         }
 
-        currentVelocity = _rb.velocity;
+        _currentVelocity = _rb.linearVelocity;
     }
 
     public void FreezeActions() => _canMove = false;
     public void UnfreezeActions() => _canMove = true;
-    public Vector3 GetCurrentDirection() => currentVelocity.normalized;
+    public Vector3 GetCurrentDirection() => _currentVelocity.normalized;
 }
