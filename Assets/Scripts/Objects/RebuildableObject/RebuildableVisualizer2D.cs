@@ -1,16 +1,14 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Rendering;
 
 [RequireComponent(typeof(SpriteRenderer))]
-public class RebuildableObjectVisualizer : MonoBehaviour
+public class RebuildableVisualizer2D : MonoBehaviour
 {
     [Tooltip("The object's sprites (in order from least built to most built)")]
     public List<Sprite> rebuildSprites;
     public ParticleSystem completeBuildEffects;
     [Tooltip("If the RebuildableObject script is attached to the same game object, no need to set this value. This is only used so that multiple objects can change their sprite!")]
-    public RebuildableObject rebuildable;
+    public RebuildableObject2D rebuildable;
 
     private int collectedComponents = 0;
     private int maxNumComponents;

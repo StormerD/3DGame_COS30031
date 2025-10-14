@@ -1,8 +1,10 @@
+
+
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RebuildableObject : MonoBehaviour, IInteractable
+public class RebuildableObjectBase : MonoBehaviour, IInteractable
 {
     [TextArea] public string info = "This script creates 'components' in the editor as children of this object, instead of having us create them manually and linking them to this object. To create them, open the context menu (three dots next to script name) and click 'RecreateComponents' at the bottom of the menu. The created objects can be moved to their position freely. Make sure to have put the correct prefab in the prefab component!";
     public int numComponents = 3;
@@ -69,7 +71,7 @@ public class RebuildableObject : MonoBehaviour, IInteractable
             Debug.Log("Collected components: " + componentsGathered);
             _numCollected += componentsGathered;
             OnComponentsCollected?.Invoke(componentsGathered);
-            if (_numCollected == numComponents) OnCompletedRebuild?.Invoke();
+            if (_numCollected == numComponents) { Debug.Log("Completed rebuild!"); OnCompletedRebuild?.Invoke(); }
 
             if (AudioManager.Instance != null) AudioManager.Instance.PlayComponentPlaced();
         }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,7 +16,8 @@ using UnityEngine.SceneManagement;
 public class LevelManager : MonoBehaviour
 {
     public static LevelManager instance;
-    public List<LevelSceneChanger> levelTransitionSpots;
+    public event Action<int> OnLevelUnlockChanged;
+    public event Action OnForgeHasBeenOpened;
     public GameObject player;
     private PlayerLooter _pLooter;
     private PlayerWeaponHandler2D _pWeaponHandler;
@@ -40,11 +42,9 @@ public class LevelManager : MonoBehaviour
         int latestUnlock = SaveManager.instance.GetFurthestUnlockedLevel();
         string equippedWeapon = SaveManager.instance.GetEquippedWeapon();
         bool hasWeaponBeenEquipped = equippedWeapon != null && equippedWeapon != "";
-        foreach (var l in levelTransitionSpots)
-        {
-            l.LevelUnlockDataChanged(latestUnlock);
-            if (hasWeaponBeenEquipped) l.ForgeHasBeenOpened();
-        }
+
+        OnLevelUnlockChanged?.Invoke(latestUnlock);
+        if (hasWeaponBeenEquipped) ForgeOpened();
     }
 
     public void LoadLevel(string which, float minLoadTime, int levelNum)
@@ -84,8 +84,5 @@ public class LevelManager : MonoBehaviour
         op.allowSceneActivation = true;
     }
 
-    public void ForgeOpened()
-    {
-        foreach (var l in levelTransitionSpots) l.ForgeHasBeenOpened();
-    }
+    public void ForgeOpened() => OnForgeHasBeenOpened?.Invoke();
 }
