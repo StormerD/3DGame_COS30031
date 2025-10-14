@@ -21,7 +21,11 @@ public abstract class ComponentObjectBase : MonoBehaviour, IItem
         InteractedWith?.Invoke(); // probably just UI things
     }
 
-    public abstract void Pickup(IInteractor interactor);
+    public virtual void Pickup(IInteractor interactor)
+    {
+        gameObject.SetActive(false);
+    }
+    
     public virtual void Use(IInteractor interactor)
     {
         Destroy(gameObject);
