@@ -1,5 +1,3 @@
-
-
 using System.Collections.Generic;
 using UnityEngine;
 using static UnityEngine.InputSystem.InputAction;
@@ -10,6 +8,7 @@ public class PlayerInteract3D : PlayerInteractBase
 {
     public Color interactFocusOutlineColor = new(1, 0.6f, 0.4f);
     private readonly Dictionary<GameObject, IInteractable> interactablesInRange = new();
+    private readonly Dictionary<GameObject, InteractableOutline3D> interactableOutlinesInRange = new();
     private GameObject _closestInteractable = null;
 
     protected override void Start()
@@ -36,7 +35,7 @@ public class PlayerInteract3D : PlayerInteractBase
             bool shouldRemove = true;
             if (interactablesInRange[closest] is IItem) shouldRemove = TryCarry(interactablesInRange[closest] as IItem);
             else (interactablesInRange[closest] as IPickupable).Pickup(this);
-            if (shouldRemove) interactablesInRange.Remove(closest);
+            if (shouldRemove) RemoveInteractable(closest);
         }
     }
 
@@ -62,16 +61,44 @@ public class PlayerInteract3D : PlayerInteractBase
         GameObject closestNow = FindClosestInteractable();
         if (closestNow == _closestInteractable) return; // work already done prior
 
-        if (closestNow != null && interactablesInRange.ContainsKey(closestNow))
+        if (closestNow != null && interactableOutlinesInRange.ContainsKey(closestNow))
         {
-            interactablesInRange[closestNow].SetInteractFocus(interactFocusOutlineColor);
+            interactableOutlinesInRange[closestNow].SetInteractFocus(interactFocusOutlineColor);
         }
-        if (_closestInteractable != null && interactablesInRange.ContainsKey(_closestInteractable))
+        if (_closestInteractable != null && interactableOutlinesInRange.ContainsKey(_closestInteractable))
         {
-            interactablesInRange[_closestInteractable].RemoveInteractFocus();
+            interactableOutlinesInRange[_closestInteractable].RemoveInteractFocus();
         }
 
         _closestInteractable = closestNow;
+    }
+
+    private void RemoveInteractable(GameObject which)
+    {
+        if (!interactablesInRange.ContainsKey(which)) Debug.LogWarning("Object left zone, but it was not registered as an interactable " + which.name);
+        if (!interactableOutlinesInRange.ContainsKey(which)) Debug.Log("Object left zone, but it was not registered as an outline entry: " + which.name);
+
+        interactablesInRange.Remove(which);
+        interactableOutlinesInRange[which].ExitInteractZone();
+        interactableOutlinesInRange.Remove(which);
+    }
+
+    private void AddInteractable(GameObject which)
+    {
+        if (!which.TryGetComponent(out IInteractable interactable))
+        {
+            Debug.LogWarning("Passed gameobject " + which.name + " which does not have IInteractable. Does the player's sphere collider have include LayerMask set to Interactables, and exclude set to everything but Interactables?");
+            return;
+        }
+        if (!which.TryGetComponent(out InteractableOutline3D outline))
+        {
+            Debug.LogWarning("Passed gameobject " + which.name + " which does not have an Outline component attached to it.");
+            return;
+        }
+
+        interactablesInRange.Add(which, interactable);
+        interactableOutlinesInRange.Add(which, outline);
+        outline.EnterInteractZone();
     }
 
     #endregion
@@ -80,25 +107,13 @@ public class PlayerInteract3D : PlayerInteractBase
 
     void OnTriggerEnter(Collider col)
     {
-        if (!col.TryGetComponent(out IInteractable interactable))
-        {
-            Debug.Log("Detected an object that is not IInteractable: " + col.name + ". Does the player's sphere collider have include LayerMask set to Interactables, and exclude set to everything but Interactables?");
-            return;
-        }
-        interactable.EnterInteractZone();
-        interactablesInRange.Add(col.gameObject, interactable);
+        AddInteractable(col.gameObject);
         SyncClosestInteractable();
     }
     void OnTriggerExit(Collider col)
     {
-        if (!interactablesInRange.ContainsKey(col.gameObject))
-        {
-            Debug.Log("Object left zone, but it was not registered as a dictionary entry: " + col.name);
-            return;
-        }
-        interactablesInRange[col.gameObject].ExitInteractZone();
-        interactablesInRange[col.gameObject].RemoveInteractFocus();
-        interactablesInRange.Remove(col.gameObject);
+        RemoveInteractable(col.gameObject);
+        SyncClosestInteractable();
     }
 
     #endregion
