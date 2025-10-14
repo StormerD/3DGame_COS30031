@@ -1,8 +1,7 @@
 using UnityEngine;
 
-public class BasicMelee : Weapon2D
+public class BasicMelee3D : Weapon3D
 {
-
     [Header("Attack configuration")]
     public float basicAttackRange = 2.0f;
     public float attackWidthDegrees = 45f;

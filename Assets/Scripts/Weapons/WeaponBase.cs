@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public abstract class WeaponBase : MonoBehaviour, IWeapon
+public abstract class WeaponBase : MonoBehaviour
 {
     public event Action OnBasicReady;
     public event Action<Vector2> OnBasicUsedReady;
@@ -9,15 +9,16 @@ public abstract class WeaponBase : MonoBehaviour, IWeapon
     public event Action OnSecondaryReady;
     public event Action<Vector2> OnSecondaryUsedReady;
     public event Action OnSecondaryUsedNotReady;
+
     [Header("Weapon cooldown and damage data")]
     public WeaponData weaponData;
+
     [Header("Weapon sounds")]
     public AudioClip basicAttack;
     public AudioClip basicNotReady;
     public AudioClip secondaryAttack;
     public AudioClip secondaryNotReady;
 
-    private IMover2D _entityMovement;
     private float _nextBasicAttackTime = 0;
     private bool _basicReady = true;
     protected bool _doBasicAttack = false; // flag to run attack physics from FixedUpdate()
@@ -25,21 +26,10 @@ public abstract class WeaponBase : MonoBehaviour, IWeapon
     private bool _secondaryReady = true;
     protected bool _doSecondaryAttack = false;
 
-    protected Vector2 _attackingDirection = Vector2.one;
-
-    void Start()
-    {
-        _entityMovement = null;
-    }
+    protected Vector3 _attackingDirection = Vector2.one;
 
     void Update()
     {
-        if (_entityMovement == null && !transform.parent.TryGetComponent(out _entityMovement))
-        {
-            Debug.LogWarning("Parent of weapon missing IMover script");
-            return;
-        }
-
         if (Time.time > _nextBasicAttackTime && !_basicReady)
         {
             _basicReady = true;
@@ -52,15 +42,13 @@ public abstract class WeaponBase : MonoBehaviour, IWeapon
         }
     }
 
-    public void LinkNewMover(IMover2D mover) => _entityMovement = mover;
-
     void FixedUpdate()
     {
         if (_doBasicAttack) AttackPhysics();
         if (_doSecondaryAttack) SecondaryPhysics();
     }
 
-    public void Attack()
+    public void Attack(Vector2 clickScreenPosition)
     {
         // if weapon is not ready to be used, emit an event for UI to possibly listen to; can do some sound / visual to show it's not ready
         if (!_basicReady)
@@ -69,8 +57,7 @@ public abstract class WeaponBase : MonoBehaviour, IWeapon
             OnBasicUsedNotReady?.Invoke();
             return;
         }
-        _attackingDirection = _entityMovement?.GetCurrentDirection() ?? Vector2.zero;
-        if (_attackingDirection == Vector2.zero) _attackingDirection = Vector2.up;
+        _attackingDirection = GetAttackDirection(clickScreenPosition);
         _nextBasicAttackTime = Time.time + 1.0f / weaponData.basicAttacksPerSecond; // update next basic attack
         _basicReady = false;
         _doBasicAttack = true;
@@ -78,7 +65,7 @@ public abstract class WeaponBase : MonoBehaviour, IWeapon
         AudioManager.Instance.PlayAudioClip(basicAttack);
     }
 
-    public void Secondary()
+    public void Secondary(Vector2 clickScreenPosition)
     {
         if (!_secondaryReady)
         {
@@ -86,8 +73,7 @@ public abstract class WeaponBase : MonoBehaviour, IWeapon
             OnSecondaryUsedNotReady?.Invoke();
             return;
         }
-        _attackingDirection = _entityMovement?.GetCurrentDirection() ?? Vector2.zero;
-        if (_attackingDirection == Vector2.zero) _attackingDirection = Vector2.up;
+        _attackingDirection = GetAttackDirection(clickScreenPosition);
         _nextSecondaryAttackTime = Time.time + weaponData.secondaryAttackCooldownSeconds;
         _secondaryReady = false;
         _doSecondaryAttack = true;
@@ -99,4 +85,5 @@ public abstract class WeaponBase : MonoBehaviour, IWeapon
 
     protected abstract void AttackPhysics();
     protected abstract void SecondaryPhysics();
+    protected abstract Vector3 GetAttackDirection(Vector2 clickScreenPosition);
 }

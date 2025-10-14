@@ -40,7 +40,7 @@ public class ForgeManager : MonoBehaviour
         else instance = this;
         foreach (GameObject w in availableWeapons)
         {
-            string weaponId = w.GetComponent<IWeapon>().GetWeaponData().weaponId;
+            string weaponId = w.GetComponent<WeaponBase>().GetWeaponData().weaponId;
             if (!_weaponsById.ContainsKey(weaponId)) _weaponsById.Add(weaponId, w);
         }
         if (!player.TryGetComponent(out _playerLooter)) Debug.LogWarning("ForgeManager player needs an ILooter component to purchase weapons!");
