@@ -86192,7 +86192,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3161170324828375380, guid: a51d51bef65864f39bebfaf079b44330, type: 3}
       propertyPath: m_Name
-      value: Level1SceneLoader
+      value: Level1Loader
       objectReference: {fileID: 0}
     - target: {fileID: 4245655062409032971, guid: a51d51bef65864f39bebfaf079b44330, type: 3}
       propertyPath: m_AnchoredPosition.x

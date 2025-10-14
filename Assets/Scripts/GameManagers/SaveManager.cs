@@ -1,7 +1,10 @@
+#pragma warning disable CS0162
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 
 /// <summary>
 /// This manager is based on the Saving system provided in the modules, and uses a lot of the code from that. 
@@ -198,6 +201,6 @@ public class SaveManager : MonoBehaviour
 		yield return new WaitForSeconds(delay);
 		action?.Invoke();
 	}
-	
+
 	#endregion
 }
