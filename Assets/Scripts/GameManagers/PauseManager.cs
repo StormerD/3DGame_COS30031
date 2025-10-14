@@ -17,7 +17,6 @@ public class PauseManager : MonoBehaviour
     // By checking if already paused, we can make it so that pressing the pause button twice will open then close the pause menu
     public void Pause()
     {
-        Debug.Log("Paused.");
         if (_paused) Unpause();
         else
         {
@@ -28,7 +27,6 @@ public class PauseManager : MonoBehaviour
 
     public void Unpause()
     {
-        Debug.Log("Unpause");
         _paused = false;
         OnUnpause?.Invoke();
     }

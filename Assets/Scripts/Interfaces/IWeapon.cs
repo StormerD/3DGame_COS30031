@@ -14,5 +14,6 @@ public interface IWeapon
     void Attack();
     void Secondary();
     WeaponData GetWeaponData();
-    void LinkNewMover(IMover2D mover);
+    void LinkNewMover(IMover2D mover) { Debug.Log("Unimplemented."); }
+    void LinkNewMover(IMover3D mover) { Debug.Log("Unimplemented."); }
 }

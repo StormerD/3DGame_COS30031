@@ -69,9 +69,7 @@ public abstract class WeaponBase : MonoBehaviour, IWeapon
             OnBasicUsedNotReady?.Invoke();
             return;
         }
-        Debug.Log("Getting attacking direction, currently have " + _attackingDirection);
         _attackingDirection = _entityMovement?.GetCurrentDirection() ?? Vector2.zero;
-        Debug.Log("Now is " + _attackingDirection);
         if (_attackingDirection == Vector2.zero) _attackingDirection = Vector2.up;
         _nextBasicAttackTime = Time.time + 1.0f / weaponData.basicAttacksPerSecond; // update next basic attack
         _basicReady = false;

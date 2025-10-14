@@ -55,9 +55,7 @@ public class ForgeManager : MonoBehaviour
 
         for (int i = 0; i < forgeMenuScrollbox.childCount; i++)
         {
-            if (!forgeMenuScrollbox.GetChild(i).TryGetComponent(out ForgeItemListing listing))
-                Debug.LogWarning("Forge content box child " + i + " is missing ForgeItemListing.");
-            else
+            if (forgeMenuScrollbox.GetChild(i).TryGetComponent(out ForgeItemListing listing))
             {
                 listing.OnEquipWeapon += EquipItem;
                 listing.OnTryPurchaseWeapon += PurchaseItem;

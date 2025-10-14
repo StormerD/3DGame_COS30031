@@ -19,8 +19,8 @@ public class LevelManager : MonoBehaviour
     public event Action<int> OnLevelUnlockChanged;
     public event Action OnForgeHasBeenOpened;
     public GameObject player;
-    private PlayerLooter _pLooter;
-    private PlayerWeaponHandler2D _pWeaponHandler;
+    private ILooter _pLooter;
+    private IFighter _pWeaponHandler;
 
     void Awake()
     {
@@ -34,7 +34,6 @@ public class LevelManager : MonoBehaviour
         if (player == null) Debug.LogWarning("LevelManager player is null.");
         if (!player.TryGetComponent(out _pLooter)) Debug.LogWarning("Player is missing PlayerLooter.");
         if (!player.TryGetComponent(out _pWeaponHandler)) Debug.LogWarning("Player is missing WeaponHandler.");
-        LoadLevels();
     }
 
     void LoadLevels()

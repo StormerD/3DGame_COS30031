@@ -7,4 +7,6 @@ public interface IFighter
     void UseSecondary();
     void EquipWeapon(string weaponId);
     void EquipWeapon(GameObject weapon);
+    string GetEquippedWeapon();
+    GameObject GetEquippedWeaponObject();
 }

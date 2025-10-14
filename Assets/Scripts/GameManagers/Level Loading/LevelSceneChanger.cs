@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 
@@ -22,20 +23,20 @@ public class LevelSceneChanger : MonoBehaviour
     {
         if (sceneEntry == null) Debug.LogError(transform.name + " missing SceneLoaderTriggerHandler ref.");
         if (visuals == null) Debug.LogError(transform.name + " Missing visuals ref");
-        OnUnlockedChanged += sceneEntry.ChangeTrigger;
-        OnUnlockedChanged += visuals.SetUnlocked;
-        sceneEntry.OnEnterLoadZone += Load;
     }
 
     void Start()
     {
+        OnUnlockedChanged += sceneEntry.ChangeTrigger;
+        OnUnlockedChanged += visuals.SetUnlocked;
+        sceneEntry.OnEnterLoadZone += Load;
         if (LevelManager.instance != null)
         {
             LevelManager.instance.OnForgeHasBeenOpened += ForgeHasBeenOpened;
             LevelManager.instance.OnLevelUnlockChanged += LevelUnlockDataChanged;
         }
     }
-
+    
     public void Load()
     {
         if (_levelUnlocked && _canLoad)
@@ -48,6 +49,7 @@ public class LevelSceneChanger : MonoBehaviour
 
     private void LevelUnlockDataChanged(int furthestUnlocked)
     {
+        Debug.Log(gameObject.name + " my furthest unlcoked is " + furthestUnlocked);
         // lockedText == null since this script is also used for level loaders to go back home and we don't care if the forge has been opened there
         if (furthestUnlocked >= levelNum && (_forgeOpened || lockedText == null)) _levelUnlocked = true;
         else if (!_forgeOpened && lockedText != null && furthestUnlocked >= levelNum) // last condition (furthestUnlocked >= levelNum) to display the level's locked reason over forge not being opened
@@ -58,6 +60,7 @@ public class LevelSceneChanger : MonoBehaviour
         else _levelUnlocked = false;
 
         _furthestUnlock = furthestUnlocked;
+        Debug.Log(gameObject.name + " Furthest: " + _furthestUnlock); Debug.Log(gameObject.name + " unlocked: " + _levelUnlocked);
         OnUnlockedChanged?.Invoke(_levelUnlocked);
     }
 

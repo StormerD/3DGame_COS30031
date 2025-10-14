@@ -1380,7 +1380,7 @@ PrefabInstance:
     - target: {fileID: 6512955475250862936, guid: a51d51bef65864f39bebfaf079b44330, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+      objectReference: {fileID: 5275834686372913095, guid: 0e0333f6e9b334a619c05d1e9de225a1, type: 2}
     - target: {fileID: 7609997605784589864, guid: a51d51bef65864f39bebfaf079b44330, type: 3}
       propertyPath: m_LocalPosition.x
       value: 22.47
@@ -82151,7 +82151,7 @@ PrefabInstance:
     - target: {fileID: 6512955475250862936, guid: a51d51bef65864f39bebfaf079b44330, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+      objectReference: {fileID: 5275834686372913095, guid: 0e0333f6e9b334a619c05d1e9de225a1, type: 2}
     - target: {fileID: 7609997605784589864, guid: a51d51bef65864f39bebfaf079b44330, type: 3}
       propertyPath: m_LocalPosition.x
       value: -24.67
@@ -82360,10 +82360,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5360029505523077858, guid: 2885aa5f9827f814abba74e48e9996dc, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3773872355296092491, guid: 2885aa5f9827f814abba74e48e9996dc, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2018216530}
   m_SourcePrefab: {fileID: 100100000, guid: 2885aa5f9827f814abba74e48e9996dc, type: 3}
 --- !u!4 &1483449072 stripped
 Transform:
@@ -84774,6 +84778,19 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 3773872355296092491, guid: 2885aa5f9827f814abba74e48e9996dc, type: 3}
   m_PrefabInstance: {fileID: 1483449071}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2018216530
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2018216521}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00f29f36cb3a245a59c71ce9ae2dfa84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerWeaponHandler2D
+  weaponInstantiationTransform: {fileID: 0}
 --- !u!1 &2054092422
 GameObject:
   m_ObjectHideFlags: 0
@@ -86175,7 +86192,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3161170324828375380, guid: a51d51bef65864f39bebfaf079b44330, type: 3}
       propertyPath: m_Name
-      value: LevelOneSceneLoader
+      value: Level1SceneLoader
       objectReference: {fileID: 0}
     - target: {fileID: 4245655062409032971, guid: a51d51bef65864f39bebfaf079b44330, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -86216,7 +86233,7 @@ PrefabInstance:
     - target: {fileID: 6512955475250862936, guid: a51d51bef65864f39bebfaf079b44330, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+      objectReference: {fileID: 5275834686372913095, guid: 0e0333f6e9b334a619c05d1e9de225a1, type: 2}
     - target: {fileID: 7609997605784589864, guid: a51d51bef65864f39bebfaf079b44330, type: 3}
       propertyPath: m_LocalPosition.x
       value: 23.48

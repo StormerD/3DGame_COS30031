@@ -24,17 +24,15 @@ public abstract class PlayerWeaponHandlerBase : MonoBehaviour, IFighter
     #region Equipping
     private void SetEquippedWeapon()
     {
-        Debug.Log("SETTING EQUIPPED WEAPON.");
         EquipWeapon(SaveManager.instance.GetEquippedWeapon());
     }
     public void EquipWeapon(string to)
     {
-        Debug.Log("EQUIPPING: " + to);
         EquipWeapon(ForgeManager.instance.GetWeaponByID(to));
     }
     public virtual void EquipWeapon(GameObject to)
     {
-        Destroy(_equippedWeapon);
+        if (_equippedWeapon != null) Destroy(_equippedWeapon);
         if (to == null)
         {
             _equippedWeapon = null;
@@ -44,7 +42,8 @@ public abstract class PlayerWeaponHandlerBase : MonoBehaviour, IFighter
         _equippedWeapon = Instantiate(to, weaponInstantiationTransform);
     }
     public string GetEquippedWeapon() => _weaponScript?.GetWeaponData().weaponId;
-    public GameObject GetEquippedWeaponObject() => _equippedWeapon;
+    public virtual GameObject GetEquippedWeaponObject() => _equippedWeapon;
+    
     #endregion
 
     #region Attacking
@@ -55,5 +54,15 @@ public abstract class PlayerWeaponHandlerBase : MonoBehaviour, IFighter
     #endregion
 
     protected abstract void InitializeWeapon();
-    protected abstract bool VerifyWeaponScriptSynced();
+    protected virtual bool VerifyWeaponScriptSynced()
+    {
+        if (_equippedWeapon != null && _weaponScript == null)
+        {
+            bool res = _equippedWeapon.TryGetComponent(out _weaponScript);
+            if (res) Link(_weaponScript);
+            return res;
+        }
+        return _equippedWeapon != null && _weaponScript != null;
+    }
+    protected abstract void Link(IWeapon weapon);
 }

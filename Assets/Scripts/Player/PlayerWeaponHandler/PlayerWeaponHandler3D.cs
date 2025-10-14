@@ -7,17 +7,19 @@ public class PlayerWeaponHandler3D : PlayerWeaponHandlerBase
     [Tooltip("Upon entry into a level scene, we pull the equipped weapon from the ActiveGameManager. That will give us a 2d weapon. This is a list of 3D equivalent weapons that will be matched by ID of the 2d weapon.")]
     public List<GameObject> weapon3DTranslations;
     private Dictionary<string, GameObject> _3dWeaponsById;
-    private IMover3D _playerMovement;
+    private IMover3D _playerMover;
+    private GameObject _weapon2D;
 
     protected override void Start()
     {
-        _playerMovement = GetComponent<PlayerMovement3D>();
+        _playerMover = GetComponent<PlayerMovement3D>();
         base.Start();
     }
 
     public override void EquipWeapon(GameObject weapon)
     {
         GameObject weapon3D = TranslateWeaponDimension(weapon);
+        if (weapon != weapon3D) _weapon2D = weapon; // store 2d version for the active game manager
         base.EquipWeapon(weapon3D);
     }
 
@@ -34,11 +36,44 @@ public class PlayerWeaponHandler3D : PlayerWeaponHandlerBase
 
     protected override void InitializeWeapon()
     {
-        throw new System.NotImplementedException();
+        if (_equippedWeapon != null) return;
+        
+        if (ActiveGameManager.instance != null && ActiveGameManager.instance.equippedWeapon != null)
+        {
+            GameObject temp = ActiveGameManager.instance.equippedWeapon;
+            if (!temp.TryGetComponent(out _weaponScript)) Debug.LogWarning("Equipped weapon missing IWeapon interface");
+            else
+            {
+                GameObject translation = TranslateWeaponDimension(temp);
+                if (!translation.TryGetComponent<IWeapon>(out var weapon)) Debug.LogWarning("Translation " + translation.name + " does not have an IWeapon script.");
+                EquipWeapon(temp);
+            }
+        }
+        if (ActiveGameManager.instance == null && transform.childCount > 0)
+        {
+            foreach (Transform t in transform)
+            {
+                if (t.TryGetComponent<IWeapon>(out var _))
+                {
+                    _equippedWeapon = t.gameObject;
+                    if (!_equippedWeapon.TryGetComponent(out _weaponScript)) Debug.LogWarning("Equipped weapon does not implement IWeapon interface");
+                    else _weaponScript.LinkNewMover(_playerMover);
+                    break;
+                }
+            }
+        }
     }
 
     protected override bool VerifyWeaponScriptSynced()
     {
         throw new System.NotImplementedException();
     }
+
+    public override GameObject GetEquippedWeaponObject()
+    {
+        if (_weapon2D != null) return _weapon2D;
+        return base.GetEquippedWeaponObject();
+    }
+
+    protected override void Link(IWeapon weapon) => weapon.LinkNewMover(_playerMover);
 }
