@@ -1,30 +1,33 @@
 using UnityEngine;
+using static UnityEngine.InputSystem.InputAction;
 
 [RequireComponent(typeof(Rigidbody), typeof(PlayerInput))]
 public class PlayerMovement3d : MonoBehaviour, IMover3D
 {
-    public float maxSpeed = 30f;
+    public float maxSpeed = 100f;
     public float playerSpeed = 10f;
-    public float acceleration = 10f;
+    public float acceleration = 8f;
     public float deceleration = 5f;
-    public float dashSpeed = 15f;
-    public float dashLength = 0.3f;
+    public float jumpForce = 50f;
+    public float dashForce = 15f;
     public float dashCooldownSeconds = 1.5f;
 
     private UnityEngine.Rigidbody _rb;
     private PlayerInput _inp;
     private Vector3 _currentVelocity = Vector3.zero;
+    private bool _canDash = true;
     private bool _canMove = true;
+    private float _dashTimeStamp;
+    private float _distanceToGround;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
         _inp = GetComponent<PlayerInput>();
-        Debug.Log(_rb.GetType());
-        Debug.Log(typeof(Rigidbody).GetProperty("velocity"));
-        Debug.Log(typeof(Rigidbody).GetProperty("velocity"));
-
+        _inp.dash.performed += Dash;
+        _inp.jump.performed += Jump;
+        _distanceToGround = GetComponent<Collider>().bounds.extents.y;
     }
 
     // Update is called once per frame
@@ -49,7 +52,8 @@ public class PlayerMovement3d : MonoBehaviour, IMover3D
             targetVelocity = movementDirection * playerSpeed;
         } else {
             Vector3 decelerationForce = -_currentVelocity.normalized * deceleration;
-            _rb.AddForce(decelerationForce, ForceMode.Acceleration);
+            Vector3 decelerationForceSwizzle = new(decelerationForce.x, 0, decelerationForce.z);
+            _rb.AddForce(decelerationForceSwizzle, ForceMode.Acceleration);
         }
 
         Vector3 velocityChange = targetVelocity - _currentVelocity; // _currentVelocity is originally set to zero and is updating every loop
@@ -65,6 +69,37 @@ public class PlayerMovement3d : MonoBehaviour, IMover3D
         }
 
         _currentVelocity = _rb.linearVelocity;
+    }
+
+    bool IsGrounded()
+    {
+        return Physics.Raycast(transform.position, -Vector3.up, _distanceToGround + 0.1f);
+    }
+
+    void Jump(CallbackContext ctx) => Jump();
+
+    public void Jump()
+    {
+        if (IsGrounded())
+        {
+            _rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        }
+    }
+
+    void Dash(CallbackContext ctx) => Dash();
+
+    public void Dash()
+    {
+        if (_canDash)
+        {
+            _rb.AddForce(GetCurrentDirection() * dashForce, ForceMode.Impulse);
+
+            _dashTimeStamp = Time.time;
+            _canDash = false;
+        } else if ((Time.time - _dashTimeStamp) > dashCooldownSeconds) 
+        {
+            _canDash = true;
+        }
     }
 
     public void FreezeActions() => _canMove = false;

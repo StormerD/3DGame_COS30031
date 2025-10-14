@@ -5,7 +5,7 @@ using static UnityEngine.InputSystem.InputAction;
 
 public class PlayerInput : MonoBehaviour
 {
-    public InputAction dash, interact, move, attack, secondary, pause;
+    public InputAction dash, interact, move, attack, secondary, pause, jump;
 
     private FrameInput _inputActions;
 
@@ -18,6 +18,7 @@ public class PlayerInput : MonoBehaviour
         attack = _inputActions.Player.Attack;
         secondary = _inputActions.Player.Ability2;
         pause = _inputActions.Player.Pause;
+        jump = _inputActions.Player.Jump;
     }
 
     void Start()
@@ -39,6 +40,7 @@ public class PlayerInput : MonoBehaviour
     void DisableMovement() {
         dash.Disable();
         move.Disable();
+        jump.Disable();
     }
     void DisableFighting() {
         attack.Disable();
@@ -55,6 +57,7 @@ public class PlayerInput : MonoBehaviour
     {
         dash.Enable();
         move.Enable();
+        jump.Enable();
     }
     void EnableFighting()
     {
