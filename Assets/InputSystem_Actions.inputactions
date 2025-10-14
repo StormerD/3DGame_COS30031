@@ -68,6 +68,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Jump",
+                    "type": "Button",
+                    "id": "dd9fda07-1832-4632-8a2a-d4c8891f9e4a",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -348,23 +357,23 @@
                 },
                 {
                     "name": "",
-                    "id": "015618ab-ecf0-4a14-95ed-8437c792f734",
-                    "path": "<Keyboard>/space",
+                    "id": "28a9d74a-309b-48de-90fd-4ca3299e400c",
+                    "path": "<Keyboard>/escape",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
-                    "action": "Dash",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Pause",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "28a9d74a-309b-48de-90fd-4ca3299e400c",
-                    "path": "<Keyboard>/escape",
+                    "id": "7530a684-4eb2-4a04-83b2-a5b208099f7b",
+                    "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
-                    "action": "Pause",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Jump",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
