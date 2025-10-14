@@ -34,8 +34,6 @@ public class PlayerWeaponHandler3D : PlayerWeaponHandlerBase
     private GameObject TranslateWeaponDimension(GameObject original)
     {
         string originalId = original.TryGetComponent(out WeaponBase originalWeaponScript) ? originalWeaponScript.GetWeaponData().weaponId : "";
-
-        Debug.Log("original's id: " + originalId);
         
         if (originalId == "") Debug.LogWarning("No original weapon ID found on " + original.name);
         else if (!_3dWeaponsById.ContainsKey(originalId)) Debug.LogWarning("No suitable 3D translation found for ID: " + originalId);
@@ -54,7 +52,6 @@ public class PlayerWeaponHandler3D : PlayerWeaponHandlerBase
             if (!temp.TryGetComponent(out _weaponScript)) Debug.LogWarning("Equipped weapon missing IWeapon interface");
             else
             {
-                Debug.Log(temp.name);
                 GameObject translation = TranslateWeaponDimension(temp);
                 if (!translation.TryGetComponent<WeaponBase>(out _)) Debug.LogWarning("Translation " + translation.name + " does not have an IWeapon script.");
                 EquipWeapon(temp);
