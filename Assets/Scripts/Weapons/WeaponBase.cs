@@ -57,7 +57,7 @@ public abstract class WeaponBase : MonoBehaviour
             OnBasicUsedNotReady?.Invoke();
             return;
         }
-        _attackingDirection = GetAttackDirection(clickScreenPosition);
+        _attackingDirection = GetAttackDirection(clickScreenPosition).normalized;
         _nextBasicAttackTime = Time.time + 1.0f / weaponData.basicAttacksPerSecond; // update next basic attack
         _basicReady = false;
         _doBasicAttack = true;
@@ -73,7 +73,7 @@ public abstract class WeaponBase : MonoBehaviour
             OnSecondaryUsedNotReady?.Invoke();
             return;
         }
-        _attackingDirection = GetAttackDirection(clickScreenPosition);
+        _attackingDirection = GetAttackDirection(clickScreenPosition).normalized;
         _nextSecondaryAttackTime = Time.time + weaponData.secondaryAttackCooldownSeconds;
         _secondaryReady = false;
         _doSecondaryAttack = true;

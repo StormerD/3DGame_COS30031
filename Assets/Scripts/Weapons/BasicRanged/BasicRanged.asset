@@ -15,5 +15,5 @@ MonoBehaviour:
   weaponId: ranged1
   basicAttacksPerSecond: 3
   basicAttackDamage: 1
-  secondaryAttackCooldownSeconds: 3
+  secondaryAttackCooldownSeconds: 1.8
   secondaryAttackDamage: 1

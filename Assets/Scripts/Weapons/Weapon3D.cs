@@ -5,6 +5,6 @@ public abstract class Weapon3D : WeaponBase
 {
     protected override Vector3 GetAttackDirection(Vector2 clickScreenPosition)
     {
-        throw new System.NotImplementedException();
+        return Vector3.ProjectOnPlane(Camera.main.transform.forward, Vector3.up).normalized;
     }
 }

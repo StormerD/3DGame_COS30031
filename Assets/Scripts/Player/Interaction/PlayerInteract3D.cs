@@ -107,13 +107,19 @@ public class PlayerInteract3D : PlayerInteractBase
 
     void OnTriggerEnter(Collider col)
     {
-        AddInteractable(col.gameObject);
-        SyncClosestInteractable();
+        if (col.gameObject.layer == LayerMask.NameToLayer("Interactable"))
+        {
+            AddInteractable(col.gameObject);
+            SyncClosestInteractable();
+        }
     }
     void OnTriggerExit(Collider col)
     {
-        RemoveInteractable(col.gameObject);
-        SyncClosestInteractable();
+        if (col.gameObject.layer == LayerMask.NameToLayer("Interactable"))
+        {
+            RemoveInteractable(col.gameObject);
+            SyncClosestInteractable();
+        }
     }
 
     #endregion

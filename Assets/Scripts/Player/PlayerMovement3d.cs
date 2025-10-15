@@ -1,18 +1,18 @@
 using UnityEngine;
 using static UnityEngine.InputSystem.InputAction;
 
-[RequireComponent(typeof(Rigidbody), typeof(PlayerInput))]
+[RequireComponent(typeof(Rigidbody), typeof(PlayerInput), typeof(Collider))]
 public class PlayerMovement3D : MonoBehaviour, IMover3D
 {
     public float maxSpeed = 100f;
     public float playerSpeed = 10f;
     public float acceleration = 8f;
     public float deceleration = 5f;
-    public float jumpForce = 50f;
+    public float jumpForce = 10f;
     public float dashForce = 15f;
     public float dashCooldownSeconds = 1.5f;
 
-    private UnityEngine.Rigidbody _rb;
+    private Rigidbody _rb;
     private PlayerInput _inp;
     private Vector3 _currentVelocity = Vector3.zero;
     private bool _canDash = true;
@@ -36,7 +36,6 @@ public class PlayerMovement3D : MonoBehaviour, IMover3D
         if (!_canMove) return;
 
         Vector2 inp = _inp.move.ReadValue<Vector2>(); 
-        //Vector3 inpSwizzle = new(inp.x, _rb.velocity.y, inp.y);
         Vector3 targetVelocity = Vector3.zero;
 
         if (inp != Vector2.zero)
@@ -58,10 +57,11 @@ public class PlayerMovement3D : MonoBehaviour, IMover3D
 
         Vector3 velocityChange = targetVelocity - _currentVelocity; // _currentVelocity is originally set to zero and is updating every loop
         Vector3 velocityForce = velocityChange * acceleration;
+        velocityForce.y = 0;
 
         _rb.AddForce(velocityForce, ForceMode.Acceleration);
 
-        Vector3 horizontalVelocity = new Vector3(_rb.linearVelocity.x, 0, _rb.linearVelocity.z);
+        Vector3 horizontalVelocity = new(_rb.linearVelocity.x, 0, _rb.linearVelocity.z);
         if (horizontalVelocity.magnitude > maxSpeed)
         {
             horizontalVelocity = horizontalVelocity.normalized * maxSpeed;

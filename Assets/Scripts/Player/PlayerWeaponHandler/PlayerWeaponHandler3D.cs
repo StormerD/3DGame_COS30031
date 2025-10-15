@@ -45,7 +45,7 @@ public class PlayerWeaponHandler3D : PlayerWeaponHandlerBase
     protected override void InitializeWeapon()
     {
         if (_equippedWeapon != null) return;
-        
+
         if (ActiveGameManager.instance != null && ActiveGameManager.instance.equippedWeapon != null)
         {
             GameObject temp = ActiveGameManager.instance.equippedWeapon;
@@ -59,21 +59,16 @@ public class PlayerWeaponHandler3D : PlayerWeaponHandlerBase
         }
         if (ActiveGameManager.instance == null && transform.childCount > 0)
         {
-            foreach (Transform t in transform)
+            WeaponBase test = GetComponentInChildren<WeaponBase>();
+            if (test != null)
             {
-                if (t.TryGetComponent<WeaponBase>(out var _))
-                {
-                    _equippedWeapon = t.gameObject;
-                    if (!_equippedWeapon.TryGetComponent(out _weaponScript)) Debug.LogWarning("Equipped weapon does not implement IWeapon interface");
-                    break;
-                }
+                _equippedWeapon = test.gameObject;
+                _weaponScript = test;
+            } else
+            {
+                Debug.Log("Could not find any weapon on player");
             }
         }
-    }
-
-    protected override bool VerifyWeaponScriptSynced()
-    {
-        throw new System.NotImplementedException();
     }
 
     public override GameObject GetEquippedWeaponObject()
