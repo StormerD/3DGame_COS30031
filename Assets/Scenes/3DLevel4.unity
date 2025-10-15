@@ -860,7 +860,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0.253, y: -0.717, z: 0.249}
 --- !u!114 &813214157
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1240,7 +1240,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bf7e17252b934063a8fac8a81e8fbf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  playerSpeed: 5
+  maxSpeed: 30
+  playerSpeed: 10
+  acceleration: 5
+  deceleration: 5
+  jumpForce: 15
+  dashForce: 15
+  dashCooldownSeconds: 1.5
 --- !u!136 &1551612031
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1398,6 +1404,15 @@ MonoBehaviour:
     m_Type: 0
     m_ExpectedControlType: 
     m_Id: 69afdfd6-f26a-4ff0-81f4-ca2016e3c1f8
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  jump:
+    m_Name: Jump
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 6572a675-e3ba-4165-a0e3-b3a515c60a17
     m_Processors: 
     m_Interactions: 
     m_SingletonActionBindings: []
