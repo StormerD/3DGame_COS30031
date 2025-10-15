@@ -27,6 +27,7 @@ public abstract class WeaponBase : MonoBehaviour
     protected bool _doSecondaryAttack = false;
 
     protected Vector3 _attackingDirection = Vector2.one;
+    protected bool _subclassHandlesBasicSounds = false;
 
     void Update()
     {
@@ -62,7 +63,7 @@ public abstract class WeaponBase : MonoBehaviour
         _basicReady = false;
         _doBasicAttack = true;
         OnBasicUsedReady?.Invoke(_attackingDirection);
-        AudioManager.Instance.PlayAudioClip(basicAttack);
+        if (!_subclassHandlesBasicSounds) AudioManager.Instance.PlayAudioClip(basicAttack);
     }
 
     public void Secondary(Vector2 clickScreenPosition)

@@ -50,9 +50,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BasicRanged3D
   weaponData: {fileID: 11400000, guid: 99989bed371fa45668025a71bc70c33b, type: 2}
-  basicAttack: {fileID: 0}
-  basicNotReady: {fileID: 0}
-  secondaryAttack: {fileID: 8300000, guid: fa8b7fff9f26d4e5085f4d251c2c0dba, type: 3}
+  basicAttack: {fileID: 8300000, guid: 72353cb8e0a14448fadd8b3f5d0f55a4, type: 3}
+  basicNotReady: {fileID: 8300000, guid: aef9e7664a194433c875e73471654283, type: 3}
+  secondaryAttack: {fileID: 8300000, guid: 696b7fc8673974952b2fe3ecdfe3aac3, type: 3}
   secondaryNotReady: {fileID: 0}
   visuals: {fileID: 2244111701209436324}
   projectilePrefab: {fileID: 6413784911227082996, guid: 27477d2de4ec84f25b0e94e523a8d8c5, type: 3}
