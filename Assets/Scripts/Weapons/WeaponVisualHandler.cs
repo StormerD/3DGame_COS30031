@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Animator), typeof(IWeapon))]
+[RequireComponent(typeof(Animator), typeof(WeaponBase))]
 public class WeaponVisuals : MonoBehaviour
 {
     public GameObject visualWrapper;
@@ -9,7 +9,7 @@ public class WeaponVisuals : MonoBehaviour
     void Start()
     {
         _animator = GetComponent<Animator>();
-        IWeapon weaponScript = GetComponent<IWeapon>();
+        WeaponBase weaponScript = GetComponent<WeaponBase>();
         weaponScript.OnBasicUsedReady += OnAttack;
         weaponScript.OnSecondaryUsedReady += OnSecondary;
     }

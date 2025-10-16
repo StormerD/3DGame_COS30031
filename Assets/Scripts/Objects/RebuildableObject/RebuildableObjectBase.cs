@@ -41,7 +41,7 @@ public class RebuildableObjectBase : MonoBehaviour, IInteractable
     // Game functions
     void Awake()
     {
-        if (!componentPrefab.TryGetComponent<IInteractable>(out _))
+        if (componentPrefab != null && !componentPrefab.TryGetComponent<IInteractable>(out _))
         {
             Debug.LogError("Rebuildable object component prefab requires a Pickupable script.");
         }

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BasicMelee
   m_EditorClassIdentifier: 
   weaponId: melee1
-  basicAttacksPerSecond: 3
+  basicAttacksPerSecond: 2.8
   basicAttackDamage: 1
   secondaryAttackCooldownSeconds: 1.5
   secondaryAttackDamage: 5
