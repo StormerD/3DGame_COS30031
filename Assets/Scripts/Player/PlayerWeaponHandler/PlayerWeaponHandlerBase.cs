@@ -42,6 +42,7 @@ public abstract class PlayerWeaponHandlerBase : MonoBehaviour, IFighter
             return;
         }
         _equippedWeapon = Instantiate(to, weaponInstantiationTransform);
+        _weaponScript = _equippedWeapon.GetComponent<WeaponBase>();
     }
     public string GetEquippedWeapon() => _weaponScript?.GetWeaponData().weaponId;
     public virtual GameObject GetEquippedWeaponObject() => _equippedWeapon;
