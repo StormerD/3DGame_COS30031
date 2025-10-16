@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 
@@ -22,13 +23,13 @@ public class LevelSceneChanger : MonoBehaviour
     {
         if (sceneEntry == null) Debug.LogError(transform.name + " missing SceneLoaderTriggerHandler ref.");
         if (visuals == null) Debug.LogError(transform.name + " Missing visuals ref");
-        OnUnlockedChanged += sceneEntry.ChangeTrigger;
-        OnUnlockedChanged += visuals.SetUnlocked;
-        sceneEntry.OnEnterLoadZone += Load;
     }
 
     void Start()
     {
+        OnUnlockedChanged += sceneEntry.ChangeTrigger;
+        OnUnlockedChanged += visuals.SetUnlocked;
+        sceneEntry.OnEnterLoadZone += Load;
         if (LevelManager.instance != null)
         {
             LevelManager.instance.OnForgeHasBeenOpened += ForgeHasBeenOpened;

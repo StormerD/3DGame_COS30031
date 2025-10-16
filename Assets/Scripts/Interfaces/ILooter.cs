@@ -17,7 +17,8 @@ public interface ILooter : ICurrencyHoarder
         UseCurrency(CurrencyType.MYTHIC, price.mythic);
         return true;
     }
-    public int GetCurrency(CurrencyType type);
+    int GetCurrency(CurrencyType type);
+    PlayerCurrency GetSaveableCurrency();
 }
 
 public enum CurrencyType

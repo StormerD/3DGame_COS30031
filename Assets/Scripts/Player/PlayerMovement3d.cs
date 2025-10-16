@@ -2,7 +2,7 @@ using UnityEngine;
 using static UnityEngine.InputSystem.InputAction;
 
 [RequireComponent(typeof(Rigidbody), typeof(PlayerInput))]
-public class PlayerMovement3d : MonoBehaviour, IMover3D
+public class PlayerMovement3D : MonoBehaviour, IMover3D
 {
     public float maxSpeed = 100f;
     public float playerSpeed = 10f;

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class BasicMelee : WeaponBase
+public class BasicMelee : Weapon2D
 {
 
     [Header("Attack configuration")]

@@ -17,13 +17,10 @@ public class ForgeManager : MonoBehaviour
     [Tooltip("Ensure these GameObjects have an IWeapon script attached, with WeaponData correctly set in the IWeapon script")]
     public List<GameObject> availableWeapons;
     public GameObject player;
-    [Tooltip("These should be UI elements (like images!) that have an attached ForgeItemButtonScript.")]
-    public List<GameObject> forgeWeaponListingPrefabs;
     [Tooltip("This should be the reference to the entire ForgeMenu canvas object that will be turned on / off.")]
     public GameObject forgeMenu;
     [Tooltip("This should be the actual scrollbox (part of the forge menu) where the forge purchase listings will go.")]
     public RectTransform forgeMenuScrollbox;
-    public ObjectiveManager objectiveManager;
 
     public event Action<string, bool> OnListingPurchaseStateChange; // <string> is the weaponId purchased, bool is true if purchased, false if not
     public event Action<string, bool> OnListingUnlockedStateChange;
@@ -37,17 +34,16 @@ public class ForgeManager : MonoBehaviour
     public bool IsInitializing => _isInitializing;
 
 
-
     void Awake()
     {
         if (instance != null && instance != this) Destroy(gameObject);
         else instance = this;
         foreach (GameObject w in availableWeapons)
         {
-            string weaponId = w.GetComponent<IWeapon>().GetWeaponData().weaponId;
+            string weaponId = w.GetComponent<WeaponBase>().GetWeaponData().weaponId;
             if (!_weaponsById.ContainsKey(weaponId)) _weaponsById.Add(weaponId, w);
         }
-        if (!player.TryGetComponent<ILooter>(out _playerLooter)) Debug.LogWarning("ForgeManager player needs an ILooter component to purchase weapons!");
+        if (!player.TryGetComponent(out _playerLooter)) Debug.LogWarning("ForgeManager player needs an ILooter component to purchase weapons!");
         if (!forgeMenu.TryGetComponent(out _forgeMenuAnimator)) Debug.LogWarning("ForgeMenu missing animator.");
     }
 
@@ -59,9 +55,7 @@ public class ForgeManager : MonoBehaviour
 
         for (int i = 0; i < forgeMenuScrollbox.childCount; i++)
         {
-            if (!forgeMenuScrollbox.GetChild(i).TryGetComponent(out ForgeItemListing listing))
-                Debug.LogWarning("Forge content box child " + i + " is missing ForgeItemListing.");
-            else
+            if (forgeMenuScrollbox.GetChild(i).TryGetComponent(out ForgeItemListing listing))
             {
                 listing.OnEquipWeapon += EquipItem;
                 listing.OnTryPurchaseWeapon += PurchaseItem;
@@ -72,18 +66,13 @@ public class ForgeManager : MonoBehaviour
     public void OpenForgeMenu()
     {
         forgeMenu.SetActive(true);
-
-        // Hide the objective arrow while forge menu is open
-        if (objectiveManager != null && objectiveManager.arrow != null)
-            objectiveManager.arrow.gameObject.SetActive(false);
-        _forgeMenuAnimator.SetTrigger("OpenMenu");}
+        _forgeMenuAnimator.SetTrigger("OpenMenu");
+    }
 
 
     public void CloseForgeMenu()
     {
         _forgeMenuAnimator.SetTrigger("CloseMenu");
-        if (objectiveManager != null)
-        objectiveManager.SetNextObjective();
     }
 
     public GameObject GetWeaponByID(string id)
@@ -112,14 +101,12 @@ public class ForgeManager : MonoBehaviour
             OnListingPurchaseStateChange?.Invoke(id, true);
             EquipItem(id);
             AudioManager.Instance.PlayPurchaseSuccess();
-
         }
         else
-    {
-        Debug.LogWarning("Not enough currency to buy " + id);
-        AudioManager.Instance.PlayPurchaseError();
-    }
-
+        {
+            Debug.LogWarning("Not enough currency to buy " + id);
+            AudioManager.Instance.PlayPurchaseError();
+        }
     }
     public void EquipItem(string id)
     {

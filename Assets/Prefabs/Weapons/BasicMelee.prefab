@@ -142,10 +142,10 @@ MonoBehaviour:
   basicNotReady: {fileID: 0}
   secondaryAttack: {fileID: 0}
   secondaryNotReady: {fileID: 0}
-  basicAttackRange: 2
+  basicAttackRange: 3
   attackWidthDegrees: 20
   basicAttackRaycastAmount: 5
-  secondaryAttackRadius: 1.5
+  secondaryAttackRadius: 2
 --- !u!95 &7969432672301319179
 Animator:
   serializedVersion: 7

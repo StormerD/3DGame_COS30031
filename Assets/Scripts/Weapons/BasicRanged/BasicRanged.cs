@@ -1,7 +1,6 @@
-using System;
 using UnityEngine;
 
-public class BasicRanged : WeaponBase
+public class BasicRanged : Weapon2D
 {
     [Header("Attack configuration")]
     public GameObject projectilePrefab;

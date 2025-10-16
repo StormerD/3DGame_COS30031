@@ -1,6 +1,10 @@
+#pragma warning disable CS0162
+
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 
 /// <summary>
 /// This manager is based on the Saving system provided in the modules, and uses a lot of the code from that. 
@@ -23,10 +27,12 @@ public class SaveManager : MonoBehaviour
 	public int slotIndex = 0;     // set in Inspector to test different slots
 	public GameObject player;
 
-	private PlayerLooter _playerLooter;
-	private PlayerWeaponHandler _playerWeaponHandler;
+	private ILooter _playerLooter;
+	private IFighter _playerWeaponHandler;
 	private SaveData _currentSaveData;
 	private SlotTimesData _slotTimes;
+
+	private const bool VERBOSE = false;
 
 	#region Unity Functions
 	void Awake()
@@ -39,12 +45,12 @@ public class SaveManager : MonoBehaviour
 		{
 			instance = this;
 		}
-		if (!player.TryGetComponent<PlayerLooter>(out _playerLooter)) Debug.LogWarning("Save manager needs Player to have PlayerLooter!");
-		if (!player.TryGetComponent<PlayerWeaponHandler>(out _playerWeaponHandler)) Debug.LogWarning("Save manager needs Player to have PlayerWeaponHandler!");
 	}
 
 	void Start()
 	{
+		if (!player.TryGetComponent(out _playerLooter)) Debug.LogWarning("Save manager needs Player to have PlayerLooter!");
+		if (!player.TryGetComponent(out _playerWeaponHandler)) Debug.LogWarning("Save manager needs Player to have PlayerWeaponHandler!");
 		// If the game is ongoing and we are re-entering the main scene, load from the active scene
 		if (ActiveGameManager.instance != null && ActiveGameManager.instance.gameHasStarted)
 		{
@@ -89,7 +95,7 @@ public class SaveManager : MonoBehaviour
 		};
 		SaveSystem.SaveSlotTimes(timeData);
 		_slotTimes = timeData;
-		Debug.Log("Updated slot saved times");
+		if (VERBOSE) Debug.Log("Updated slot saved times");
 		OnSlotTimesUpdated?.Invoke();
 	}
 	#endregion
@@ -99,37 +105,33 @@ public class SaveManager : MonoBehaviour
 	public void LoadFromSlot(int which)
 	{
 		slotIndex = which;
+		if (VERBOSE) Debug.Log("Loading slot: " + which);
 		DoLoad();
 	}
 	void DoLoad()
 	{
 		if (slotIndex == 0) return;
 
-		Debug.Log("LOADING FROM " + slotIndex);
-
-		if (SaveSystem.TryLoad(slotIndex, out _currentSaveData))
-		{
-			Debug.Log($"Loaded slot {slotIndex}");
-		}
+		if (SaveSystem.TryLoad(slotIndex, out _currentSaveData)) Debug.Log($"Loaded slot {slotIndex}");
 		else
 		{
 			// Set to default data (new game)
-			Debug.Log("Doing default load data.");
+			Debug.Log("Doing default load data for slot " + slotIndex);
 			_currentSaveData = new SaveData
 			{
 				slotIndex = slotIndex,
 				furthestUnlockedLevel = 1,
-				currency = new PlayerCurrency{ common = 0, rare = 0, mythic = 0 },
+				currency = new PlayerCurrency { common = 0, rare = 0, mythic = 0 },
 				equippedWeapon = "",
 				weaponsPurchased = ForgeManager.instance != null ? ForgeManager.instance.GetWeaponPurchaseData() : new()
 			};
 		}
 		ActiveGameManager.instance.saveSlot = slotIndex;
-		OnSaveDataChanged?.Invoke();
+		StartCoroutine(DelayedEmit(OnSaveDataChanged, 0.2f));
 	}
 	private void LoadSlotTimes()
 	{
-		if (SaveSystem.TryLoadSlotTimes(out _slotTimes)) { Debug.Log($"Loaded timeslots!"); }
+		if (SaveSystem.TryLoadSlotTimes(out _slotTimes)) { if (VERBOSE) Debug.Log($"Loaded timeslots!"); }
 		else
 		{
 			_slotTimes = new SlotTimesData
@@ -142,22 +144,28 @@ public class SaveManager : MonoBehaviour
 	}
 	private bool ConfirmDataLoaded()
 	{
-		Debug.Log("Confirming data from slot " + slotIndex + " is loaded.");
-		Debug.Log("Before: " + (_currentSaveData != null ? _currentSaveData.equippedWeapon : "null"));
-		if (_currentSaveData == null) DoLoad();
-		Debug.Log("After: " + (_currentSaveData != null ? _currentSaveData.equippedWeapon : "null"));
+		if (slotIndex < 1 || slotIndex > 3) { if (VERBOSE) Debug.Log("Loading slot not set."); return false; }
+		if (VERBOSE)
+		{
+			Debug.Log("Confirming data from slot " + slotIndex + " is loaded.");
+			Debug.Log("Before: " + (_currentSaveData != null ? _currentSaveData.equippedWeapon : "null"));
+		}
+		if (_currentSaveData == null) { Debug.Log("Loading!"); DoLoad(); }
+
+		if (VERBOSE) Debug.Log("After: " + (_currentSaveData != null ? _currentSaveData.equippedWeapon : "null"));
+
 		return _currentSaveData != null; // possible that loading failed 
 	}
 	private bool ConfirmSlotTimesLoaded()
 	{
 		LoadSlotTimes();
-		return _slotTimes != null; 
+		return _slotTimes != null;
 	}
 
 	public void SyncSlotDataWithoutEmittingEvents(int which)
 	{
-		if (SaveSystem.TryLoad(which, out _currentSaveData)) { Debug.Log($"Loaded slot {which}");  }
-		else { Debug.Log("Failed to sync."); }
+		if (SaveSystem.TryLoad(which, out _currentSaveData) && VERBOSE) { Debug.Log($"Loaded slot {which}"); }
+		else if (VERBOSE) { Debug.Log("Failed to sync."); }
 	}
 
 	#endregion
@@ -171,7 +179,7 @@ public class SaveManager : MonoBehaviour
 	public DateTime? GetSlotLastSavedTime(int whichSlot)
 	{
 		if (!ConfirmSlotTimesLoaded()) return null;
-		if (_slotTimes == null)
+		if (_slotTimes == null && VERBOSE)
 		{
 			Debug.Log("Somehow, _slotTimes is null after ConfirmSlotTimesLoaded.");
 			return null;
@@ -184,5 +192,15 @@ public class SaveManager : MonoBehaviour
 			_ => null
 		};
 	}
+	#endregion
+
+	#region coroutines
+
+	IEnumerator DelayedEmit(Action action, float delay)
+	{
+		yield return new WaitForSeconds(delay);
+		action?.Invoke();
+	}
+
 	#endregion
 }

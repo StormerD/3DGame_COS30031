@@ -51,22 +51,21 @@ public class ForgeItemListing : MonoBehaviour, IPointerClickHandler, IPointerEnt
     }
 
     private void SomeWeaponPurchased(string whichId, bool wasPurchased)
-{
-    if (whichId != weaponListing.weaponId) return;
-    weaponListing.isPurchased = wasPurchased;
-
-    // ✅ Prevent sound when forge is initializing/loading
-    if (ForgeManager.instance != null && !ForgeManager.instance.IsInitializing)
     {
-        if (wasPurchased)
-            AudioManager.Instance.PlayPurchaseSuccess();
-        else
-            AudioManager.Instance.PlayPurchaseError();
+        if (whichId != weaponListing.weaponId) return;
+        weaponListing.isPurchased = wasPurchased;
+
+        // ✅ Prevent sound when forge is initializing/loading
+        if (ForgeManager.instance != null && !ForgeManager.instance.IsInitializing)
+        {
+            if (wasPurchased)
+                AudioManager.Instance.PlayPurchaseSuccess();
+            else
+                AudioManager.Instance.PlayPurchaseError();
+        }
+
+        EmitWeaponStateChanged();
     }
-
-    EmitWeaponStateChanged();
-}
-
 
     private void EmitWeaponStateChanged() => OnWeaponStateChanged?.Invoke(weaponListing.isPurchased, weaponListing.isUnlocked, _isEquipped);
 
@@ -80,7 +79,6 @@ public class ForgeItemListing : MonoBehaviour, IPointerClickHandler, IPointerEnt
             // Play error sound
             AudioManager.Instance.PlayPurchaseError();      // ✅ fail sound
         }
-            
     }
 
     public void OnPointerEnter(PointerEventData ped) => OnHoverChanged?.Invoke(true);
