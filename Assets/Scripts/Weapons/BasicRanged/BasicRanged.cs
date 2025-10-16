@@ -9,12 +9,19 @@ public class BasicRanged : Weapon2D
     public float secondaryAttackDistance; // secondary attack is a beam
     public float secondaryAttackWidth;
     public float secondaryAttackKnockbackForce = 5.0f;
+    public int maxSecondaryHits = 20;
 
-    void Start()
+    private Collider2D[] _secondaryHits;
+    private ContactFilter2D _secondaryContactFilter;
+
+    void Awake()
     {
         if (projectileSpawnPoint == null) Debug.LogWarning("set projectile spawn!");
         if (projectilePrefab == null) Debug.LogWarning("Set projectile prefab!");
         if (!projectilePrefab.TryGetComponent<IProjectile>(out _)) Debug.LogWarning("Projectile prefab needs an iprojectile script");
+        _secondaryHits = new Collider2D[maxSecondaryHits];
+        _secondaryContactFilter = new();
+        _secondaryContactFilter.SetLayerMask(LayerMask.GetMask("Enemy"));
     }
 
     protected override void AttackPhysics()
@@ -32,10 +39,11 @@ public class BasicRanged : Weapon2D
     {
         _doSecondaryAttack = false;
         Vector3 normalizedDir = _attackingDirection.normalized;
+        int hits = Physics2D.OverlapBox(transform.position + normalizedDir * (secondaryAttackDistance / 2), new Vector2(secondaryAttackDistance, secondaryAttackWidth), Mathf.Atan2(normalizedDir.y, normalizedDir.x) * Mathf.Rad2Deg, _secondaryContactFilter, _secondaryHits);
 
-        foreach (var c in Physics2D.OverlapBoxAll(transform.position + normalizedDir * (secondaryAttackDistance / 2), new Vector2(secondaryAttackDistance, secondaryAttackWidth), Mathf.Atan2(normalizedDir.y, normalizedDir.x) * Mathf.Rad2Deg, LayerMask.GetMask("Enemy")))
+        for(int i = 0; i < hits; i++)
         {
-            if (c.TryGetComponent<IHealth>(out var h))
+            if (_secondaryHits[i].TryGetComponent<IHealth>(out var h))
             {
                 h.TakeDamage(weaponData.secondaryAttackDamage);
             }
