@@ -23,7 +23,9 @@ public class BasicRanged : Weapon2D
         _doBasicAttack = false;
 
         projectileSpawnPoint.localPosition = _attackingDirection.normalized;
-        Instantiate(projectilePrefab, projectileSpawnPoint.position, Quaternion.LookRotation(Vector3.forward, _attackingDirection));
+        BasicRangedProjectile proj = Instantiate(projectilePrefab, projectileSpawnPoint.position, Quaternion.LookRotation(Vector3.forward, _attackingDirection)).GetComponent<BasicRangedProjectile>();
+        proj.SetDamage(weaponData.basicAttackDamage);
+        proj.SetSpeed(basicAttackProjectileSpeed);
     }
 
     protected override void SecondaryPhysics()

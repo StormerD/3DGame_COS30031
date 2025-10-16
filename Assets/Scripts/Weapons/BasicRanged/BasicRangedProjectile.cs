@@ -12,10 +12,14 @@ public class BasicRangedProjectile : MonoBehaviour, IProjectile
 
     private int numHitsTaken = 0;
 
+    void Awake()
+    {
+        _rb = GetComponent<Rigidbody2D>();
+    }
+
     void Start()
     {
         _spawnTime = Time.time;
-        _rb = GetComponent<Rigidbody2D>();
         _rb.linearVelocity = transform.up * speed;
     }
 

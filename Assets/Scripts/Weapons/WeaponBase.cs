@@ -27,6 +27,7 @@ public abstract class WeaponBase : MonoBehaviour
     protected bool _doSecondaryAttack = false;
 
     protected Vector3 _attackingDirection = Vector2.one;
+    protected bool _subclassHandlesBasicSounds = false;
 
     void Update()
     {
@@ -57,12 +58,12 @@ public abstract class WeaponBase : MonoBehaviour
             OnBasicUsedNotReady?.Invoke();
             return;
         }
-        _attackingDirection = GetAttackDirection(clickScreenPosition);
+        _attackingDirection = GetAttackDirection(clickScreenPosition).normalized;
         _nextBasicAttackTime = Time.time + 1.0f / weaponData.basicAttacksPerSecond; // update next basic attack
         _basicReady = false;
         _doBasicAttack = true;
         OnBasicUsedReady?.Invoke(_attackingDirection);
-        AudioManager.Instance.PlayAudioClip(basicAttack);
+        if (!_subclassHandlesBasicSounds) AudioManager.Instance.PlayAudioClip(basicAttack);
     }
 
     public void Secondary(Vector2 clickScreenPosition)
@@ -73,7 +74,7 @@ public abstract class WeaponBase : MonoBehaviour
             OnSecondaryUsedNotReady?.Invoke();
             return;
         }
-        _attackingDirection = GetAttackDirection(clickScreenPosition);
+        _attackingDirection = GetAttackDirection(clickScreenPosition).normalized;
         _nextSecondaryAttackTime = Time.time + weaponData.secondaryAttackCooldownSeconds;
         _secondaryReady = false;
         _doSecondaryAttack = true;
