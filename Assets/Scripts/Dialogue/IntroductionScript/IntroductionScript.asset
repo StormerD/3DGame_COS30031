@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: IntroductionScript
   m_EditorClassIdentifier: Assembly-CSharp::DialogueScene
   scripts:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: d8a76e8f3f0524a458ffb77450ecb207, type: 2}
+  - {fileID: 11400000, guid: 0911a3113e3eb46ea9982f62fd12bc7e, type: 2}
+  - {fileID: 11400000, guid: d1b6ee913b9b2417782a2eca8b1767d8, type: 2}
