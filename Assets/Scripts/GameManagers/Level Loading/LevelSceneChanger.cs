@@ -1,17 +1,14 @@
 using System;
-using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelSceneChanger : MonoBehaviour
 {
     public string sceneToLoad;
     public int levelNum = -1; // If -1, will always be unlocked
     public float minimumLoadingTime = 1; // in case we want to do transitions. if we don't then just set this to 0
-    public event Action LoadingScene; // to subscribe to for transitions or other things we may need to do
     public event Action<bool> OnUnlockedChanged;
-    public SceneLoaderTriggerHandler sceneEntry;
-    public LevelLockedUI visuals;
     [SerializeField] TMP_Text lockedText;
 
     private bool _levelUnlocked = true;
@@ -21,15 +18,14 @@ public class LevelSceneChanger : MonoBehaviour
 
     void Awake()
     {
-        if (sceneEntry == null) Debug.LogError(transform.name + " missing SceneLoaderTriggerHandler ref.");
-        if (visuals == null) Debug.LogError(transform.name + " Missing visuals ref");
+        if (GetComponentInChildren<SceneLoaderTriggerHandler>() == null)
+        {
+            Debug.LogError($"{gameObject.name} LevelChanger requires a SceneLoaderTriggerHandler in children, otherwise Load() will not be invoked");
+        }
     }
 
     void Start()
     {
-        OnUnlockedChanged += sceneEntry.ChangeTrigger;
-        OnUnlockedChanged += visuals.SetUnlocked;
-        sceneEntry.OnEnterLoadZone += Load;
         if (LevelManager.instance != null)
         {
             LevelManager.instance.OnForgeHasBeenOpened += ForgeHasBeenOpened;
@@ -42,7 +38,6 @@ public class LevelSceneChanger : MonoBehaviour
         if (_levelUnlocked && _canLoad)
         {
             _canLoad = false; // prevent multiple loads
-            LoadingScene?.Invoke();
             LevelManager.instance.LoadLevel(sceneToLoad, minimumLoadingTime, levelNum);
         }
     }
