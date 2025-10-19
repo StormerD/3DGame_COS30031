@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -10,8 +9,6 @@ using UnityEngine.SceneManagement;
 /// the saving system, which i considered, but i think it's better to have the level loaders
 /// as fully separate from the save system as possible. having a central manager instead of
 /// multiple subscriptions to OnSaveDataChanged is better imo.
-/// downside is that you do have to set all the level transition spots directly in this editor. 
-/// if we had a lot of levels this approach wouldn't be good b/c of that
 /// </summary>
 public class LevelManager : MonoBehaviour
 {
@@ -50,7 +47,8 @@ public class LevelManager : MonoBehaviour
     {
         // if going to a scene other than the main menu, save (this prevents everything from breaking.)
         if (levelNum != -1) SaveManager.instance.Save(ActiveGameManager.instance.saveSlot);
-        StartCoroutine(AsyncLoader(which, minLoadTime, levelNum));
+        if (SceneUtility.GetBuildIndexByScenePath(which) != -1) StartCoroutine(AsyncLoader(which, minLoadTime, levelNum));
+        else Debug.LogWarning("Tried to load unknown scene: " + which);
     }
 
     IEnumerator AsyncLoader(string loader, float loadTime, int levelNum)

@@ -1,20 +1,25 @@
 using System;
 using UnityEngine;
 
-[RequireComponent(typeof(Collider2D))]
-public class SceneLoaderTriggerHandler : MonoBehaviour
+public abstract class SceneLoaderTriggerHandler : MonoBehaviour
 {
     public event Action OnEnterLoadZone;
-    void OnTriggerEnter2D(Collider2D col)
+
+    void Awake()
     {
-        if (col.gameObject.CompareTag("Player")) OnEnterLoadZone?.Invoke();
+        LevelSceneChanger controller = GetComponentInParent<LevelSceneChanger>();
+        if (controller == null) Debug.LogWarning($"{gameObject.name} unable to find LevelSceneChanger in parent.");
+        else
+        {
+            controller.OnUnlockedChanged += ChangeTrigger;
+            OnEnterLoadZone += controller.Load;
+        }
     }
 
-    public void ChangeTrigger(bool unlocked)
+    protected void WhenTriggerEntered(GameObject enter)
     {
-        Collider2D col = GetComponent<Collider2D>();
-        // If the level is not unlocked, this should be a solid collider, to prevent them from walking further.
-        // If it is unlocked, make it a trigger! That way they can walk into it and let the scene load while they're still moving.
-        col.isTrigger = unlocked;
+        if (enter.CompareTag("Player")) OnEnterLoadZone?.Invoke();
     }
+
+    public abstract void ChangeTrigger(bool unlocked);
 }

@@ -31,6 +31,6 @@ public class PlayerWeaponHandler2D : PlayerWeaponHandlerBase
     public override void EquipWeapon(GameObject to)
     {
         base.EquipWeapon(to);
-        if (!_equippedWeapon.TryGetComponent(out _weaponScript)) Debug.LogWarning("Newly equipped weapon does not implement IWeapon interface");
+        if (to != null && !_equippedWeapon.TryGetComponent(out _weaponScript)) Debug.LogWarning("Newly equipped weapon does not implement IWeapon interface");
     }
 }

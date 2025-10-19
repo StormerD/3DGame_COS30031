@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5129351702560377092}
   - component: {fileID: 7712163894817585629}
-  - component: {fileID: 2832969117296752544}
+  - component: {fileID: 8567501808856750227}
   m_Layer: 0
   m_Name: SceneEntryCollider
   m_TagString: Untagged
@@ -79,7 +79,7 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 5.232178}
   m_EdgeRadius: 0
---- !u!114 &2832969117296752544
+--- !u!114 &8567501808856750227
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -88,9 +88,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 103788817024820531}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7da692afaa9704f78a56289f4a09e66a, type: 3}
+  m_Script: {fileID: 11500000, guid: 37a56b4dd8208492a9d63f97a9178310, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier: Assembly-CSharp::SceneLoaderTriggerHandler2D
 --- !u!1 &4884085562345361300
 GameObject:
   m_ObjectHideFlags: 0
@@ -207,7 +207,7 @@ GameObject:
   - component: {fileID: 8061044414728876894}
   - component: {fileID: 1140703786573709350}
   m_Layer: 0
-  m_Name: HomeLoader
+  m_Name: 2DHomeLoader
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -245,8 +245,6 @@ MonoBehaviour:
   sceneToLoad: MainScene
   levelNum: -1
   minimumLoadingTime: 1
-  sceneEntry: {fileID: 2832969117296752544}
-  visuals: {fileID: 8113001964974265572}
   lockedText: {fileID: 0}
 --- !u!1 &7407373972894958756
 GameObject:
