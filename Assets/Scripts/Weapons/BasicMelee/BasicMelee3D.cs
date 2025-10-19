@@ -2,38 +2,50 @@ using UnityEngine;
 
 public class BasicMelee3D : Weapon3D
 {
-    [Header("Attack configuration")]
+    [Header("basic attack configuration")]
     public float basicAttackRange = 2.0f;
     public float attackWidthDegrees = 45f;
-    public int basicAttackRaycastAmount = 5; // attack is done in a cone shape over +- attackWidthDegrees, will be split into this many raycasts
+    public int basicAttackRaycastAmount = 3; // attack is done in a cone shape over +- attackWidthDegrees, will be split into this many raycasts
+    public float sphereCastRadius = 0.2f;
+    [Header("Secondary attack config")]
     public float secondaryAttackRadius = 3.0f; // secondary attack hits all enemies in a circle of this radius
+    public int maxSecondaryHits = 100;
+
+    private Collider[] _hitResult;
+    private int _basicMask;
+    private int _secondaryMask;
+
+
+    void Awake()
+    {
+        _hitResult = new Collider[maxSecondaryHits];
+        // basic can only hit enemies; won't to anything to enemy attacks
+        _basicMask = 1 << LayerMask.NameToLayer("Enemy");
+        // secondary can destroy both enemies and enemy attacks
+        _secondaryMask = 1 << LayerMask.NameToLayer("Enemy") | 1 << LayerMask.NameToLayer("EnemyAttack");
+    }
 
     protected override void AttackPhysics()
     {
         if (!_doBasicAttack) return;
         _doBasicAttack = false;
 
+        Debug.Log("basci atack");
+
         float angleStep = 0;
         if (basicAttackRaycastAmount > 1) angleStep = attackWidthDegrees * 2 / (basicAttackRaycastAmount - 1);
         float startAngle = -attackWidthDegrees;
-
-        RaycastHit2D[] hits = new RaycastHit2D[basicAttackRaycastAmount];
+        
         for (int i = 0; i < basicAttackRaycastAmount; i++)
         {
             float angle = startAngle + i * angleStep;
-            Vector2 rayDir = Quaternion.Euler(0, 0, angle) * _attackingDirection;
-            hits[i] = Physics2D.Raycast(transform.position, rayDir, basicAttackRange, LayerMask.GetMask("Enemy"));
-            Debug.DrawRay(transform.position, rayDir * basicAttackRange, Color.red, 2f);
-            if (hits[i].collider != null)
+            Vector3 rayDir = Quaternion.Euler(0, angle, 0) * _attackingDirection;
+            Debug.DrawRay(transform.root.position, rayDir * basicAttackRange, Color.red, 2f);
+            
+            // using the root transform here as that will (should?) be the player
+            if (Physics.SphereCast(transform.root.position, sphereCastRadius, rayDir, out RaycastHit hit, basicAttackRange, _basicMask))
             {
-                if (hits[i].collider.TryGetComponent<IHealth>(out var h))
-                {
-                    // apply damage to enemy; it's okay if we hit the same enemy multiple times
-                    // as they should track if they've been hit in a fixedUpdate frame and will not apply damage multiple times
-                    // (however this does mean that if two player attacks like a basic and a secondary attack 
-                    // hit the same one only one of those damages will proc -- not good!)
-                    h.TakeDamage(weaponData.basicAttackDamage);
-                }
+                if (hit.collider.TryGetComponent<IHealth>(out var h)) h.TakeDamage(weaponData.basicAttackDamage);
             }
         }
     }
@@ -41,17 +53,15 @@ public class BasicMelee3D : Weapon3D
     protected override void SecondaryPhysics()
     {
         _doSecondaryAttack = false;
-        foreach (var c in Physics2D.OverlapCircleAll(transform.position, secondaryAttackRadius, LayerMask.GetMask("Enemy")))
+        int enemiesInRange = Physics.OverlapSphereNonAlloc(transform.position, secondaryAttackRadius, _hitResult, _secondaryMask);
+        for (int i = 0; i < enemiesInRange; i++)
         {
-            if (c.TryGetComponent<IHealth>(out var h))
+            Debug.Log("Hit: " + _hitResult[i].name + ", layer" + LayerMask.LayerToName(_hitResult[i].gameObject.layer));
+            if (_hitResult[i].TryGetComponent<IHealth>(out var health))
             {
-                h.TakeDamage(weaponData.secondaryAttackDamage);
+                health.TakeDamage(weaponData.secondaryAttackDamage);
             }
+            else Debug.LogWarning("Hit does not have IHealth");
         }
-        // draw debug circle range
-        Debug.DrawRay(transform.position, Vector2.up * secondaryAttackRadius, Color.blue, 2f);
-        Debug.DrawRay(transform.position, Vector2.right * secondaryAttackRadius, Color.blue, 2f);
-        Debug.DrawRay(transform.position, Vector2.down * secondaryAttackRadius, Color.blue, 2f);
-        Debug.DrawRay(transform.position, Vector2.left * secondaryAttackRadius, Color.blue, 2f);
     }
 }

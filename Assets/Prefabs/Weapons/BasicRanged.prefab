@@ -49,9 +49,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponData: {fileID: 11400000, guid: 99989bed371fa45668025a71bc70c33b, type: 2}
+  basicAttack: {fileID: 0}
+  basicNotReady: {fileID: 0}
+  secondaryAttack: {fileID: 0}
+  secondaryNotReady: {fileID: 0}
   projectilePrefab: {fileID: 959012440057939218, guid: 029439363bda946d486f19032d0d3f86, type: 3}
   projectileSpawnPoint: {fileID: 4161243924565852830}
-  basicAttackProjectileSpeed: 3
+  basicAttackProjectileSpeed: 15
   secondaryAttackDistance: 5
   secondaryAttackWidth: 1
   secondaryAttackKnockbackForce: 5
@@ -173,6 +177,8 @@ SpriteRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -194,6 +200,7 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 4
