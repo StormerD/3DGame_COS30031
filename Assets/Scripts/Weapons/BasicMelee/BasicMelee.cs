@@ -8,6 +8,22 @@ public class BasicMelee : Weapon2D
     public float attackWidthDegrees = 45f;
     public int basicAttackRaycastAmount = 5; // attack is done in a cone shape over +- attackWidthDegrees, will be split into this many raycasts
     public float secondaryAttackRadius = 3.0f; // secondary attack hits all enemies in a circle of this radius
+    public int maxSecondaryHits = 30;
+
+    private RaycastHit2D[] _basicHits;
+    private Collider2D[] _secondaryHits;
+    private ContactFilter2D _contactFilter;
+    private int _enemyLayerMask;
+
+    void Start()
+    {
+        _secondaryHits = new Collider2D[maxSecondaryHits];
+        _enemyLayerMask = LayerMask.GetMask("Enemy");
+        _contactFilter = new();
+        _contactFilter.SetLayerMask(_enemyLayerMask);
+        _basicHits = new RaycastHit2D[basicAttackRaycastAmount];
+    }
+
 
     protected override void AttackPhysics()
     {
@@ -18,16 +34,15 @@ public class BasicMelee : Weapon2D
         if (basicAttackRaycastAmount > 1) angleStep = attackWidthDegrees * 2 / (basicAttackRaycastAmount - 1);
         float startAngle = -attackWidthDegrees;
 
-        RaycastHit2D[] hits = new RaycastHit2D[basicAttackRaycastAmount];
         for (int i = 0; i < basicAttackRaycastAmount; i++)
         {
             float angle = startAngle + i * angleStep;
             Vector2 rayDir = Quaternion.Euler(0, 0, angle) * _attackingDirection;
-            hits[i] = Physics2D.Raycast(transform.position, rayDir, basicAttackRange, LayerMask.GetMask("Enemy"));
+            _basicHits[i] = Physics2D.Raycast(transform.position, rayDir, basicAttackRange, _enemyLayerMask);
             Debug.DrawRay(transform.position, rayDir * basicAttackRange, Color.red, 2f);
-            if (hits[i].collider != null)
+            if (_basicHits[i].collider != null)
             {
-                if (hits[i].collider.TryGetComponent<IHealth>(out var h))
+                if (_basicHits[i].collider.TryGetComponent<IHealth>(out var h))
                 {
                     // apply damage to enemy; it's okay if we hit the same enemy multiple times
                     // as they should track if they've been hit in a fixedUpdate frame and will not apply damage multiple times
@@ -42,9 +57,10 @@ public class BasicMelee : Weapon2D
     protected override void SecondaryPhysics()
     {
         _doSecondaryAttack = false;
-        foreach (var c in Physics2D.OverlapCircleAll(transform.position, secondaryAttackRadius, LayerMask.GetMask("Enemy")))
+        int hits = Physics2D.OverlapCircle(transform.position, secondaryAttackRadius, _contactFilter, _secondaryHits);
+        for (int i = 0; i < hits; i++)
         {
-            if (c.TryGetComponent<IHealth>(out var h))
+            if (_secondaryHits[i].TryGetComponent<IHealth>(out var h))
             {
                 h.TakeDamage(weaponData.secondaryAttackDamage);
             }
