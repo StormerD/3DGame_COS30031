@@ -49,12 +49,17 @@ public class PlayerWeaponHandler3D : PlayerWeaponHandlerBase
         if (ActiveGameManager.instance != null && ActiveGameManager.instance.equippedWeapon != null)
         {
             GameObject temp = ActiveGameManager.instance.equippedWeapon;
-            if (!temp.TryGetComponent(out _weaponScript)) Debug.LogWarning("Equipped weapon missing IWeapon interface");
+            if (!temp.TryGetComponent(out WeaponBase _)) Debug.LogWarning("Equipped weapon missing WeaponBase");
             else
             {
                 GameObject translation = TranslateWeaponDimension(temp);
-                if (!translation.TryGetComponent<WeaponBase>(out _)) Debug.LogWarning("Translation " + translation.name + " does not have an IWeapon script.");
-                EquipWeapon(temp);
+                if (translation != null)
+                {
+                    if (!translation.TryGetComponent(out _weaponScript)) Debug.LogWarning("Translation " + translation.name + " does not have an IWeapon script.");
+                    EquipWeapon(temp);
+                }
+                else Debug.LogWarning("Could not find a translation for " + temp.name);
+                temp.SetActive(false);
             }
         }
         if (ActiveGameManager.instance == null && transform.childCount > 0)
