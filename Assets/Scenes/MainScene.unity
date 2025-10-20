@@ -17240,7 +17240,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ee64644fbeb747e1ba44b76734f1036, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DialogueManager
-  TEST_DIALOGUE: {fileID: 11400000, guid: aada2249769c24ef99348049caf14917, type: 2}
 --- !u!1 &1021645035
 GameObject:
   m_ObjectHideFlags: 0
@@ -82342,6 +82341,10 @@ PrefabInstance:
       value: Pause
       objectReference: {fileID: 0}
     - target: {fileID: 1668686616039734458, guid: 2885aa5f9827f814abba74e48e9996dc, type: 3}
+      propertyPath: dustPuffPrefab
+      value: 
+      objectReference: {fileID: 359076714251711221, guid: 6f4cb0ab08810a345a2a7e05d65622d7, type: 3}
+    - target: {fileID: 1668686616039734458, guid: 2885aa5f9827f814abba74e48e9996dc, type: 3}
       propertyPath: dashParticlesPrefab
       value: 
       objectReference: {fileID: 2709738328075119769, guid: d486ed36a4e604949a45a153731aaff6, type: 3}
@@ -85375,6 +85378,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8867810941286056943, guid: 4aed527469897784184aa5f634897652, type: 3}
+      propertyPath: footstepClips.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8867810941286056943, guid: 4aed527469897784184aa5f634897652, type: 3}
+      propertyPath: 'footstepClips.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 19bb5baf65c5e114bacf71bc4a2cdaec, type: 3}
+    - target: {fileID: 8867810941286056943, guid: 4aed527469897784184aa5f634897652, type: 3}
+      propertyPath: 'footstepClips.Array.data[1]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 996f80840724da14db3a69940038c876, type: 3}
+    - target: {fileID: 8867810941286056943, guid: 4aed527469897784184aa5f634897652, type: 3}
+      propertyPath: 'footstepClips.Array.data[2]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 10b7b0aefaf47df40ad72b3b5d467bd6, type: 3}
+    - target: {fileID: 8867810941286056943, guid: 4aed527469897784184aa5f634897652, type: 3}
+      propertyPath: 'footstepClips.Array.data[3]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 1c691386d0559824d919ea986eccccf9, type: 3}
+    - target: {fileID: 8867810941286056943, guid: 4aed527469897784184aa5f634897652, type: 3}
+      propertyPath: 'footstepClips.Array.data[4]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 3bda6cf2f0f20fa4b9e7349100e4fca6, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

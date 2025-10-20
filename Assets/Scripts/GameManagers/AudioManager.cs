@@ -7,6 +7,10 @@ public class AudioManager : MonoBehaviour
 
     private AudioSource audioSource;
 
+    [Header("Footstep Clips")]
+    public AudioClip[] footstepClips;
+
+
     [Header("Clips")]
     public AudioClip dashClip;
     public AudioClip attackClip;
@@ -31,6 +35,22 @@ public class AudioManager : MonoBehaviour
 
         audioSource = GetComponent<AudioSource>();
     }
+
+    public void PlayFootstep()
+    {
+        if (footstepClips != null && footstepClips.Length > 0)
+        {
+            int index = Random.Range(0, footstepClips.Length);
+            Debug.Log($"Playing footstep clip {index}");
+            audioSource.PlayOneShot(footstepClips[index]);
+        }
+        else
+        {
+            Debug.LogWarning("Footstep clips not assigned!");
+        }
+    }
+
+
 
     public void PlayPurchaseSuccess()
     {
