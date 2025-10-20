@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
 /// <summary>
@@ -42,27 +43,41 @@ public class SaveManager : MonoBehaviour
 	void Awake()
 	{
 		if (instance != null && instance != this) Destroy(gameObject);
-		else instance = this;
+		else
+		{
+			instance = this;
+			DontDestroyOnLoad(gameObject);
+			SceneManager.activeSceneChanged += ResyncPlayerData;
+		}
 	}
 
 	void Start()
 	{
-		if (player != null)
-        {
-            if (!player.TryGetComponent(out _playerLooter)) Debug.LogWarning("Save manager needs Player to have PlayerLooter!");
-			if (!player.TryGetComponent(out _playerWeaponHandler)) Debug.LogWarning("Save manager needs Player to have PlayerWeaponHandler!");
-        }
 		// If the game is ongoing and we are re-entering the main scene, load from the active scene
 		if (ActiveGameManager.instance != null && ActiveGameManager.instance.gameHasStarted)
 		{
 			LoadFromSlot(ActiveGameManager.instance.saveSlot);
 		}
 	}
+
+	void ResyncPlayerData(Scene current, Scene next)
+	{
+		GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+		Debug.Log("Player size: " + players.Length);
+		if (players.Length > 0)
+		{
+			GameObject player = players[0];
+			if (!player.TryGetComponent(out _playerLooter)) Debug.LogWarning("Save manager needs Player to have PlayerLooter!");
+			if (!player.TryGetComponent(out _playerWeaponHandler)) Debug.LogWarning("Save manager needs Player to have PlayerWeaponHandler!");
+		}
+		else Debug.LogError("Scene manager unable to find any players!");
+	}
+	
 	#endregion
 
 	#region Saving
 	public void Save(int to) => DoSave(to, GetFurthestUnlockedLevel());
-	public void SafeSave(int to) => SafeSaveWithLevel(to, GetFurthestUnlockedLevel());
+	public void SafeSave() => SafeSaveWithLevel(slotIndex, GetFurthestUnlockedLevel());
 	public void SafeSaveWithLevel(int to, int furthestLevel) // Confirms that the slot's data is loaded before saving.
 	{
 		SyncSlotDataWithoutEmittingEvents(to);

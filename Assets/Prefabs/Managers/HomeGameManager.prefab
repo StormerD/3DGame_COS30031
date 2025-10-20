@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 866636932715319542}
-  - component: {fileID: 7675618883860281714}
   - component: {fileID: 1167996640419250321}
   - component: {fileID: 6051233350238237071}
   - component: {fileID: 4534276167769153773}
@@ -35,20 +34,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7675618883860281714
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8221447523195868004}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 007b87689f41d457a89a83e21a199e5e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  slotIndex: 0
-  player: {fileID: 0}
 --- !u!114 &1167996640419250321
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -67,11 +52,6 @@ MonoBehaviour:
   - {fileID: 4087904268931396438, guid: 47304c19acc294ec08f82d18aa634b22, type: 3}
   - {fileID: 1667736680288488315, guid: 3c1327c8ffe124b8f8c8b94e9027df6d, type: 3}
   player: {fileID: 0}
-  forgeWeaponListingPrefabs:
-  - {fileID: 8220440612854842642, guid: ceeeec931d2fc4750ab08b6e2767455e, type: 3}
-  - {fileID: 2177345877604324293, guid: 1be3078b3788c4da6a22cf5fda7cbf62, type: 3}
-  - {fileID: 3449805807632952156, guid: bd7add86e47ba464c9968980564f5961, type: 3}
-  - {fileID: 7976035552278195013, guid: b86f0a1cc46264bc39a31eaae1383c07, type: 3}
   forgeMenu: {fileID: 0}
   forgeMenuScrollbox: {fileID: 0}
 --- !u!114 &6051233350238237071
@@ -86,10 +66,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01466ea5362d84850ac6d1e4efa9a080, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelTransitionSpots:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  player: {fileID: 0}
 --- !u!114 &4534276167769153773
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -102,5 +79,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f69738238a70948df9b7f29819b2b1cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pauseMenuObject: {fileID: 0}
-  debug: 
