@@ -1,2 +1,13 @@
 fileFormatVersion: 2
 guid: 3d7ee252c082945a2ab02bb9b3349202
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - dustPuffPrefab: {fileID: 359076714251711221, guid: 6f4cb0ab08810a345a2a7e05d65622d7, type: 3}
+  - dashParticlesPrefab: {fileID: 2709738328075119769, guid: d486ed36a4e604949a45a153731aaff6, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

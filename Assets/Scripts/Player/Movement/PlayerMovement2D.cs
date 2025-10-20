@@ -9,6 +9,10 @@ public class PlayerMovement2D : MonoBehaviour, IMover2D
     public float dashLength = 0.3f;
     public float dashCooldownSeconds = 1.5f;
     public bool canMove = true;
+    public float footstepInterval = 0.4f;
+    private float footstepTimer = 0f;
+
+    public GameObject dustPuffPrefab;
 
     public GameObject dashParticlesPrefab;
 
@@ -51,6 +55,34 @@ public class PlayerMovement2D : MonoBehaviour, IMover2D
         // keep track of current direction for other scripts (like weapons) that depend on player direction
         // but only update when actually moving. this way if the player stops moving the last direction is saved
         _currentDirection = _rb.linearVelocity == Vector2.zero ? _currentDirection : _rb.linearVelocity.normalized;
+        bool isMoving = Mathf.Abs(inp.x) > 0.1f;
+        bool isGrounded = IsGrounded();
+
+        if (isGrounded && isMoving && Time.time > _dashStartedAt + dashLength)
+        {
+            footstepTimer += Time.deltaTime;
+            if (footstepTimer >= footstepInterval)
+            {
+                AudioManager.Instance.PlayFootstep();
+                if (dustPuffPrefab != null)
+                {
+                    Vector3 spawnPos = transform.position + new Vector3(0, -0.5f, 0); // adjust Y for foot level
+                    Instantiate(dustPuffPrefab, spawnPos, Quaternion.identity);
+                }
+                footstepTimer = 0f;
+            }
+        }
+        else
+        {
+            footstepTimer = 0f;
+        }
+
+    }
+
+    bool IsGrounded()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 0.1f);
+        return hit.collider != null;
     }
 
     void Dash(CallbackContext ctx) => Dash(false);
