@@ -13,7 +13,7 @@ public class DialogueBoxScript : ScriptableObject
 
     [Header("Configuration around text appearance / speed")]
     [Tooltip("The amount of time it takes for one letter to appear.")]
-    public float letterAppearanceTime;
+    public float letterAppearanceTime = 0.03f;
     [Tooltip("If this is true, then clicking the dialogue box will allow the rest of the text to appear")]
     public bool canSkipPrinting = true;
     [Tooltip("After this text finishes displaying, the scene will wait this long before going to the next dialogue")]

@@ -49,6 +49,7 @@ public class SaveData
     public PlayerCurrency currency; // persistent player progress
     public string equippedWeapon; // the player's currently equipped weapon
     public List<WeaponPurchaseData> weaponsPurchased;
+    public HashSet<string> dialoguesPlayed;
 }
 
 [Serializable]

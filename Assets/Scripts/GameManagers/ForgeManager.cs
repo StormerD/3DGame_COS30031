@@ -25,6 +25,8 @@ public class ForgeManager : MonoBehaviour
     public event Action<string, bool> OnListingPurchaseStateChange; // <string> is the weaponId purchased, bool is true if purchased, false if not
     public event Action<string, bool> OnListingUnlockedStateChange;
     public event Action<string> OnListingEquipped; // same as above.
+    public event Action OnForgeOpened;
+    public event Action OnForgeClosed;
 
     private Dictionary<string, GameObject> _weaponsById = new();
     private List<WeaponPurchaseData> _purchaseData;
@@ -67,12 +69,13 @@ public class ForgeManager : MonoBehaviour
     {
         forgeMenu.SetActive(true);
         _forgeMenuAnimator.SetTrigger("OpenMenu");
+        OnForgeOpened?.Invoke();
     }
-
 
     public void CloseForgeMenu()
     {
         _forgeMenuAnimator.SetTrigger("CloseMenu");
+        OnForgeClosed?.Invoke();
     }
 
     public GameObject GetWeaponByID(string id)

@@ -3,7 +3,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
 /// <summary>
@@ -11,12 +13,14 @@ using UnityEngine;
 /// Instead of saving player position, it saves:
 /// 1. Currency (points)
 /// 2. Furthest unlocked level
-/// 3. Forge purchases & unlocks
+/// 3. Weapons that have been purchased or unlocked
 /// 4. Current player-equipped weapon
 /// 5. slot index
-/// Technically there can be infinite save slots, but the menu only allows 3. I also use the fourth "slot" to save metadata about the
-/// saves themselves (like when they were last saved) but not any game-related data. That way to display
-/// when the slots were most recently saved you don't have to reload the entire JSON. Not super important in this game
+/// 6. (IN PROGRESS) Player position
+/// 7. (IN PROGRESS) Dialogue played
+/// Technically there can be infinite save slots, but the menu only allows 3. Another file saves metadata about the
+/// saves themselves (currently only when last saved) but not any game-related data. That way to display
+/// when the slots were most recently saved you don't have to reload the entire slot. Not super important in this game
 /// since the save data is small anyway, but I think it's a good idea in case we add more save data in the future
 /// </summary>
 public class SaveManager : MonoBehaviour
@@ -29,6 +33,7 @@ public class SaveManager : MonoBehaviour
 
 	private ILooter _playerLooter;
 	private IFighter _playerWeaponHandler;
+	private HashSet<string> _dialoguesPlayedSinceLastSave = new();
 	private SaveData _currentSaveData;
 	private SlotTimesData _slotTimes;
 
@@ -37,31 +42,42 @@ public class SaveManager : MonoBehaviour
 	#region Unity Functions
 	void Awake()
 	{
-		if (instance != null && instance != this)
-		{
-			Destroy(gameObject);
-		}
+		if (instance != null && instance != this) Destroy(gameObject);
 		else
 		{
 			instance = this;
+			DontDestroyOnLoad(gameObject);
+			SceneManager.activeSceneChanged += ResyncPlayerData;
 		}
 	}
 
 	void Start()
 	{
-		if (!player.TryGetComponent(out _playerLooter)) Debug.LogWarning("Save manager needs Player to have PlayerLooter!");
-		if (!player.TryGetComponent(out _playerWeaponHandler)) Debug.LogWarning("Save manager needs Player to have PlayerWeaponHandler!");
 		// If the game is ongoing and we are re-entering the main scene, load from the active scene
 		if (ActiveGameManager.instance != null && ActiveGameManager.instance.gameHasStarted)
 		{
 			LoadFromSlot(ActiveGameManager.instance.saveSlot);
 		}
 	}
+
+	void ResyncPlayerData(Scene current, Scene next)
+	{
+		GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+		Debug.Log("Player size: " + players.Length);
+		if (players.Length > 0)
+		{
+			GameObject player = players[0];
+			if (!player.TryGetComponent(out _playerLooter)) Debug.LogWarning("Save manager needs Player to have PlayerLooter!");
+			if (!player.TryGetComponent(out _playerWeaponHandler)) Debug.LogWarning("Save manager needs Player to have PlayerWeaponHandler!");
+		}
+		else Debug.LogError("Scene manager unable to find any players!");
+	}
+	
 	#endregion
 
 	#region Saving
 	public void Save(int to) => DoSave(to, GetFurthestUnlockedLevel());
-	public void SafeSave(int to) => SafeSaveWithLevel(to, GetFurthestUnlockedLevel());
+	public void SafeSave() => SafeSaveWithLevel(slotIndex, GetFurthestUnlockedLevel());
 	public void SafeSaveWithLevel(int to, int furthestLevel) // Confirms that the slot's data is loaded before saving.
 	{
 		SyncSlotDataWithoutEmittingEvents(to);
@@ -70,17 +86,21 @@ public class SaveManager : MonoBehaviour
 	void DoSave() => DoSave(slotIndex, _currentSaveData.furthestUnlockedLevel);
 	void DoSave(int sIndex, int furthestUnlockedLevel)
 	{
+		_dialoguesPlayedSinceLastSave.AddRange(_currentSaveData.dialoguesPlayed);
 		var saveData = new SaveData
 		{
 			slotIndex = sIndex,
 			furthestUnlockedLevel = furthestUnlockedLevel,
 			currency = _playerLooter.GetSaveableCurrency(),
 			equippedWeapon = _playerWeaponHandler.GetEquippedWeapon(),
-			weaponsPurchased = ForgeManager.instance != null ? ForgeManager.instance.GetWeaponPurchaseData() : _currentSaveData.weaponsPurchased
+			weaponsPurchased = ForgeManager.instance != null ? ForgeManager.instance.GetWeaponPurchaseData() : _currentSaveData.weaponsPurchased,
+			dialoguesPlayed = _dialoguesPlayedSinceLastSave
 		};
 		SaveSystem.Save(saveData);
 		_currentSaveData = saveData;
-		Debug.Log($"Saved slot {sIndex}");
+		_dialoguesPlayedSinceLastSave = new();
+
+		if (VERBOSE) Debug.Log($"Saved slot {sIndex}");
 		SaveSlotTimes(sIndex);
 	}
 
@@ -98,6 +118,9 @@ public class SaveManager : MonoBehaviour
 		if (VERBOSE) Debug.Log("Updated slot saved times");
 		OnSlotTimesUpdated?.Invoke();
 	}
+
+	private void UpdateDialogueList(string with) { _dialoguesPlayedSinceLastSave.Add(with); }
+	
 	#endregion
 
 	#region Loading
@@ -123,10 +146,10 @@ public class SaveManager : MonoBehaviour
 				furthestUnlockedLevel = 1,
 				currency = new PlayerCurrency { common = 0, rare = 0, mythic = 0 },
 				equippedWeapon = "",
-				weaponsPurchased = ForgeManager.instance != null ? ForgeManager.instance.GetWeaponPurchaseData() : new()
+				weaponsPurchased = ForgeManager.instance != null ? ForgeManager.instance.GetWeaponPurchaseData() : new(),
+				dialoguesPlayed = new()
 			};
 		}
-		ActiveGameManager.instance.saveSlot = slotIndex;
 		StartCoroutine(DelayedEmit(OnSaveDataChanged, 0.2f));
 	}
 	private void LoadSlotTimes()
@@ -192,6 +215,11 @@ public class SaveManager : MonoBehaviour
 			_ => null
 		};
 	}
+	public bool GetDialogueHasBeenPlayed(string which)
+    {
+		if (ConfirmDataLoaded()) return _dialoguesPlayedSinceLastSave.Contains(which) || _currentSaveData.dialoguesPlayed.Contains(which);
+		else return _dialoguesPlayedSinceLastSave.Contains(which);
+    }
 	#endregion
 
 	#region coroutines
