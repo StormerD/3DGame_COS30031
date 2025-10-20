@@ -1,4 +1,6 @@
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
@@ -6,9 +8,13 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Animator))]
-public class DialogueBox : MonoBehaviour, IPointerClickHandler
+public class DialogueScreen : MonoBehaviour, IPointerClickHandler
 {
     #region vars
+    public static DialogueScreen instance;
+    public event Action<string> OnDialogueStarted;
+    public event Action<string> OnDialogueEnded;
+
     [Header("Blank image is for speakers")]
     [SerializeField] private TMP_Text _dialogueTextBox;
     public Texture2D defaultBlankImage;
@@ -20,6 +26,9 @@ public class DialogueBox : MonoBehaviour, IPointerClickHandler
     [SerializeField] private RawImage _rightSpeakerImage;
     [SerializeField] private GameObject _rightSpeakerNameBox;
     [SerializeField] private TMP_Text _rightSpeakerNameText;
+
+    private bool _sceneRunning;
+    private Queue<DialogueScene> _queuedScenes = new();
 
     private Animator _textboxAnimator;
     private float _boxEntryTime;
@@ -43,15 +52,11 @@ public class DialogueBox : MonoBehaviour, IPointerClickHandler
         _transitionEnterTime = clips.First(clip => clip.name == "TransitionEntry").length;
         _transitionExitTime = clips.First(clip => clip.name == "TransitionExit").length;
         if (defaultBlankImage == null) Debug.LogWarning("Dialogue box missing blank texture image! Speaker sprites will display oddly.");
-    }
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        if (DialogueManager.instance != null)
-        {
-            DialogueManager.instance.OnStartDialogue += WriteDialogueScene;
-        }
+        if (instance == null) instance = this;
+        else Destroy(gameObject);
+
+        OnDialogueEnded += CheckQueuedScenes;
     }
 
     public void OnPointerClick(PointerEventData ped)
@@ -64,9 +69,21 @@ public class DialogueBox : MonoBehaviour, IPointerClickHandler
 
     public void ResetTextBox() => _dialogueTextBox.text = "";
 
-    private void WriteDialogueScene(DialogueScene scene)
+    public void RunScene(DialogueScene scene)
     {
-        StartCoroutine(RunDialogueScene(scene));
+        if (_sceneRunning) _queuedScenes.Enqueue(scene);
+        else StartCoroutine(RunDialogueScene(scene));
+    }
+
+    private void CheckQueuedScenes(string justEnded)
+    {
+        // remove any duplicates of the scene that just ended from the queue (just in case)
+        while (_queuedScenes.Count > 0 && _queuedScenes.Peek().dialogueKey == justEnded)
+        {
+            _queuedScenes.Dequeue();
+        }
+        // if there was a non-duplicate in the queue, run it now
+        if (_queuedScenes.Count > 0) RunScene(_queuedScenes.Dequeue());
     }
 
     private void ToggleLeftSpeaker(bool on, DialogueBoxScript script)
@@ -85,6 +102,8 @@ public class DialogueBox : MonoBehaviour, IPointerClickHandler
     
     IEnumerator RunDialogueScene(DialogueScene scene)
     {
+        _sceneRunning = true;
+        OnDialogueStarted?.Invoke(scene.dialogueKey);
         for (int i = 0; i < scene.scripts.Count; i++)
         {
             ResetTextBox();
@@ -126,6 +145,8 @@ public class DialogueBox : MonoBehaviour, IPointerClickHandler
             _goNextScript = false;
             _fastWriteDialogue = false;
         }
+        _sceneRunning = false;
+        OnDialogueEnded?.Invoke(scene.dialogueKey);
     }
 
     IEnumerator PrintTextToBox(DialogueBoxScript parameters)

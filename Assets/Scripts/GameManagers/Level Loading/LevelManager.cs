@@ -31,6 +31,7 @@ public class LevelManager : MonoBehaviour
         if (player == null) Debug.LogWarning("LevelManager player is null.");
         if (!player.TryGetComponent(out _pLooter)) Debug.LogWarning("Player is missing PlayerLooter.");
         if (!player.TryGetComponent(out _pWeaponHandler)) Debug.LogWarning("Player is missing WeaponHandler.");
+        if (ForgeManager.instance != null) ForgeManager.instance.OnForgeOpened += ForgeOpened;
     }
 
     void LoadLevels()
@@ -81,5 +82,5 @@ public class LevelManager : MonoBehaviour
         op.allowSceneActivation = true;
     }
 
-    public void ForgeOpened() => OnForgeHasBeenOpened?.Invoke();
+    private void ForgeOpened() => OnForgeHasBeenOpened?.Invoke();
 }

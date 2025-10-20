@@ -3,6 +3,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -11,12 +12,14 @@ using UnityEngine;
 /// Instead of saving player position, it saves:
 /// 1. Currency (points)
 /// 2. Furthest unlocked level
-/// 3. Forge purchases & unlocks
+/// 3. Weapons that have been purchased or unlocked
 /// 4. Current player-equipped weapon
 /// 5. slot index
-/// Technically there can be infinite save slots, but the menu only allows 3. I also use the fourth "slot" to save metadata about the
-/// saves themselves (like when they were last saved) but not any game-related data. That way to display
-/// when the slots were most recently saved you don't have to reload the entire JSON. Not super important in this game
+/// 6. (IN PROGRESS) Player position
+/// 7. (IN PROGRESS) Dialogue played
+/// Technically there can be infinite save slots, but the menu only allows 3. Another file saves metadata about the
+/// saves themselves (currently only when last saved) but not any game-related data. That way to display
+/// when the slots were most recently saved you don't have to reload the entire slot. Not super important in this game
 /// since the save data is small anyway, but I think it's a good idea in case we add more save data in the future
 /// </summary>
 public class SaveManager : MonoBehaviour
@@ -29,6 +32,7 @@ public class SaveManager : MonoBehaviour
 
 	private ILooter _playerLooter;
 	private IFighter _playerWeaponHandler;
+	private HashSet<string> _dialoguesPlayedSinceLastSave = new();
 	private SaveData _currentSaveData;
 	private SlotTimesData _slotTimes;
 
@@ -37,14 +41,8 @@ public class SaveManager : MonoBehaviour
 	#region Unity Functions
 	void Awake()
 	{
-		if (instance != null && instance != this)
-		{
-			Destroy(gameObject);
-		}
-		else
-		{
-			instance = this;
-		}
+		if (instance != null && instance != this) Destroy(gameObject);
+		else instance = this;
 	}
 
 	void Start()
@@ -70,17 +68,21 @@ public class SaveManager : MonoBehaviour
 	void DoSave() => DoSave(slotIndex, _currentSaveData.furthestUnlockedLevel);
 	void DoSave(int sIndex, int furthestUnlockedLevel)
 	{
+		_dialoguesPlayedSinceLastSave.AddRange(_currentSaveData.dialoguesPlayed);
 		var saveData = new SaveData
 		{
 			slotIndex = sIndex,
 			furthestUnlockedLevel = furthestUnlockedLevel,
 			currency = _playerLooter.GetSaveableCurrency(),
 			equippedWeapon = _playerWeaponHandler.GetEquippedWeapon(),
-			weaponsPurchased = ForgeManager.instance != null ? ForgeManager.instance.GetWeaponPurchaseData() : _currentSaveData.weaponsPurchased
+			weaponsPurchased = ForgeManager.instance != null ? ForgeManager.instance.GetWeaponPurchaseData() : _currentSaveData.weaponsPurchased,
+			dialoguesPlayed = _dialoguesPlayedSinceLastSave
 		};
 		SaveSystem.Save(saveData);
 		_currentSaveData = saveData;
-		Debug.Log($"Saved slot {sIndex}");
+		_dialoguesPlayedSinceLastSave = new();
+
+		if (VERBOSE) Debug.Log($"Saved slot {sIndex}");
 		SaveSlotTimes(sIndex);
 	}
 
@@ -98,6 +100,9 @@ public class SaveManager : MonoBehaviour
 		if (VERBOSE) Debug.Log("Updated slot saved times");
 		OnSlotTimesUpdated?.Invoke();
 	}
+
+	private void UpdateDialogueList(string with) { _dialoguesPlayedSinceLastSave.Add(with); }
+	
 	#endregion
 
 	#region Loading
@@ -192,6 +197,11 @@ public class SaveManager : MonoBehaviour
 			_ => null
 		};
 	}
+	public bool GetDialogueHasBeenPlayed(string which)
+    {
+		if (ConfirmDataLoaded()) return _dialoguesPlayedSinceLastSave.Contains(which) || _currentSaveData.dialoguesPlayed.Contains(which);
+		else return _dialoguesPlayedSinceLastSave.Contains(which);
+    }
 	#endregion
 
 	#region coroutines

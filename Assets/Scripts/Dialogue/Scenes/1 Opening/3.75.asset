@@ -10,13 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 93f59b2ae768f461e81f69dd151d86b1, type: 3}
-  m_Name: ScriptB
+  m_Name: 3.75
   m_EditorClassIdentifier: Assembly-CSharp::DialogueBoxScript
-  text: This is a test script! it's going to be very long to make sure it works.
+  text: They were ravaged by rising temperatures, changing weather, and heaps of
+    trash.
   speakerImage: {fileID: 0}
-  speakerName: ???
+  speakerName: You
   speakerShowsOnLeft: 0
-  letterAppearanceTime: 0.04
+  letterAppearanceTime: 0.03
   canSkipPrinting: 1
-  goToNextDialogueAfter: 10
+  goToNextDialogueAfter: 5
   syncedAudio: {fileID: 0}
