@@ -2013,8 +2013,8 @@ RectTransform:
   m_Children:
   - {fileID: 1966861217}
   - {fileID: 768175110}
-  - {fileID: 1332103609}
   - {fileID: 181077797}
+  - {fileID: 1332103609}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -84212,11 +84212,11 @@ PrefabInstance:
     - target: {fileID: 1973279363575173599, guid: 3a23b8e99d3f14ff3b16578628aee2f4, type: 3}
       propertyPath: m_fontAsset
       value: 
-      objectReference: {fileID: 11400000, guid: 9d1040591e7a9d1419b3d2fc09bef650, type: 2}
+      objectReference: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
     - target: {fileID: 1973279363575173599, guid: 3a23b8e99d3f14ff3b16578628aee2f4, type: 3}
       propertyPath: m_sharedMaterial
       value: 
-      objectReference: {fileID: 4759026606815148497, guid: 9d1040591e7a9d1419b3d2fc09bef650, type: 2}
+      objectReference: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
     - target: {fileID: 1973279363575173599, guid: 3a23b8e99d3f14ff3b16578628aee2f4, type: 3}
       propertyPath: m_hasFontAssetChanged
       value: 0
@@ -85506,7 +85506,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 688954412569791780, guid: 7d56b51a736ba449eaa90819da0d49de, type: 3}
       propertyPath: m_fontColor32.rgba
-      value: 16777215
+      value: 4283367327
       objectReference: {fileID: 0}
     - target: {fileID: 866864302792457388, guid: 7d56b51a736ba449eaa90819da0d49de, type: 3}
       propertyPath: m_Name
@@ -85514,7 +85514,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4578283837815426487, guid: 7d56b51a736ba449eaa90819da0d49de, type: 3}
       propertyPath: m_fontColor32.rgba
-      value: 16777215
+      value: 4283367403
       objectReference: {fileID: 0}
     - target: {fileID: 5945172417545652027, guid: 7d56b51a736ba449eaa90819da0d49de, type: 3}
       propertyPath: m_Name
