@@ -88,10 +88,12 @@ public class PlayerMovement2D : MonoBehaviour, IMover2D
     public void FreezeActions()
     {
         canMove = false;
+        _rb.linearVelocity = Vector2.zero;
     }
 
     public void UnfreezeActions()
     {
         canMove = true;
+        Debug.Log("allowing movement");
     }
 }

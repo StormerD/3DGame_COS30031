@@ -7,11 +7,11 @@ public class SaveSlotDisplay : MonoBehaviour, IPointerClickHandler
 {
     public int slot;
     public TMP_Text savetimeDisplay;
-    private MainMenuManager menuManager;
+    private MainMenuHandler menuManager;
 
     void Start()
     {
-        menuManager = GetComponentInParent<MainMenuManager>();
+        menuManager = GetComponentInParent<MainMenuHandler>();
         SaveManager.instance.OnSlotTimesUpdated += UpdateTimeText;
         UpdateTimeText();
     }

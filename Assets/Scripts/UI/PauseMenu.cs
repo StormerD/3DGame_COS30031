@@ -1,23 +1,20 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(Animator))]
-public class PauseMenu : MonoBehaviour, IMenuPausable
+public class PauseMenu : MonoBehaviour
 {
     private Animator _animator;
     void Start()
     {
         _animator = GetComponent<Animator>();
-        PauseManager.instance.OnPause += OpenMenu;
-        PauseManager.instance.OnUnpause += CloseMenu;
+        PauseManager.instance.OnPause += OpenAnimation;
+        PauseManager.instance.OnUnpause += CloseAnimation;
     }
-    public void CloseMenu()
-    {
-        _animator.SetTrigger("CloseMenu");
-    }
-    public void OpenMenu()
-    {
-        _animator.SetTrigger("OpenMenu");
-    }
+
+    public void CloseMenu() => PauseManager.instance.Unpause();
+    private void CloseAnimation() => _animator.SetTrigger("CloseMenu");
+    private void OpenAnimation() => _animator.SetTrigger("OpenMenu");
 
     public void Save()
     {
@@ -25,13 +22,17 @@ public class PauseMenu : MonoBehaviour, IMenuPausable
         else if (SaveManager.instance == null) Debug.LogError("Cannot save: SaveManager instance is null.");
         else
         {
-            SaveManager.instance.SafeSave(ActiveGameManager.instance.saveSlot);
+            SaveManager.instance.SafeSave();
         }
     }
 
-    public void Quit()
+    public void QuitToMainMenu()
     {
-        Save();
-        Application.Quit(0);
+        if (SaveManager.instance == null) Debug.LogError("Cannot save: SaveManager instance is null.");
+        else
+        {
+            SaveManager.instance.SafeSave();
+            SceneManager.LoadScene(0);
+        }
     }
 }
