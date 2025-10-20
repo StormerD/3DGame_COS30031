@@ -47,8 +47,11 @@ public class SaveManager : MonoBehaviour
 
 	void Start()
 	{
-		if (!player.TryGetComponent(out _playerLooter)) Debug.LogWarning("Save manager needs Player to have PlayerLooter!");
-		if (!player.TryGetComponent(out _playerWeaponHandler)) Debug.LogWarning("Save manager needs Player to have PlayerWeaponHandler!");
+		if (player != null)
+        {
+            if (!player.TryGetComponent(out _playerLooter)) Debug.LogWarning("Save manager needs Player to have PlayerLooter!");
+			if (!player.TryGetComponent(out _playerWeaponHandler)) Debug.LogWarning("Save manager needs Player to have PlayerWeaponHandler!");
+        }
 		// If the game is ongoing and we are re-entering the main scene, load from the active scene
 		if (ActiveGameManager.instance != null && ActiveGameManager.instance.gameHasStarted)
 		{
@@ -128,10 +131,10 @@ public class SaveManager : MonoBehaviour
 				furthestUnlockedLevel = 1,
 				currency = new PlayerCurrency { common = 0, rare = 0, mythic = 0 },
 				equippedWeapon = "",
-				weaponsPurchased = ForgeManager.instance != null ? ForgeManager.instance.GetWeaponPurchaseData() : new()
+				weaponsPurchased = ForgeManager.instance != null ? ForgeManager.instance.GetWeaponPurchaseData() : new(),
+				dialoguesPlayed = new()
 			};
 		}
-		ActiveGameManager.instance.saveSlot = slotIndex;
 		StartCoroutine(DelayedEmit(OnSaveDataChanged, 0.2f));
 	}
 	private void LoadSlotTimes()
