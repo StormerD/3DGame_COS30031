@@ -50,6 +50,7 @@ public class SaveData
     public string equippedWeapon; // the player's currently equipped weapon
     public List<WeaponPurchaseData> weaponsPurchased;
     public HashSet<string> dialoguesPlayed;
+    public int activeLevel;
 }
 
 [Serializable]
