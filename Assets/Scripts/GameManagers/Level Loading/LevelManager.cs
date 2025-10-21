@@ -27,7 +27,7 @@ public class LevelManager : MonoBehaviour
 
     void Start()
     {
-        SaveManager.instance.OnSaveDataChanged += LoadLevels;
+        // SaveManager.instance.OnSaveDataChanged += LoadLevels;
         if (player == null) Debug.LogWarning("LevelManager player is null.");
         if (!player.TryGetComponent(out _pLooter)) Debug.LogWarning("Player is missing PlayerLooter.");
         if (!player.TryGetComponent(out _pWeaponHandler)) Debug.LogWarning("Player is missing WeaponHandler.");

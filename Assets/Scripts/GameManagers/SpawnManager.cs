@@ -43,17 +43,6 @@ public class SpawnManager : MonoBehaviour
     {
         if (Time.time > _timeSinceLastSpawn)
         {
-
-
-
-
-
-
-
-
-
-
-
             _enemyPool.Get();
             _timeSinceLastSpawn = Time.time + _timeBetweenSpawns;
 

@@ -16,7 +16,7 @@ public abstract class PlayerWeaponHandlerBase : MonoBehaviour, IFighter
         inp.secondary.performed += Secondary;
         
         if (ForgeManager.instance != null) ForgeManager.instance.OnListingEquipped += EquipWeapon;
-        SaveManager.instance.OnSaveDataChanged += SetEquippedWeapon;
+        // SaveManager.instance.OnSaveDataChanged += SetEquippedWeapon;
 
         if (weaponInstantiationTransform == null) weaponInstantiationTransform = transform;
 
