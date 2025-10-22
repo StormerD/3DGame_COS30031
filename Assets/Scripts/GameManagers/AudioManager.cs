@@ -82,7 +82,7 @@ public class AudioManager : MonoBehaviour
 
     public void PlayComponentPlaced()
     {
-        if (attackClip != null)
+        if (componentPlaced != null)
             audioSource.PlayOneShot(componentPlaced);
     }
 
