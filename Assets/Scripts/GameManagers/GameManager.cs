@@ -32,18 +32,17 @@ public class GameManager : MonoBehaviour
 	public event Action OnLoadStart;
 	public event Action OnLoadComplete;
 	public event Action OnSlotTimesUpdated;
-	public event Action OnPlayerStartPositionChanged;
-	public int slotIndex = 0;     // set in Inspector to test different slots
+	public event Action OnDoneLoadingNewScene;
 	public const int LEVEL_AMOUNT = 4;
+	public float transitionWaitDelay = 1f;
 
 	private HashSet<string> _dialoguesPlayedSinceLastSave = new();
 	private SaveData _currentSaveData;
 	private SlotTimesData _slotTimes;
-	private event Action OnActivePlayerDataChanged;
 	private PlayerDataTracker _activePlayerData;
 	private PlayerDataTracker _previousPlayerData;
 	private int _currentLevel = -1;
-	private Vector3 _spawnPosition = Vector3.zero;
+	private int slotIndex = 0; 
 
 	private const bool VERBOSE = false;
 
@@ -70,6 +69,7 @@ public class GameManager : MonoBehaviour
 			_activePlayerData.transform.position = levelInformation.GetSpawnPositionComingFrom(_currentLevel);
 			_currentLevel = levelInformation.levelNumber;
 		}
+		StartCoroutine(DelayedParamlessActionInvoke(OnDoneLoadingNewScene, transitionWaitDelay));
 	}
 
 	public void RegisterPlayer(PlayerDataTracker newPlayer)
@@ -108,12 +108,12 @@ public class GameManager : MonoBehaviour
 		}
 		else if (_previousPlayerData.gameObject == player.gameObject) _previousPlayerData = null;
     }
-	
+
 	public void CurrentLevelComplete()
-    {
+	{
 		if (_currentLevel < 1 || _currentLevel > LEVEL_AMOUNT) Debug.LogWarning("GameManager does not know the current level number; it currently has it set as: " + _currentLevel);
 		// todo assorted things
-    }
+	}
 	
 	#endregion
 
@@ -195,7 +195,7 @@ public class GameManager : MonoBehaviour
 			};
 			Debug.Log("Current save data: " + _currentSaveData);
 		}
-		StartCoroutine(DelayInvoke(1f));
+		StartCoroutine(DelayedParamlessActionInvoke(OnLoadComplete, 0.1f));
 	}
 	private void LoadSlotTimes()
 	{
@@ -267,10 +267,4 @@ public class GameManager : MonoBehaviour
 		yield return new WaitForSeconds(delay);
 		action?.Invoke();
 	}
-	
-	IEnumerator DelayInvoke(float delay = 0.1f)
-    {
-		yield return new WaitForSeconds(delay);
-		OnLoadComplete?.Invoke();
-    }
 }

@@ -51,6 +51,8 @@ public class ForgeManager : MonoBehaviour
 
     void Start()
     {
+        if (GameManager.instance == null) { Debug.LogWarning("GameManager null; forge does not know purchase state."); return; } 
+
         GameManager.instance.OnLoadComplete += ReloadWeaponPurchaseData;
         ReloadWeaponPurchaseData();
         if (_purchaseData.Count == 0) _purchaseData = GetDefaultWeaponPurchaseData();

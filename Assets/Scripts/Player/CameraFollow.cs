@@ -22,5 +22,6 @@ public class CameraFollow : MonoBehaviour
     public void SetPlayer(Transform to)
     {
         player = to;
+        transform.position = new(player.position.x, player.position.y, transform.position.z);
     }
 }

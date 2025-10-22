@@ -16,7 +16,7 @@ public abstract class DialogueEventWatcherBase : MonoBehaviour
             SyncDialogue();
             GameManager.instance.OnLoadComplete += SyncDialogue;
         }
-        else Debug.LogWarning("Missing SaveManager instance");
+        else Debug.LogWarning("GameManager null; Dialogue does not know save state.");
         DialogueScreen.instance.OnDialogueEnded += SomeDialogueCompleted;
 
     }
@@ -28,7 +28,7 @@ public abstract class DialogueEventWatcherBase : MonoBehaviour
     }
     protected bool HasSceneAlreadyHappened(string which)
     {
-        return GameManager.instance.GetDialogueHasBeenPlayed(which);
+        return GameManager.instance != null && GameManager.instance.GetDialogueHasBeenPlayed(which);
     }
     private void SyncWrapper()
     {

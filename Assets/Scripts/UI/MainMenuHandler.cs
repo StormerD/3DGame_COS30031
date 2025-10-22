@@ -12,7 +12,6 @@ public class MainMenuHandler : MonoBehaviour
     void Start()
     {
         _animator = GetComponent<Animator>();
-        _animator.SetTrigger("GameStart");
     }
 
     public void GoToExplanationMenu()
@@ -45,7 +44,7 @@ public class MainMenuHandler : MonoBehaviour
 
         // Load data
         GameManager.instance.LoadFromSlot(slot);
-        SceneManager.LoadScene("HomeArea");
+        StartCoroutine(AsyncSceneLoader.AsyncLoad("HomeArea"));
     }
 
     public void QuitGame() => Application.Quit();

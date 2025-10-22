@@ -10,9 +10,9 @@ using UnityEngine.SceneManagement;
 /// as fully separate from the save system as possible. having a central manager instead of
 /// multiple subscriptions to SaveManager is better imo.
 /// </summary>
-public class LevelManager : MonoBehaviour
+public class LevelLoaderManager : MonoBehaviour
 {
-    public static LevelManager instance;
+    public static LevelLoaderManager instance;
     public event Action<int> OnLevelUnlockChanged;
     public event Action OnForgeHasBeenOpened;
 
@@ -30,6 +30,8 @@ public class LevelManager : MonoBehaviour
 
     public void SyncUnlockedLevels()
     {
+        if (GameManager.instance == null) { Debug.LogWarning("GameManager null; levels will not load normally."); return; }
+
         int latestUnlock = GameManager.instance.GetFurthestUnlockedLevel();
         string equippedWeapon = GameManager.instance.GetEquippedWeapon();
         bool hasWeaponBeenEquipped = equippedWeapon != null && equippedWeapon != "";
