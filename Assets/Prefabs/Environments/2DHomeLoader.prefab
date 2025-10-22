@@ -242,7 +242,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a709442b4f9a94ae3bf7f3728124668e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneToLoad: MainScene
+  sceneToLoad: HomeArea
   levelNum: -1
   minimumLoadingTime: 1
   lockedText: {fileID: 0}

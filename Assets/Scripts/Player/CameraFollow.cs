@@ -18,4 +18,9 @@ public class CameraFollow : MonoBehaviour
     {
         transform.position = Vector3.SmoothDamp(transform.position, new Vector3(player.position.x, player.position.y, transform.position.z), ref currentVelocity, dampTime);
     }
+
+    public void SetPlayer(Transform to)
+    {
+        player = to;
+    }
 }

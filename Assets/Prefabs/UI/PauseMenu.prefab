@@ -831,7 +831,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 5097742646402918633}
         m_TargetAssemblyTypeName: PauseMenu, Assembly-CSharp
-        m_MethodName: Quit
+        m_MethodName: QuitToMainMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

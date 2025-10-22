@@ -51,7 +51,7 @@ public class ForgeManager : MonoBehaviour
 
     void Start()
     {
-        SaveManager.instance.OnSaveDataChanged += ReloadWeaponPurchaseData;
+        GameManager.instance.OnLoadComplete += ReloadWeaponPurchaseData;
         ReloadWeaponPurchaseData();
         if (_purchaseData.Count == 0) _purchaseData = GetDefaultWeaponPurchaseData();
 
@@ -81,7 +81,7 @@ public class ForgeManager : MonoBehaviour
     public GameObject GetWeaponByID(string id)
     {
         if (id != null && _weaponsById.ContainsKey(id)) return _weaponsById[id];
-        Debug.LogWarning("Requested weapon: " + id + ", not found!");
+        if (id != null) Debug.LogWarning("Requested weapon: " + id + ", not found!");
         return null;
     }
 
@@ -140,7 +140,7 @@ public class ForgeManager : MonoBehaviour
     private void ReloadWeaponPurchaseData()
     {
         _isInitializing = true; // ✅ prevent sounds during data load
-        _purchaseData = SaveManager.instance.GetWeaponsPurchased() ?? GetDefaultWeaponPurchaseData();
+        _purchaseData = GameManager.instance.GetWeaponsPurchased() ?? GetDefaultWeaponPurchaseData();
 
         // go through and send message out for each ForgeListing to update its data
         foreach (WeaponPurchaseData wpd in _purchaseData)
@@ -150,7 +150,7 @@ public class ForgeManager : MonoBehaviour
         }
 
         // also emit a weapon is equipped if necessary
-        string equippedWeapon = SaveManager.instance.GetEquippedWeapon() ?? "";
+        string equippedWeapon = GameManager.instance.GetEquippedWeapon() ?? "";
         if (equippedWeapon.Length != 0) OnListingEquipped?.Invoke(equippedWeapon);
         _isInitializing = false; // ✅ re-enable sounds after data load
     }

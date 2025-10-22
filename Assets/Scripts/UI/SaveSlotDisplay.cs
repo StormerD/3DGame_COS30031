@@ -12,13 +12,13 @@ public class SaveSlotDisplay : MonoBehaviour, IPointerClickHandler
     void Start()
     {
         menuManager = GetComponentInParent<MainMenuHandler>();
-        SaveManager.instance.OnSlotTimesUpdated += UpdateTimeText;
+        GameManager.instance.OnSlotTimesUpdated += UpdateTimeText;
         UpdateTimeText();
     }
 
     void UpdateTimeText()
     {
-        DateTime? time = SaveManager.instance.GetSlotLastSavedTime(slot);
+        DateTime? time = GameManager.instance.GetSlotLastSavedTime(slot);
         savetimeDisplay.text = time == null || time?.Ticks == 0 ? "Never saved!" : time?.ToString("F") ?? "Never saved!";
     }
 

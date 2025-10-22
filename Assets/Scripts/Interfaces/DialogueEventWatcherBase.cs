@@ -11,10 +11,10 @@ public abstract class DialogueEventWatcherBase : MonoBehaviour
     private bool _dialogueSynced = false;
     protected virtual void Start()
     {
-        if (SaveManager.instance != null)
+        if (GameManager.instance != null)
         {
             SyncDialogue();
-            SaveManager.instance.OnSaveDataChanged += SyncDialogue;
+            GameManager.instance.OnLoadComplete += SyncDialogue;
         }
         else Debug.LogWarning("Missing SaveManager instance");
         DialogueScreen.instance.OnDialogueEnded += SomeDialogueCompleted;
@@ -28,7 +28,7 @@ public abstract class DialogueEventWatcherBase : MonoBehaviour
     }
     protected bool HasSceneAlreadyHappened(string which)
     {
-        return SaveManager.instance.GetDialogueHasBeenPlayed(which);
+        return GameManager.instance.GetDialogueHasBeenPlayed(which);
     }
     private void SyncWrapper()
     {

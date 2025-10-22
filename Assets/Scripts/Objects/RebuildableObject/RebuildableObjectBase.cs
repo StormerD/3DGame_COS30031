@@ -56,11 +56,11 @@ public class RebuildableObjectBase : MonoBehaviour, IInteractable
 
     void Start()
     {
-        if (ActiveGameManager.instance != null)
+        if (GameManager.instance != null)
         {
-            OnCompletedRebuild += ActiveGameManager.instance.CurrentLevelComplete;
+            OnCompletedRebuild += GameManager.instance.CurrentLevelComplete;
         }
-        else Debug.LogWarning("ActiveGameManager is null; level complete events will not be emitted.");
+        else Debug.LogWarning("GameManager is null; level complete events will not be emitted.");
     }
 
     public void Interact(IInteractor interactor)

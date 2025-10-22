@@ -10,6 +10,7 @@ public class LevelSceneChanger : MonoBehaviour
     public float minimumLoadingTime = 1; // in case we want to do transitions. if we don't then just set this to 0
     public event Action<bool> OnUnlockedChanged;
     [SerializeField] TMP_Text lockedText;
+    public float loadDelay = 0.5f;
 
     private bool _levelUnlocked = true;
     private bool _canLoad = true;
@@ -38,7 +39,7 @@ public class LevelSceneChanger : MonoBehaviour
         if (_levelUnlocked && _canLoad)
         {
             _canLoad = false; // prevent multiple loads
-            LevelManager.instance.LoadLevel(sceneToLoad, minimumLoadingTime, levelNum);
+            LoadScene();
         }
     }
 
@@ -61,5 +62,11 @@ public class LevelSceneChanger : MonoBehaviour
     {
         _forgeOpened = true;
         LevelUnlockDataChanged(_furthestUnlock);
+    }
+
+    private void LoadScene()
+    {
+        if (SceneUtility.GetBuildIndexByScenePath(sceneToLoad) != -1) StartCoroutine(Util.AsyncLoader(sceneToLoad, loadDelay, minimumLoadingTime));
+        else Debug.LogWarning("Tried to load unknown scene: " + sceneToLoad);
     }
 }

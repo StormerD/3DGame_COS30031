@@ -7,24 +7,15 @@ public class PlayerWeaponHandler2D : PlayerWeaponHandlerBase
     {
         if (_equippedWeapon != null) return;
 
-        if (ActiveGameManager.instance != null && ActiveGameManager.instance.equippedWeapon != null)
-        {
-            _equippedWeapon = ActiveGameManager.instance.equippedWeapon;
-            if (!_equippedWeapon.TryGetComponent(out _weaponScript)) Debug.LogWarning("Equipped weapon missing IWeapon interface");
-            else
-            {
-                _equippedWeapon.transform.parent = transform;
-                _equippedWeapon.transform.localPosition = Vector2.zero;
-            }
-        }
-        if (ActiveGameManager.instance == null && transform.childCount > 0)
+        // really only used for debugging - happens when you start the game within a level (in editor) 
+        if (GameManager.instance == null && transform.childCount > 0)
         {
             foreach (Transform t in transform) if (t.TryGetComponent<WeaponBase>(out var _))
-            {
-                _equippedWeapon = t.gameObject;
-                if (!_equippedWeapon.TryGetComponent(out _weaponScript)) Debug.LogWarning("Equipped weapon does not implement IWeapon interface");
-                break;
-            }
+                {
+                    _equippedWeapon = t.gameObject;
+                    if (!_equippedWeapon.TryGetComponent(out _weaponScript)) Debug.LogWarning("Equipped weapon does not implement IWeapon interface");
+                    break;
+                }
         }
     }
 

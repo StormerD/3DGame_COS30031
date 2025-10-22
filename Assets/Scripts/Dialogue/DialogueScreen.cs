@@ -59,6 +59,12 @@ public class DialogueScreen : MonoBehaviour, IPointerClickHandler
         OnDialogueEnded += CheckQueuedScenes;
     }
 
+    void Start()
+    {
+        if (GameManager.instance != null) OnDialogueEnded += GameManager.instance.UpdateDialogueList;
+        else { Debug.Log("Gamemanager null; dialogue screen cannot update saved dialogue"); }
+    }
+
     public void OnPointerClick(PointerEventData ped)
     {
         if (!_playerCanClick) return;

@@ -36,7 +36,7 @@ public class MainMenuHandler : MonoBehaviour
 
     public void SaveToSlot(int which)
     {
-        SaveManager.instance.Save(which);
+        GameManager.instance.Save(which);
     }
 
     public void StartGame(int slot)
@@ -44,7 +44,7 @@ public class MainMenuHandler : MonoBehaviour
         Debug.Log("Loading game... slot " + slot);
 
         // Load data
-        SaveManager.instance.LoadFromSlot(slot);
+        GameManager.instance.LoadFromSlot(slot);
         SceneManager.LoadScene("HomeArea");
     }
 

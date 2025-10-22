@@ -29,7 +29,7 @@ public class CurrencyUI : MonoBehaviour
     private void Start()
     {
         PullCurrencyValuesDirectly();
-        if (SaveManager.instance != null) SaveManager.instance.OnSaveDataChanged += PullCurrencyValuesDirectly;
+        if (GameManager.instance != null) GameManager.instance.OnLoadComplete += PullCurrencyValuesDirectly;
     }
 
     private void PullCurrencyValuesDirectly()

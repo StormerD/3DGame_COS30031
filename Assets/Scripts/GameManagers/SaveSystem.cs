@@ -44,12 +44,12 @@ public static class SaveSystem
 [Serializable]
 public class SaveData
 {
-    public int slotIndex;       // identifies which save slot to use
-    public int furthestUnlockedLevel;  
-    public PlayerCurrency currency; // persistent player progress
+    public int slotIndex;       
+    public int furthestUnlockedLevel; // furthest complete level is this - 1
+    public PlayerCurrency currency; 
     public string equippedWeapon; // the player's currently equipped weapon
-    public List<WeaponPurchaseData> weaponsPurchased;
-    public HashSet<string> dialoguesPlayed;
+    public List<WeaponPurchaseData> weaponsPurchased; // if a weapon key is omitted here, it is not unlocked or purchased
+    public List<string> dialoguesPlayed; // dialogue keys that have been played
     public int activeLevel;
 }
 
