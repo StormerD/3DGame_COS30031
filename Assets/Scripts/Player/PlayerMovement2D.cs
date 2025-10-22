@@ -55,7 +55,7 @@ public class PlayerMovement2D : MonoBehaviour, IMover2D
         // keep track of current direction for other scripts (like weapons) that depend on player direction
         // but only update when actually moving. this way if the player stops moving the last direction is saved
         _currentDirection = _rb.linearVelocity == Vector2.zero ? _currentDirection : _rb.linearVelocity.normalized;
-        bool isMoving = Mathf.Abs(inp.x) > 0.1f;
+        bool isMoving = inp.magnitude > 0.1f;
         bool isGrounded = IsGrounded();
 
         if (isGrounded && isMoving && Time.time > _dashStartedAt + dashLength)
