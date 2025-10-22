@@ -433,6 +433,11 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7831754770760270017, guid: 3a23b8e99d3f14ff3b16578628aee2f4, type: 3}
   m_PrefabInstance: {fileID: 1966861215}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &46888005 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8221447523195868004, guid: 773277139d0e24244aa60dd089f9f200, type: 3}
+  m_PrefabInstance: {fileID: 4934818787946672838}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &98039417
 GameObject:
   m_ObjectHideFlags: 0
@@ -16849,12 +16854,24 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1167996640419250321, guid: 773277139d0e24244aa60dd089f9f200, type: 3}
   m_PrefabInstance: {fileID: 4934818787946672838}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 46888005}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9aab54963e4354d7cbe3c3c5eb4d73fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1021198080
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 46888005}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60933bc63379f4374bb8832e61ba2618, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FreezeEntitiesManager
 --- !u!1 &1021645035
 GameObject:
   m_ObjectHideFlags: 0
@@ -84536,7 +84553,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8221447523195868004, guid: 773277139d0e24244aa60dd089f9f200, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1021198080}
   m_SourcePrefab: {fileID: 100100000, guid: 773277139d0e24244aa60dd089f9f200, type: 3}
 --- !u!1001 &5178464292170593641
 PrefabInstance:

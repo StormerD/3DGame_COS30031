@@ -35,7 +35,6 @@ public class ForgeManager : MonoBehaviour
     private bool _isInitializing = false;
     public bool IsInitializing => _isInitializing;
 
-
     void Awake()
     {
         if (instance != null && instance != this) Destroy(gameObject);
@@ -51,6 +50,13 @@ public class ForgeManager : MonoBehaviour
 
     void Start()
     {
+        if (FreezeEntitiesManager.instance != null)
+        {
+            OnForgeOpened += FreezeEntitiesManager.instance.StartFreeze;
+            OnForgeClosed += FreezeEntitiesManager.instance.EndFreeze;
+        }
+        else Debug.Log("Cannot add dialogue to freeze, as freezeentitiesmanager is null!");
+        
         if (GameManager.instance == null) { Debug.LogWarning("GameManager null; forge does not know purchase state."); return; } 
 
         GameManager.instance.OnLoadComplete += ReloadWeaponPurchaseData;
