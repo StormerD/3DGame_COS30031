@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0659cfded02744af4b37b6e20e5dd2ce, type: 3}
+  m_Name: LearnToPickup
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueScene
+  dialogueKey: learnToPickupRebuildables
+  scripts:
+  - {fileID: 11400000, guid: 17655f4b4aba5402bb76273b93403f9a, type: 2}
+  - {fileID: 11400000, guid: 36edff770b7fa429282ef3e41e845cda, type: 2}
+  - {fileID: 11400000, guid: c2fd32c8bcba94390867e5f1c8c15ab7, type: 2}
+  - {fileID: 11400000, guid: 2fd3b107c02864f679c73844666d236c, type: 2}
+  - {fileID: 11400000, guid: 862822e50e15141028553a7686cf96db, type: 2}

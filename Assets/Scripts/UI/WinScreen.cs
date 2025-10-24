@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class WinScreen : MonoBehaviour
 {
@@ -12,20 +13,18 @@ public class WinScreen : MonoBehaviour
 
     void Start()
     {
-        if (ActiveGameManager.instance == null) Debug.LogWarning("WinScreen needs the active manager to work!");
-        if (ActiveGameManager.instance.gameComplete) gameObject.SetActive(true);
+        if (GameManager.instance != null && GameManager.instance.GetGameComplete()) gameObject.SetActive(true);
         else gameObject.SetActive(false);
     }
 
-    public void RestartGame()
+    public void ContinuePlaying()
     {
-        ActiveGameManager.instance.gameHasStarted = false;
-        ActiveGameManager.instance.gameComplete = false;
-        LevelManager.instance.LoadLevel("MainScene", 0.1f, -1);
+        gameObject.SetActive(false);
     }
 
-    public void QuitGame()
+    public void QuitToMainMenu()
     {
-        Application.Quit(0);
+        if (GameManager.instance == null) Debug.LogWarning("Unable to save!");
+        else { GameManager.instance.SafeSave(); SceneManager.LoadScene(0); }
     }
 }

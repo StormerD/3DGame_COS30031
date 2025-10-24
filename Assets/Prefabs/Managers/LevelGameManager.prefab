@@ -9,8 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8558036495669174324}
-  - component: {fileID: 8078258290047091242}
+  - component: {fileID: 7784151854064337324}
   - component: {fileID: 8029355547032946047}
+  - component: {fileID: 2805340995070385376}
   m_Layer: 0
   m_Name: LevelGameManager
   m_TagString: Untagged
@@ -27,13 +28,13 @@ Transform:
   m_GameObject: {fileID: 5888958742883519145}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 211.17046, y: 124.75339, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8078258290047091242
+--- !u!114 &7784151854064337324
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -42,10 +43,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 5888958742883519145}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 01466ea5362d84850ac6d1e4efa9a080, type: 3}
+  m_Script: {fileID: 11500000, guid: 9aab54963e4354d7cbe3c3c5eb4d73fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  availableWeapons:
+  - {fileID: 4087904268931396438, guid: 47304c19acc294ec08f82d18aa634b22, type: 3}
+  - {fileID: 1667736680288488315, guid: 3c1327c8ffe124b8f8c8b94e9027df6d, type: 3}
+  - {fileID: 4087904268931396438, guid: 47304c19acc294ec08f82d18aa634b22, type: 3}
+  - {fileID: 1667736680288488315, guid: 3c1327c8ffe124b8f8c8b94e9027df6d, type: 3}
   player: {fileID: 0}
+  forgeMenu: {fileID: 0}
+  forgeMenuScrollbox: {fileID: 0}
 --- !u!114 &8029355547032946047
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -58,3 +66,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f69738238a70948df9b7f29819b2b1cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2805340995070385376
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5888958742883519145}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60933bc63379f4374bb8832e61ba2618, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FreezeEntitiesManager

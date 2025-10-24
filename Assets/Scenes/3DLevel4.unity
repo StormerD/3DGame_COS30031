@@ -1458,6 +1458,7 @@ GameObject:
   - component: {fileID: 1551612037}
   - component: {fileID: 1551612040}
   - component: {fileID: 1551612041}
+  - component: {fileID: 1551612042}
   m_Layer: 8
   m_Name: player
   m_TagString: Player
@@ -1745,6 +1746,19 @@ MonoBehaviour:
   weapon3DTranslations:
   - {fileID: 1658126677594620924, guid: dd2c69bd171d644ec880bc87b3bdcc2c, type: 3}
   - {fileID: 4031752658481073270, guid: e7badf7ae2bbe418e8d7b05f0a35d78d, type: 3}
+--- !u!114 &1551612042
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1551612029}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96e6d976ddf8c41dfb503642e78239b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerDataTracker
+  registrationPriority: 5
 --- !u!1 &1768414135
 GameObject:
   m_ObjectHideFlags: 0

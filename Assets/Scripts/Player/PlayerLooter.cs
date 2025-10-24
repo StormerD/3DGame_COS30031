@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 
+[RequireComponent(typeof(PlayerDataTracker))]
 public class PlayerLooter : MonoBehaviour, ILooter
 {
     private int _currencyCommon;
@@ -10,15 +11,9 @@ public class PlayerLooter : MonoBehaviour, ILooter
 
     void Start()
     {
-        if (ActiveGameManager.instance != null)
+        if (GameManager.instance != null)
         {
-            _currencyCommon = ActiveGameManager.instance.common;
-            _currencyRare = ActiveGameManager.instance.rare;
-            _currencyMythic = ActiveGameManager.instance.mythic;
-        }
-        if (SaveManager.instance != null)
-        {
-            SaveManager.instance.OnSaveDataChanged += SetCurrency;   
+            GameManager.instance.OnLoadComplete += SetCurrency;
         }
     }
 
@@ -39,7 +34,7 @@ public class PlayerLooter : MonoBehaviour, ILooter
                 CurrencyChanged?.Invoke(type, _currencyMythic);
                 break;
         }
-        
+
     }
 
     public int GetCurrency(CurrencyType type)
@@ -57,7 +52,7 @@ public class PlayerLooter : MonoBehaviour, ILooter
 
     public void SetCurrency()
     {
-        PlayerCurrency pc = SaveManager.instance.GetCurrency();
+        PlayerCurrency pc = GameManager.instance.GetCurrency();
         _currencyCommon = pc.common; _currencyRare = pc.rare; _currencyMythic = pc.mythic;
     }
 }

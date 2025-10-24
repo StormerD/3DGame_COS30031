@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEngine.InputSystem.InputAction;
 
-[RequireComponent(typeof(PlayerInput))]
+[RequireComponent(typeof(PlayerInput), typeof(PlayerDataTracker))]
 public abstract class PlayerWeaponHandlerBase : MonoBehaviour, IFighter
 {
     public Transform weaponInstantiationTransform;
@@ -16,7 +16,7 @@ public abstract class PlayerWeaponHandlerBase : MonoBehaviour, IFighter
         inp.secondary.performed += Secondary;
         
         if (ForgeManager.instance != null) ForgeManager.instance.OnListingEquipped += EquipWeapon;
-        SaveManager.instance.OnSaveDataChanged += SetEquippedWeapon;
+        if (GameManager.instance != null) GameManager.instance.OnLoadComplete += SetEquippedWeapon;
 
         if (weaponInstantiationTransform == null) weaponInstantiationTransform = transform;
 
@@ -26,7 +26,7 @@ public abstract class PlayerWeaponHandlerBase : MonoBehaviour, IFighter
     #region Equipping
     private void SetEquippedWeapon()
     {
-        EquipWeapon(SaveManager.instance.GetEquippedWeapon());
+        EquipWeapon(GameManager.instance.GetEquippedWeapon());
     }
     public void EquipWeapon(string to)
     {

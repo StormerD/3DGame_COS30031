@@ -50,7 +50,7 @@ GameObject:
   - component: {fileID: 2947976066158331249}
   - component: {fileID: 5564352582063219539}
   m_Layer: 5
-  m_Name: SpeakerNamebox
+  m_Name: LeftSpeakerNamebox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -493,7 +493,7 @@ GameObject:
   - component: {fileID: 5836750547729097526}
   - component: {fileID: 8541416272900203933}
   m_Layer: 5
-  m_Name: SpeakerNamebox
+  m_Name: RightSpeakerNamebox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -604,7 +604,7 @@ Animator:
   m_GameObject: {fileID: 6299038674106132122}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 9750913198edd49b59e87908d274f54c, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -630,12 +630,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DialogueBox
   _dialogueTextBox: {fileID: 213248115226575407}
   defaultBlankImage: {fileID: 2800000, guid: 2633a54a0b8bac54497e7637f7a54298, type: 3}
-  _leftSpeakerBox: {fileID: 7328188125159007830}
-  leftSpeakerImage: {fileID: 1638523204830222578}
-  _leftSpeakerNamebox: {fileID: 4578283837815426487}
-  _rightSpeakerBox: {fileID: 7948205090445845653}
-  rightSpeakerImage: {fileID: 4294830196707363497}
-  _rightSpeakerNamebox: {fileID: 688954412569791780}
+  _leftSpeakerImage: {fileID: 1638523204830222578}
+  _leftSpeakerNameBox: {fileID: 866864302792457388}
+  _leftSpeakerNameText: {fileID: 4578283837815426487}
+  _rightSpeakerImage: {fileID: 4294830196707363497}
+  _rightSpeakerNameBox: {fileID: 5945172417545652027}
+  _rightSpeakerNameText: {fileID: 688954412569791780}
 --- !u!1 &6614526629711798448
 GameObject:
   m_ObjectHideFlags: 0
@@ -869,7 +869,7 @@ MonoBehaviour:
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 44
-  m_fontSizeMax: 72
+  m_fontSizeMax: 50
   m_fontStyle: 1
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 256
@@ -880,7 +880,7 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_TextWrappingMode: 1
+  m_TextWrappingMode: 2
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}

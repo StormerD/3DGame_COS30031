@@ -4,10 +4,9 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerMovement3D))]
 public class PlayerWeaponHandler3D : PlayerWeaponHandlerBase
 {
-    [Tooltip("Upon entry into a level scene, we pull the equipped weapon from the ActiveGameManager. That will give us a 2d weapon. This is a list of 3D equivalent weapons that will be matched by ID of the 2d weapon.")]
+    [Tooltip("Upon entry into a level scene, we pull the equipped weapon from the save manager. That will give us a weapon string. This is a list of 3D equivalent weapons that will be matched by ID of the 2d weapon.")]
     public List<GameObject> weapon3DTranslations;
     private Dictionary<string, GameObject> _3dWeaponsById = new();
-    private GameObject _weapon2D;
 
     protected override void Start()
     {
@@ -23,22 +22,12 @@ public class PlayerWeaponHandler3D : PlayerWeaponHandlerBase
         }
         base.Start();
     }
-
-    public override void EquipWeapon(GameObject weapon)
+    
+    private GameObject Get3DWeapon(string id)
     {
-        GameObject weapon3D = TranslateWeaponDimension(weapon);
-        if (weapon != weapon3D) _weapon2D = weapon; // store 2d version for the active game manager
-        base.EquipWeapon(weapon3D);
-    }
+        if (_3dWeaponsById.ContainsKey(id)) return _3dWeaponsById[id];
 
-    private GameObject TranslateWeaponDimension(GameObject original)
-    {
-        string originalId = original.TryGetComponent(out WeaponBase originalWeaponScript) ? originalWeaponScript.GetWeaponData().weaponId : "";
-        
-        if (originalId == "") Debug.LogWarning("No original weapon ID found on " + original.name);
-        else if (!_3dWeaponsById.ContainsKey(originalId)) Debug.LogWarning("No suitable 3D translation found for ID: " + originalId);
-        else return _3dWeaponsById[originalId];
-        
+        Debug.LogWarning("No 3D weapon found for ID: " + id); 
         return null;
     }
 
@@ -46,23 +35,17 @@ public class PlayerWeaponHandler3D : PlayerWeaponHandlerBase
     {
         if (_equippedWeapon != null) return;
 
-        if (ActiveGameManager.instance != null && ActiveGameManager.instance.equippedWeapon != null)
+        if (GameManager.instance != null)
         {
-            GameObject temp = ActiveGameManager.instance.equippedWeapon;
-            if (!temp.TryGetComponent(out WeaponBase _)) Debug.LogWarning("Equipped weapon missing WeaponBase");
-            else
+            string equippedWeapon = GameManager.instance.GetEquippedWeapon();
+            GameObject weapon3D = Get3DWeapon(equippedWeapon);
+            if (weapon3D != null)
             {
-                GameObject translation = TranslateWeaponDimension(temp);
-                if (translation != null)
-                {
-                    if (!translation.TryGetComponent(out _weaponScript)) Debug.LogWarning("Translation " + translation.name + " does not have an IWeapon script.");
-                    EquipWeapon(temp);
-                }
-                else Debug.LogWarning("Could not find a translation for " + temp.name);
-                temp.SetActive(false);
-            }
+                if (!weapon3D.TryGetComponent(out _weaponScript)) Debug.LogWarning("Weapon " + weapon3D.name + " does not have an IWeapon script.");
+                EquipWeapon(weapon3D);
+            } else Debug.LogWarning("Failed equipping 3D weapon.");
         }
-        if (ActiveGameManager.instance == null && transform.childCount > 0)
+        if (GameManager.instance == null && transform.childCount > 0)
         {
             WeaponBase test = GetComponentInChildren<WeaponBase>();
             if (test != null)
@@ -74,11 +57,5 @@ public class PlayerWeaponHandler3D : PlayerWeaponHandlerBase
                 Debug.Log("Could not find any weapon on player");
             }
         }
-    }
-
-    public override GameObject GetEquippedWeaponObject()
-    {
-        if (_weapon2D != null) return _weapon2D;
-        return base.GetEquippedWeaponObject();
     }
 }

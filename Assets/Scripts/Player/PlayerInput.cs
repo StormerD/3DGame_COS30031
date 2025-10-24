@@ -1,4 +1,4 @@
-using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEngine.InputSystem.InputAction;
@@ -23,12 +23,13 @@ public class PlayerInput : MonoBehaviour
 
     void Start()
     {
-        if(PauseManager.instance != null)
+        pause.performed += PauseWrapper;
+        if (FreezeEntitiesManager.instance != null)
         {
-            pause.performed += PauseWrapper;
-            PauseManager.instance.OnPause += DisableSelectInput; // disables everything except the "pause" action
-            PauseManager.instance.OnUnpause += EnableSelectInput; // vice-versa
+            FreezeEntitiesManager.instance.OnFreeze += DisableSelectInput;
+            FreezeEntitiesManager.instance.OnUnfreeze += EnableSelectInput;
         }
+        else Debug.LogWarning("FreezeEntitiesManager null; player will never be frozen.");
     }
 
     public void DisableSelectInput()
@@ -65,7 +66,11 @@ public class PlayerInput : MonoBehaviour
         secondary.Enable();
     }
 
-    void PauseWrapper(CallbackContext callbackContext) => PauseManager.instance.Pause();
+    void PauseWrapper(CallbackContext callbackContext)
+    {
+        if (PauseManager.instance != null) PauseManager.instance.Pause();
+        else Debug.LogWarning("PauseManager null; cannot pause!");
+    }
     void OnEnable() => _inputActions.Enable();
     void OnDisable() => _inputActions.Disable();
 }

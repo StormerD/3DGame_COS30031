@@ -14,7 +14,7 @@ public class HomeDialogueEventWatcher : DialogueEventWatcherBase
         base.Start();
         ForgeManager.instance.OnForgeClosed += PlayForge;
         if (!_introductionPlayed) StartCoroutine(DelayedRequestDialogue(introductionScene, introductionSceneStartDelay));
-        if (ActiveGameManager.instance != null && ActiveGameManager.instance.gameComplete && !_winPlayed)
+        if (GameManager.instance != null && GameManager.instance.GetGameComplete() && !_winPlayed)
         {
             StartCoroutine(DelayedRequestDialogue(winScene, winDialogueDelay));
         }

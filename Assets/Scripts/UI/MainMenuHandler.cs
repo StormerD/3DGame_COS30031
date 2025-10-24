@@ -12,7 +12,6 @@ public class MainMenuHandler : MonoBehaviour
     void Start()
     {
         _animator = GetComponent<Animator>();
-        _animator.SetTrigger("GameStart");
     }
 
     public void GoToExplanationMenu()
@@ -36,7 +35,7 @@ public class MainMenuHandler : MonoBehaviour
 
     public void SaveToSlot(int which)
     {
-        SaveManager.instance.Save(which);
+        GameManager.instance.Save(which);
     }
 
     public void StartGame(int slot)
@@ -44,8 +43,15 @@ public class MainMenuHandler : MonoBehaviour
         Debug.Log("Loading game... slot " + slot);
 
         // Load data
-        SaveManager.instance.LoadFromSlot(slot);
-        SceneManager.LoadScene("HomeArea");
+        GameManager.instance.OnLoadComplete += LoadToActiveScene;
+        GameManager.instance.LoadFromSlot(slot);
+    }
+
+    private void LoadToActiveScene()
+    {
+        Debug.Log("Loading scene: " + GameManager.instance.GetActiveScene());
+        GameManager.instance.OnLoadComplete -= LoadToActiveScene;
+        StartCoroutine(AsyncSceneLoader.AsyncLoad(GameManager.instance.GetActiveScene()));
     }
 
     public void QuitGame() => Application.Quit();
