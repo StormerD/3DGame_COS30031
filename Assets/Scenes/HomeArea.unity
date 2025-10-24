@@ -80771,17 +80771,6 @@ Transform:
   - {fileID: 2059415857}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1286186682 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1638523204830222578, guid: 7d56b51a736ba449eaa90819da0d49de, type: 3}
-  m_PrefabInstance: {fileID: 6722052386626102264}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.RawImage
 --- !u!1001 &1326094572
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -83353,17 +83342,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7417409794376676458, guid: ceeeec931d2fc4750ab08b6e2767455e, type: 3}
   m_PrefabInstance: {fileID: 457968175}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1887060127 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4294830196707363497, guid: 7d56b51a736ba449eaa90819da0d49de, type: 3}
-  m_PrefabInstance: {fileID: 6722052386626102264}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.RawImage
 --- !u!1001 &1966861215
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -84707,21 +84685,9 @@ PrefabInstance:
       propertyPath: m_TextWrappingMode
       value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 213248115226575407, guid: 7d56b51a736ba449eaa90819da0d49de, type: 3}
-      propertyPath: m_fontColor32.rgba
-      value: 4294967295
-      objectReference: {fileID: 0}
-    - target: {fileID: 688954412569791780, guid: 7d56b51a736ba449eaa90819da0d49de, type: 3}
-      propertyPath: m_fontColor32.rgba
-      value: 4283367327
-      objectReference: {fileID: 0}
     - target: {fileID: 866864302792457388, guid: 7d56b51a736ba449eaa90819da0d49de, type: 3}
       propertyPath: m_Name
       value: LeftSpeakerNamebox
-      objectReference: {fileID: 0}
-    - target: {fileID: 4578283837815426487, guid: 7d56b51a736ba449eaa90819da0d49de, type: 3}
-      propertyPath: m_fontColor32.rgba
-      value: 4283367403
       objectReference: {fileID: 0}
     - target: {fileID: 5945172417545652027, guid: 7d56b51a736ba449eaa90819da0d49de, type: 3}
       propertyPath: m_Name
@@ -84731,14 +84697,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: DialogueScreen
       objectReference: {fileID: 0}
-    - target: {fileID: 7596192985681487146, guid: 7d56b51a736ba449eaa90819da0d49de, type: 3}
-      propertyPath: _leftSpeakerImage
-      value: 
-      objectReference: {fileID: 1286186682}
-    - target: {fileID: 7596192985681487146, guid: 7d56b51a736ba449eaa90819da0d49de, type: 3}
-      propertyPath: _rightSpeakerImage
-      value: 
-      objectReference: {fileID: 1887060127}
     - target: {fileID: 7596192985681487146, guid: 7d56b51a736ba449eaa90819da0d49de, type: 3}
       propertyPath: _leftSpeakerNameBox
       value: 

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1167996640419250321}
   - component: {fileID: 6051233350238237071}
   - component: {fileID: 4534276167769153773}
+  - component: {fileID: 6742871774967735005}
   m_Layer: 0
   m_Name: HomeGameManager
   m_TagString: Untagged
@@ -66,7 +67,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01466ea5362d84850ac6d1e4efa9a080, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
 --- !u!114 &4534276167769153773
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -79,3 +79,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f69738238a70948df9b7f29819b2b1cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6742871774967735005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8221447523195868004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60933bc63379f4374bb8832e61ba2618, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FreezeEntitiesManager

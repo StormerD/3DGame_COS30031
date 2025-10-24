@@ -112,6 +112,12 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
+  - m_Name: PlayFlash
+    m_Type: 9
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -188,10 +194,10 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: 992793470757869445}
-    m_Position: {x: 270, y: 250, z: 0}
+    m_Position: {x: 40, y: 250, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 5782006095697902387}
-    m_Position: {x: 270, y: 110, z: 0}
+    m_Position: {x: 350, y: 250, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -1471525900293696487}
     m_Position: {x: -30, y: 170, z: 0}
@@ -201,7 +207,7 @@ AnimatorStateMachine:
   - {fileID: -3986726010660305370}
   m_StateMachineTransitions: {}
   m_StateMachineBehaviours: []
-  m_AnyStatePosition: {x: 50, y: 20, z: 0}
+  m_AnyStatePosition: {x: 50, y: 30, z: 0}
   m_EntryPosition: {x: -230, y: 170, z: 0}
   m_ExitPosition: {x: 750, y: 160, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}

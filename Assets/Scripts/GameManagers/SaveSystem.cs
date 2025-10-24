@@ -50,7 +50,7 @@ public class SaveData
     public string equippedWeapon; // the player's currently equipped weapon
     public List<WeaponPurchaseData> weaponsPurchased; // if a weapon key is omitted here, it is not unlocked or purchased
     public List<string> dialoguesPlayed; // dialogue keys that have been played
-    public int activeLevel;
+    public int activeScene;
 }
 
 [Serializable]
