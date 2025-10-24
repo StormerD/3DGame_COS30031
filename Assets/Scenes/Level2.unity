@@ -8559,6 +8559,8 @@ MonoBehaviour:
     component!
   numComponents: 5
   componentPrefab: {fileID: 8693533013562325051, guid: bfdfe8d4380aa4b59abac05fab9302ad, type: 3}
+  componentPlaced: {fileID: 8300000, guid: 97a4239fb5d3b48c2b07d86304c81135, type: 3}
+  completionSound: {fileID: 8300000, guid: bf163f2e58e1d47218416a6d73d3ad23, type: 3}
 --- !u!61 &644060859
 BoxCollider2D:
   m_ObjectHideFlags: 0

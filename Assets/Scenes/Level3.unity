@@ -173242,6 +173242,14 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1516942216790842513, guid: a379947444b2243dd9f623b359674b13, type: 3}
+      propertyPath: completionSound
+      value: 
+      objectReference: {fileID: 8300000, guid: bf163f2e58e1d47218416a6d73d3ad23, type: 3}
+    - target: {fileID: 1516942216790842513, guid: a379947444b2243dd9f623b359674b13, type: 3}
+      propertyPath: componentPlaced
+      value: 
+      objectReference: {fileID: 8300000, guid: 97a4239fb5d3b48c2b07d86304c81135, type: 3}
+    - target: {fileID: 1516942216790842513, guid: a379947444b2243dd9f623b359674b13, type: 3}
       propertyPath: componentPrefab
       value: 
       objectReference: {fileID: 2603688881602503742, guid: 3c79030cc880a4167b4bf99b465e0750, type: 3}
