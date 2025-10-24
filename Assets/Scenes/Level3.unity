@@ -599,8 +599,6 @@ GameObject:
   m_Component:
   - component: {fileID: 111343734}
   - component: {fileID: 111343737}
-  - component: {fileID: 111343736}
-  - component: {fileID: 111343735}
   m_Layer: 0
   m_Name: Waste (1)
   m_TagString: Untagged
@@ -623,39 +621,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 893345306}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &111343735
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 111343733}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 544e34fc8657148429ffa71382d4e14a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rebuildSprites:
-  - {fileID: 7444911405246898593, guid: 17d5d0d4066dade4e84da2eefab980d0, type: 3}
-  - {fileID: 7444911405246898593, guid: 17d5d0d4066dade4e84da2eefab980d0, type: 3}
-  - {fileID: 6200118337827907677, guid: 2633a54a0b8bac54497e7637f7a54298, type: 3}
-  completeBuildEffects: {fileID: 0}
-  rebuildable: {fileID: 0}
---- !u!114 &111343736
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 111343733}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 544e34fc8657148429ffa71382d4e14a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rebuildSprites: []
-  completeBuildEffects: {fileID: 0}
-  rebuildable: {fileID: 0}
 --- !u!212 &111343737
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5381,7 +5346,6 @@ GameObject:
   m_Component:
   - component: {fileID: 204720079}
   - component: {fileID: 204720081}
-  - component: {fileID: 204720080}
   m_Layer: 0
   m_Name: Plastic (9)
   m_TagString: Untagged
@@ -5404,24 +5368,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 893345306}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &204720080
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 204720078}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 544e34fc8657148429ffa71382d4e14a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rebuildSprites:
-  - {fileID: -8694458375606998644, guid: 6d3420af10371124f81c1abf293a8685, type: 3}
-  - {fileID: -8694458375606998644, guid: 6d3420af10371124f81c1abf293a8685, type: 3}
-  - {fileID: 6200118337827907677, guid: 2633a54a0b8bac54497e7637f7a54298, type: 3}
-  completeBuildEffects: {fileID: 0}
-  rebuildable: {fileID: 0}
 --- !u!212 &204720081
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -6097,7 +6043,6 @@ GameObject:
   m_Component:
   - component: {fileID: 264767529}
   - component: {fileID: 264767531}
-  - component: {fileID: 264767530}
   m_Layer: 0
   m_Name: Plastic (3)
   m_TagString: Untagged
@@ -6120,24 +6065,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 893345306}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &264767530
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 264767528}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 544e34fc8657148429ffa71382d4e14a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rebuildSprites:
-  - {fileID: -8694458375606998644, guid: 6d3420af10371124f81c1abf293a8685, type: 3}
-  - {fileID: -8694458375606998644, guid: 6d3420af10371124f81c1abf293a8685, type: 3}
-  - {fileID: 6200118337827907677, guid: 2633a54a0b8bac54497e7637f7a54298, type: 3}
-  completeBuildEffects: {fileID: 0}
-  rebuildable: {fileID: 0}
 --- !u!212 &264767531
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -6206,7 +6133,6 @@ GameObject:
   m_Component:
   - component: {fileID: 274813284}
   - component: {fileID: 274813285}
-  - component: {fileID: 274813286}
   m_Layer: 0
   m_Name: Plastic
   m_TagString: Untagged
@@ -6287,24 +6213,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &274813286
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 274813283}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 544e34fc8657148429ffa71382d4e14a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rebuildSprites:
-  - {fileID: -8694458375606998644, guid: 6d3420af10371124f81c1abf293a8685, type: 3}
-  - {fileID: -8694458375606998644, guid: 6d3420af10371124f81c1abf293a8685, type: 3}
-  - {fileID: 6200118337827907677, guid: 2633a54a0b8bac54497e7637f7a54298, type: 3}
-  completeBuildEffects: {fileID: 0}
-  rebuildable: {fileID: 0}
 --- !u!1 &275627429
 GameObject:
   m_ObjectHideFlags: 0
@@ -6608,8 +6516,6 @@ GameObject:
   m_Component:
   - component: {fileID: 345926521}
   - component: {fileID: 345926524}
-  - component: {fileID: 345926523}
-  - component: {fileID: 345926522}
   m_Layer: 0
   m_Name: Waste (6)
   m_TagString: Untagged
@@ -6632,39 +6538,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 893345306}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &345926522
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 345926520}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 544e34fc8657148429ffa71382d4e14a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rebuildSprites:
-  - {fileID: 7444911405246898593, guid: 17d5d0d4066dade4e84da2eefab980d0, type: 3}
-  - {fileID: 7444911405246898593, guid: 17d5d0d4066dade4e84da2eefab980d0, type: 3}
-  - {fileID: 6200118337827907677, guid: 2633a54a0b8bac54497e7637f7a54298, type: 3}
-  completeBuildEffects: {fileID: 0}
-  rebuildable: {fileID: 0}
---- !u!114 &345926523
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 345926520}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 544e34fc8657148429ffa71382d4e14a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rebuildSprites: []
-  completeBuildEffects: {fileID: 0}
-  rebuildable: {fileID: 0}
 --- !u!212 &345926524
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -7429,7 +7302,6 @@ GameObject:
   m_Component:
   - component: {fileID: 507275434}
   - component: {fileID: 507275436}
-  - component: {fileID: 507275435}
   m_Layer: 0
   m_Name: Plastic (8)
   m_TagString: Untagged
@@ -7446,30 +7318,12 @@ Transform:
   m_GameObject: {fileID: 507275433}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.95, y: -0.24, z: 0.04689701}
+  m_LocalPosition: {x: -5.57, y: -0.96, z: 0.04689701}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 893345306}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &507275435
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 507275433}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 544e34fc8657148429ffa71382d4e14a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rebuildSprites:
-  - {fileID: -8694458375606998644, guid: 6d3420af10371124f81c1abf293a8685, type: 3}
-  - {fileID: -8694458375606998644, guid: 6d3420af10371124f81c1abf293a8685, type: 3}
-  - {fileID: 6200118337827907677, guid: 2633a54a0b8bac54497e7637f7a54298, type: 3}
-  completeBuildEffects: {fileID: 0}
-  rebuildable: {fileID: 0}
 --- !u!212 &507275436
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -8324,8 +8178,6 @@ GameObject:
   m_Component:
   - component: {fileID: 612243292}
   - component: {fileID: 612243295}
-  - component: {fileID: 612243294}
-  - component: {fileID: 612243293}
   m_Layer: 0
   m_Name: Waste (7)
   m_TagString: Untagged
@@ -8342,45 +8194,12 @@ Transform:
   m_GameObject: {fileID: 612243291}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.16, y: -5.29, z: 0.04689701}
+  m_LocalPosition: {x: 3.79, y: -5.29, z: 0.04689701}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 893345306}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &612243293
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 612243291}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 544e34fc8657148429ffa71382d4e14a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rebuildSprites:
-  - {fileID: 7444911405246898593, guid: 17d5d0d4066dade4e84da2eefab980d0, type: 3}
-  - {fileID: 7444911405246898593, guid: 17d5d0d4066dade4e84da2eefab980d0, type: 3}
-  - {fileID: 6200118337827907677, guid: 2633a54a0b8bac54497e7637f7a54298, type: 3}
-  completeBuildEffects: {fileID: 0}
-  rebuildable: {fileID: 0}
---- !u!114 &612243294
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 612243291}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 544e34fc8657148429ffa71382d4e14a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rebuildSprites: []
-  completeBuildEffects: {fileID: 0}
-  rebuildable: {fileID: 0}
 --- !u!212 &612243295
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -10060,7 +9879,6 @@ GameObject:
   m_Component:
   - component: {fileID: 758303272}
   - component: {fileID: 758303274}
-  - component: {fileID: 758303273}
   m_Layer: 0
   m_Name: Plastic (6)
   m_TagString: Untagged
@@ -10083,24 +9901,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 893345306}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &758303273
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 758303271}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 544e34fc8657148429ffa71382d4e14a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rebuildSprites:
-  - {fileID: -8694458375606998644, guid: 6d3420af10371124f81c1abf293a8685, type: 3}
-  - {fileID: -8694458375606998644, guid: 6d3420af10371124f81c1abf293a8685, type: 3}
-  - {fileID: 6200118337827907677, guid: 2633a54a0b8bac54497e7637f7a54298, type: 3}
-  completeBuildEffects: {fileID: 0}
-  rebuildable: {fileID: 0}
 --- !u!212 &758303274
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -10748,7 +10548,6 @@ GameObject:
   m_Component:
   - component: {fileID: 881887237}
   - component: {fileID: 881887239}
-  - component: {fileID: 881887238}
   m_Layer: 0
   m_Name: Plastic (2)
   m_TagString: Untagged
@@ -10771,24 +10570,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 893345306}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &881887238
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 881887236}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 544e34fc8657148429ffa71382d4e14a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rebuildSprites:
-  - {fileID: -8694458375606998644, guid: 6d3420af10371124f81c1abf293a8685, type: 3}
-  - {fileID: -8694458375606998644, guid: 6d3420af10371124f81c1abf293a8685, type: 3}
-  - {fileID: 6200118337827907677, guid: 2633a54a0b8bac54497e7637f7a54298, type: 3}
-  completeBuildEffects: {fileID: 0}
-  rebuildable: {fileID: 0}
 --- !u!212 &881887239
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -11087,8 +10868,6 @@ GameObject:
   m_Component:
   - component: {fileID: 949766028}
   - component: {fileID: 949766031}
-  - component: {fileID: 949766030}
-  - component: {fileID: 949766029}
   m_Layer: 0
   m_Name: Waste (3)
   m_TagString: Untagged
@@ -11111,39 +10890,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 893345306}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &949766029
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 949766027}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 544e34fc8657148429ffa71382d4e14a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rebuildSprites:
-  - {fileID: 7444911405246898593, guid: 17d5d0d4066dade4e84da2eefab980d0, type: 3}
-  - {fileID: 7444911405246898593, guid: 17d5d0d4066dade4e84da2eefab980d0, type: 3}
-  - {fileID: 6200118337827907677, guid: 2633a54a0b8bac54497e7637f7a54298, type: 3}
-  completeBuildEffects: {fileID: 0}
-  rebuildable: {fileID: 0}
---- !u!114 &949766030
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 949766027}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 544e34fc8657148429ffa71382d4e14a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rebuildSprites: []
-  completeBuildEffects: {fileID: 0}
-  rebuildable: {fileID: 0}
 --- !u!212 &949766031
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -11482,7 +11228,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1068328441}
   - component: {fileID: 1068328443}
-  - component: {fileID: 1068328442}
   m_Layer: 0
   m_Name: Plastic (5)
   m_TagString: Untagged
@@ -11505,24 +11250,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 893345306}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1068328442
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1068328440}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 544e34fc8657148429ffa71382d4e14a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rebuildSprites:
-  - {fileID: -8694458375606998644, guid: 6d3420af10371124f81c1abf293a8685, type: 3}
-  - {fileID: -8694458375606998644, guid: 6d3420af10371124f81c1abf293a8685, type: 3}
-  - {fileID: 6200118337827907677, guid: 2633a54a0b8bac54497e7637f7a54298, type: 3}
-  completeBuildEffects: {fileID: 0}
-  rebuildable: {fileID: 0}
 --- !u!212 &1068328443
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -11861,8 +11588,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1103298754}
   - component: {fileID: 1103298757}
-  - component: {fileID: 1103298756}
-  - component: {fileID: 1103298755}
   m_Layer: 0
   m_Name: Waste (5)
   m_TagString: Untagged
@@ -11885,39 +11610,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 893345306}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1103298755
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1103298753}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 544e34fc8657148429ffa71382d4e14a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rebuildSprites:
-  - {fileID: 7444911405246898593, guid: 17d5d0d4066dade4e84da2eefab980d0, type: 3}
-  - {fileID: 7444911405246898593, guid: 17d5d0d4066dade4e84da2eefab980d0, type: 3}
-  - {fileID: 6200118337827907677, guid: 2633a54a0b8bac54497e7637f7a54298, type: 3}
-  completeBuildEffects: {fileID: 0}
-  rebuildable: {fileID: 0}
---- !u!114 &1103298756
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1103298753}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 544e34fc8657148429ffa71382d4e14a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rebuildSprites: []
-  completeBuildEffects: {fileID: 0}
-  rebuildable: {fileID: 0}
 --- !u!212 &1103298757
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -11986,7 +11678,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1118387077}
   - component: {fileID: 1118387079}
-  - component: {fileID: 1118387078}
   m_Layer: 0
   m_Name: Plastic (4)
   m_TagString: Untagged
@@ -12009,24 +11700,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 893345306}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1118387078
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1118387076}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 544e34fc8657148429ffa71382d4e14a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rebuildSprites:
-  - {fileID: -8694458375606998644, guid: 6d3420af10371124f81c1abf293a8685, type: 3}
-  - {fileID: -8694458375606998644, guid: 6d3420af10371124f81c1abf293a8685, type: 3}
-  - {fileID: 6200118337827907677, guid: 2633a54a0b8bac54497e7637f7a54298, type: 3}
-  completeBuildEffects: {fileID: 0}
-  rebuildable: {fileID: 0}
 --- !u!212 &1118387079
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -173259,7 +172932,7 @@ PrefabInstance:
       objectReference: {fileID: 301621421585464340, guid: d2b709357c0165f4aa74a9e79407c563, type: 3}
     - target: {fileID: 3547392731944376465, guid: a379947444b2243dd9f623b359674b13, type: 3}
       propertyPath: m_Name
-      value: RebuildableObject
+      value: Waterpump
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 5833434895326292025, guid: a379947444b2243dd9f623b359674b13, type: 3}
@@ -173382,8 +173055,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1606299212}
   - component: {fileID: 1606299215}
-  - component: {fileID: 1606299214}
-  - component: {fileID: 1606299213}
   m_Layer: 0
   m_Name: Waste (2)
   m_TagString: Untagged
@@ -173400,45 +173071,12 @@ Transform:
   m_GameObject: {fileID: 1606299211}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -6.98, y: 0.93, z: 0.04689701}
+  m_LocalPosition: {x: -6.99, y: 0.23, z: 0.04689701}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 893345306}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1606299213
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1606299211}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 544e34fc8657148429ffa71382d4e14a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rebuildSprites:
-  - {fileID: 7444911405246898593, guid: 17d5d0d4066dade4e84da2eefab980d0, type: 3}
-  - {fileID: 7444911405246898593, guid: 17d5d0d4066dade4e84da2eefab980d0, type: 3}
-  - {fileID: 6200118337827907677, guid: 2633a54a0b8bac54497e7637f7a54298, type: 3}
-  completeBuildEffects: {fileID: 0}
-  rebuildable: {fileID: 0}
---- !u!114 &1606299214
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1606299211}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 544e34fc8657148429ffa71382d4e14a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rebuildSprites: []
-  completeBuildEffects: {fileID: 0}
-  rebuildable: {fileID: 0}
 --- !u!212 &1606299215
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -173597,7 +173235,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1615247820}
   - component: {fileID: 1615247822}
-  - component: {fileID: 1615247821}
   m_Layer: 0
   m_Name: Plastic (1)
   m_TagString: Untagged
@@ -173620,24 +173257,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 893345306}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1615247821
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1615247819}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 544e34fc8657148429ffa71382d4e14a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rebuildSprites:
-  - {fileID: -8694458375606998644, guid: 6d3420af10371124f81c1abf293a8685, type: 3}
-  - {fileID: -8694458375606998644, guid: 6d3420af10371124f81c1abf293a8685, type: 3}
-  - {fileID: 6200118337827907677, guid: 2633a54a0b8bac54497e7637f7a54298, type: 3}
-  completeBuildEffects: {fileID: 0}
-  rebuildable: {fileID: 0}
 --- !u!212 &1615247822
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -174802,8 +174421,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1798884189}
   - component: {fileID: 1798884192}
-  - component: {fileID: 1798884191}
-  - component: {fileID: 1798884190}
   m_Layer: 0
   m_Name: Waste (8)
   m_TagString: Untagged
@@ -174826,39 +174443,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 893345306}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1798884190
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1798884188}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 544e34fc8657148429ffa71382d4e14a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rebuildSprites:
-  - {fileID: 7444911405246898593, guid: 17d5d0d4066dade4e84da2eefab980d0, type: 3}
-  - {fileID: 7444911405246898593, guid: 17d5d0d4066dade4e84da2eefab980d0, type: 3}
-  - {fileID: 6200118337827907677, guid: 2633a54a0b8bac54497e7637f7a54298, type: 3}
-  completeBuildEffects: {fileID: 0}
-  rebuildable: {fileID: 0}
---- !u!114 &1798884191
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1798884188}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 544e34fc8657148429ffa71382d4e14a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rebuildSprites: []
-  completeBuildEffects: {fileID: 0}
-  rebuildable: {fileID: 0}
 --- !u!212 &1798884192
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -175197,8 +174781,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1821135247}
   - component: {fileID: 1821135250}
-  - component: {fileID: 1821135249}
-  - component: {fileID: 1821135248}
   m_Layer: 0
   m_Name: Waste (4)
   m_TagString: Untagged
@@ -175221,39 +174803,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 893345306}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1821135248
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1821135246}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 544e34fc8657148429ffa71382d4e14a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rebuildSprites:
-  - {fileID: 7444911405246898593, guid: 17d5d0d4066dade4e84da2eefab980d0, type: 3}
-  - {fileID: 7444911405246898593, guid: 17d5d0d4066dade4e84da2eefab980d0, type: 3}
-  - {fileID: 6200118337827907677, guid: 2633a54a0b8bac54497e7637f7a54298, type: 3}
-  completeBuildEffects: {fileID: 0}
-  rebuildable: {fileID: 0}
---- !u!114 &1821135249
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1821135246}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 544e34fc8657148429ffa71382d4e14a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rebuildSprites: []
-  completeBuildEffects: {fileID: 0}
-  rebuildable: {fileID: 0}
 --- !u!212 &1821135250
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -215802,7 +215351,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1922557807}
   - component: {fileID: 1922557809}
-  - component: {fileID: 1922557808}
   m_Layer: 0
   m_Name: Plastic (7)
   m_TagString: Untagged
@@ -215819,30 +215367,12 @@ Transform:
   m_GameObject: {fileID: 1922557806}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -6.26, y: 0.8, z: 0.04689701}
+  m_LocalPosition: {x: -5.96, y: 1.19, z: 0.04689701}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 893345306}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1922557808
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1922557806}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 544e34fc8657148429ffa71382d4e14a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rebuildSprites:
-  - {fileID: -8694458375606998644, guid: 6d3420af10371124f81c1abf293a8685, type: 3}
-  - {fileID: -8694458375606998644, guid: 6d3420af10371124f81c1abf293a8685, type: 3}
-  - {fileID: 6200118337827907677, guid: 2633a54a0b8bac54497e7637f7a54298, type: 3}
-  completeBuildEffects: {fileID: 0}
-  rebuildable: {fileID: 0}
 --- !u!212 &1922557809
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -217546,8 +217076,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2140727769}
   - component: {fileID: 2140727770}
-  - component: {fileID: 2140727771}
-  - component: {fileID: 2140727772}
   m_Layer: 0
   m_Name: Waste
   m_TagString: Untagged
@@ -217564,7 +217092,7 @@ Transform:
   m_GameObject: {fileID: 2140727768}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.28, y: 0.21997249, z: 0.04689701}
+  m_LocalPosition: {x: -4.21, y: 0.91, z: 0.04689701}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -217628,39 +217156,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &2140727771
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2140727768}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 544e34fc8657148429ffa71382d4e14a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rebuildSprites: []
-  completeBuildEffects: {fileID: 0}
-  rebuildable: {fileID: 0}
---- !u!114 &2140727772
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2140727768}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 544e34fc8657148429ffa71382d4e14a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rebuildSprites:
-  - {fileID: 7444911405246898593, guid: 17d5d0d4066dade4e84da2eefab980d0, type: 3}
-  - {fileID: 7444911405246898593, guid: 17d5d0d4066dade4e84da2eefab980d0, type: 3}
-  - {fileID: 6200118337827907677, guid: 2633a54a0b8bac54497e7637f7a54298, type: 3}
-  completeBuildEffects: {fileID: 0}
-  rebuildable: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
