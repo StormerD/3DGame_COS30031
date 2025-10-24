@@ -1,14 +1,11 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 
 /// <summary>
 /// this manager handles the listings on the Forge UI as well as any connections that the
 /// forge system needs to make with other systems (currency, weapon equipping, saving / loading data)
-/// it doesn't need to be in the scene unless there is a Forge object—the Forge object
-/// still needs the Forge.cs script on it, it will call into ForgeManager when needed
 /// </summary>
 public class ForgeManager : MonoBehaviour
 {
@@ -35,7 +32,6 @@ public class ForgeManager : MonoBehaviour
     private bool _isInitializing = false;
     public bool IsInitializing => _isInitializing;
 
-
     void Awake()
     {
         if (instance != null && instance != this) Destroy(gameObject);
@@ -45,22 +41,35 @@ public class ForgeManager : MonoBehaviour
             string weaponId = w.GetComponent<WeaponBase>().GetWeaponData().weaponId;
             if (!_weaponsById.ContainsKey(weaponId)) _weaponsById.Add(weaponId, w);
         }
-        if (!player.TryGetComponent(out _playerLooter)) Debug.LogWarning("ForgeManager player needs an ILooter component to purchase weapons!");
-        if (!forgeMenu.TryGetComponent(out _forgeMenuAnimator)) Debug.LogWarning("ForgeMenu missing animator.");
+        if (player != null && !player.TryGetComponent(out _playerLooter)) Debug.LogWarning("ForgeManager player needs an ILooter component to purchase weapons!");
+        if (forgeMenu != null && !forgeMenu.TryGetComponent(out _forgeMenuAnimator)) Debug.LogWarning("ForgeMenu missing animator.");
     }
 
     void Start()
     {
+        if (FreezeEntitiesManager.instance != null)
+        {
+            OnForgeOpened += FreezeEntitiesManager.instance.StartFreeze;
+            OnForgeClosed += FreezeEntitiesManager.instance.EndFreeze;
+        }
+        else Debug.Log("Cannot add dialogue to freeze, as freezeentitiesmanager is null!");
+        
+        if (GameManager.instance == null) { Debug.LogWarning("GameManager null; forge does not know purchase state."); return; }
+
         GameManager.instance.OnLoadComplete += ReloadWeaponPurchaseData;
         ReloadWeaponPurchaseData();
         if (_purchaseData.Count == 0) _purchaseData = GetDefaultWeaponPurchaseData();
 
-        for (int i = 0; i < forgeMenuScrollbox.childCount; i++)
+        if (forgeMenuScrollbox != null)
         {
-            if (forgeMenuScrollbox.GetChild(i).TryGetComponent(out ForgeItemListing listing))
+
+            for (int i = 0; i < forgeMenuScrollbox.childCount; i++)
             {
-                listing.OnEquipWeapon += EquipItem;
-                listing.OnTryPurchaseWeapon += PurchaseItem;
+                if (forgeMenuScrollbox.GetChild(i).TryGetComponent(out ForgeItemListing listing))
+                {
+                    listing.OnEquipWeapon += EquipItem;
+                    listing.OnTryPurchaseWeapon += PurchaseItem;
+                }
             }
         }
     }

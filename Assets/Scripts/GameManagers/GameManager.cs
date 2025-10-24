@@ -17,8 +17,8 @@ using UnityEngine.SceneManagement;
 /// 3. Weapons that have been purchased or unlocked
 /// 4. Current player-equipped weapon
 /// 5. slot index
-/// 6. (IN PROGRESS) Player position
-/// 7. (IN PROGRESS) Dialogue played
+/// 6. Active scene (when saved)
+/// 7. Dialogue played
 /// Technically there can be infinite save slots, but the menu only allows 3. Another file saves metadata about the
 /// saves themselves (currently only when last saved) but not any game-related data. That way to display
 /// when the slots were most recently saved you don't have to reload the entire slot. Not super important in this game
@@ -32,18 +32,17 @@ public class GameManager : MonoBehaviour
 	public event Action OnLoadStart;
 	public event Action OnLoadComplete;
 	public event Action OnSlotTimesUpdated;
-	public event Action OnPlayerStartPositionChanged;
-	public int slotIndex = 0;     // set in Inspector to test different slots
+	public event Action OnDoneLoadingNewScene;
 	public const int LEVEL_AMOUNT = 4;
+	public float transitionWaitDelay = 1f;
 
 	private HashSet<string> _dialoguesPlayedSinceLastSave = new();
 	private SaveData _currentSaveData;
 	private SlotTimesData _slotTimes;
-	private event Action OnActivePlayerDataChanged;
 	private PlayerDataTracker _activePlayerData;
 	private PlayerDataTracker _previousPlayerData;
 	private int _currentLevel = -1;
-	private Vector3 _spawnPosition = Vector3.zero;
+	private int slotIndex = 0; 
 
 	private const bool VERBOSE = false;
 
@@ -70,6 +69,7 @@ public class GameManager : MonoBehaviour
 			_activePlayerData.transform.position = levelInformation.GetSpawnPositionComingFrom(_currentLevel);
 			_currentLevel = levelInformation.levelNumber;
 		}
+		StartCoroutine(DelayedParamlessActionInvoke(OnDoneLoadingNewScene, transitionWaitDelay));
 	}
 
 	public void RegisterPlayer(PlayerDataTracker newPlayer)
@@ -108,16 +108,22 @@ public class GameManager : MonoBehaviour
 		}
 		else if (_previousPlayerData.gameObject == player.gameObject) _previousPlayerData = null;
     }
-	
+
 	public void CurrentLevelComplete()
-    {
+	{
 		if (_currentLevel < 1 || _currentLevel > LEVEL_AMOUNT) Debug.LogWarning("GameManager does not know the current level number; it currently has it set as: " + _currentLevel);
 		// todo assorted things
-    }
+	}
 	
 	#endregion
 
 	#region Saving
+
+	public void SaveAndClearGame()
+	{
+		DoSave(slotIndex, GetFurthestUnlockedLevel());
+		ClearActiveGame();
+    }
 	public void Save(int to) => DoSave(to, GetFurthestUnlockedLevel());
 	public void SafeSave() => DoSave(slotIndex, GetFurthestUnlockedLevel());
 	void DoSave(int sIndex, int furthestUnlockedLevel)
@@ -132,7 +138,8 @@ public class GameManager : MonoBehaviour
 			currency = _activePlayerData.GetSaveableCurrency(),
 			equippedWeapon = _activePlayerData.GetEquippedWeapon(),
 			weaponsPurchased = ForgeManager.instance != null ? ForgeManager.instance.GetWeaponPurchaseData() : _currentSaveData.weaponsPurchased,
-			dialoguesPlayed = _dialoguesPlayedSinceLastSave.ToList()
+			dialoguesPlayed = _dialoguesPlayedSinceLastSave.ToList(),
+			activeScene = SceneManager.GetActiveScene().buildIndex
 		};
 		SaveSystem.Save(saveData);
 		_currentSaveData = saveData;
@@ -191,11 +198,12 @@ public class GameManager : MonoBehaviour
 				currency = new PlayerCurrency { common = 0, rare = 0, mythic = 0 },
 				equippedWeapon = "",
 				weaponsPurchased = null,
+				activeScene = -1,
 				dialoguesPlayed = new()
 			};
 			Debug.Log("Current save data: " + _currentSaveData);
 		}
-		StartCoroutine(DelayInvoke(1f));
+		StartCoroutine(DelayedParamlessActionInvoke(OnLoadComplete, 0.1f));
 	}
 	private void LoadSlotTimes()
 	{
@@ -260,17 +268,39 @@ public class GameManager : MonoBehaviour
 		else return _dialoguesPlayedSinceLastSave.Contains(which);
 	}
 	public bool GetGameComplete() => _currentSaveData?.furthestUnlockedLevel > LEVEL_AMOUNT;
+	public int GetActiveScene() 
+	{
+		if (_currentSaveData != null && _currentSaveData.activeScene > 0)
+		{
+			return _currentSaveData.activeScene;
+		}
+		else
+		{
+			return 1;
+		}
+	}
+	public bool GetHasActiveLevelBeenCompleted() => _currentSaveData?.furthestUnlockedLevel > _currentLevel;
+
 	#endregion
 
+	#region Other
 	IEnumerator DelayedParamlessActionInvoke(Action action, float delay = 0.1f)
 	{
 		yield return new WaitForSeconds(delay);
 		action?.Invoke();
 	}
-	
-	IEnumerator DelayInvoke(float delay = 0.1f)
+
+	public void ClearActiveGame()
     {
-		yield return new WaitForSeconds(delay);
-		OnLoadComplete?.Invoke();
+		_currentLevel = -1;
+		slotIndex = 0;
+		if (_activePlayerData != null) Destroy(_activePlayerData.gameObject);
+		if (_previousPlayerData != null) Destroy(_previousPlayerData.gameObject);
+		_activePlayerData = null;
+		_previousPlayerData = null;
+		_currentSaveData = null;
+		_dialoguesPlayedSinceLastSave = new();
     }
+
+	#endregion
 }

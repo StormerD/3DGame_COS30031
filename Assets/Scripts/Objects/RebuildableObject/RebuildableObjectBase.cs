@@ -11,6 +11,8 @@ public class RebuildableObjectBase : MonoBehaviour, IInteractable
     public GameObject componentPrefab;
     public event Action<int> OnComponentsCollected;
     public event Action OnCompletedRebuild;
+    public AudioClip componentPlaced;
+    public AudioClip completionSound;
 
     private int _numCollected = 0;
     private HashSet<int> _componentIds;
@@ -71,9 +73,12 @@ public class RebuildableObjectBase : MonoBehaviour, IInteractable
             Debug.Log("Collected components: " + componentsGathered);
             _numCollected += componentsGathered;
             OnComponentsCollected?.Invoke(componentsGathered);
-            if (_numCollected == numComponents) { Debug.Log("Completed rebuild!"); OnCompletedRebuild?.Invoke(); }
-
-            if (AudioManager.Instance != null) AudioManager.Instance.PlayComponentPlaced();
+            if (_numCollected == numComponents)
+            {
+                Debug.Log("Completed rebuild!");
+                if (AudioManager.Instance != null) AudioManager.Instance.PlayAudioClip(completionSound);
+                OnCompletedRebuild?.Invoke();
+            } else if (AudioManager.Instance != null) AudioManager.Instance.PlayAudioClip(componentPlaced);
         }
     }
 }

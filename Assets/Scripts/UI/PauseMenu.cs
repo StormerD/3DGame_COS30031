@@ -30,7 +30,7 @@ public class PauseMenu : MonoBehaviour
         if (GameManager.instance == null) Debug.LogError("Cannot save: SaveManager instance is null.");
         else
         {
-            GameManager.instance.SafeSave();
+            GameManager.instance.SaveAndClearGame();
             SceneManager.LoadScene(0);
         }
     }

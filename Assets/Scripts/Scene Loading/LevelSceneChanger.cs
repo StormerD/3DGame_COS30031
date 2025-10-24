@@ -27,10 +27,10 @@ public class LevelSceneChanger : MonoBehaviour
 
     void Start()
     {
-        if (LevelManager.instance != null)
+        if (LevelLoaderManager.instance != null)
         {
-            LevelManager.instance.OnForgeHasBeenOpened += ForgeHasBeenOpened;
-            LevelManager.instance.OnLevelUnlockChanged += LevelUnlockDataChanged;
+            LevelLoaderManager.instance.OnForgeHasBeenOpened += ForgeHasBeenOpened;
+            LevelLoaderManager.instance.OnLevelUnlockChanged += LevelUnlockDataChanged;
         }
     }
 
@@ -66,7 +66,7 @@ public class LevelSceneChanger : MonoBehaviour
 
     private void LoadScene()
     {
-        if (SceneUtility.GetBuildIndexByScenePath(sceneToLoad) != -1) StartCoroutine(Util.AsyncLoader(sceneToLoad, loadDelay, minimumLoadingTime));
+        if (SceneUtility.GetBuildIndexByScenePath(sceneToLoad) != -1) StartCoroutine(AsyncSceneLoader.AsyncLoad(sceneToLoad));
         else Debug.LogWarning("Tried to load unknown scene: " + sceneToLoad);
     }
 }
