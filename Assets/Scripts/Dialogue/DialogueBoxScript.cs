@@ -4,7 +4,7 @@ using UnityEngine;
 public class DialogueBoxScript : ScriptableObject
 {
     [Header("Configuration for what is actually displayed")]
-    [Tooltip("the dialogue text, don't make it too long!")]
+    [Tooltip("the dialogue text, don't make it too long!")] [TextArea]
     public string text;
     public Texture2D speakerImage;
     public string speakerName = "???";
