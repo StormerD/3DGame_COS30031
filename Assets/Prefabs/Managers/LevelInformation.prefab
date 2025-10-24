@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6168831809514275672}
   - component: {fileID: 2752259295125003592}
+  - component: {fileID: 6177690396095685759}
   m_Layer: 0
   m_Name: LevelInformation
   m_TagString: Untagged
@@ -49,3 +50,20 @@ MonoBehaviour:
   - fromLevel: 0
     location: {x: 2, y: 1.5}
   defaultSpawn: {x: 0, y: 0}
+--- !u!114 &6177690396095685759
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4475099492078964124}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0f7fb3867d7641af9899ca959a7aa19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WorldChanger
+  triggersTransition: {fileID: 11400000, guid: 7c4214c02961c42cab4d885ad45a2feb, type: 2}
+  destroyedWorldTilemap: {fileID: 0}
+  destroyedWorldProps: {fileID: 0}
+  healedWorldTilemap: {fileID: 0}
+  healedWorldProps: {fileID: 0}

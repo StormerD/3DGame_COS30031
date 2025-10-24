@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0659cfded02744af4b37b6e20e5dd2ce, type: 3}
+  m_Name: Lvl2Complete
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueScene
+  dialogueKey: lvl2Complete
+  scripts:
+  - {fileID: 11400000, guid: 4a62d6dc3faf545959711a817c4b8d1e, type: 2}
+  - {fileID: 11400000, guid: 549a25bef242141b8ad880402d0d7161, type: 2}
+  - {fileID: 11400000, guid: 08edbac18ce4e4a0590de130b5d00c9e, type: 2}
+  - {fileID: 11400000, guid: b12f9d7f963e849c38a741abf16a4035, type: 2}
+  - {fileID: 11400000, guid: 6450a641521ad42d28667432c9c40327, type: 2}
+  - {fileID: 11400000, guid: a63f0860745ee4a6e9c47ca475d4d655, type: 2}
