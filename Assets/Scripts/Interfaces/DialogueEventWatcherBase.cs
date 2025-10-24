@@ -11,14 +11,13 @@ public abstract class DialogueEventWatcherBase : MonoBehaviour
     private bool _dialogueSynced = false;
     protected virtual void Start()
     {
+        SyncDialogue();
         if (GameManager.instance != null)
         {
-            SyncDialogue();
             GameManager.instance.OnLoadComplete += SyncDialogue;
         }
         else Debug.LogWarning("GameManager null; Dialogue does not know save state.");
         DialogueScreen.instance.OnWhichDialogueEnded += SomeDialogueCompleted;
-
     }
     protected IEnumerator DelayedRequestDialogue(DialogueScene scene, float delay = 0)
     {

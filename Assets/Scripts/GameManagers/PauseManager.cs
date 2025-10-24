@@ -18,7 +18,6 @@ public class PauseManager : MonoBehaviour
     {
         if (FreezeEntitiesManager.instance != null)
         {
-            Debug.Log("pause manager linking");
             OnPause += FreezeEntitiesManager.instance.StartFreeze;
             OnUnpause += FreezeEntitiesManager.instance.EndFreeze;
         }

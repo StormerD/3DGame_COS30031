@@ -29,7 +29,6 @@ public class Enemy : MonoBehaviour, IHealth
         _animator = GetComponent<Animator>();
         
         OnDeath += GetComponent<LootContainer>().DropLoot;
-
     }
 
     void FixedUpdate()

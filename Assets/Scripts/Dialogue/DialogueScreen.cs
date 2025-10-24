@@ -64,7 +64,7 @@ public class DialogueScreen : MonoBehaviour, IPointerClickHandler
     void Start()
     {
         if (GameManager.instance != null) OnWhichDialogueEnded += GameManager.instance.UpdateDialogueList;
-        else { Debug.Log("Gamemanager null; dialogue screen cannot update saved dialogue"); }
+        else { Debug.LogWarning("GameManager null; dialogue screen cannot update saved dialogue"); }
 
         if (FreezeEntitiesManager.instance != null)
         {
