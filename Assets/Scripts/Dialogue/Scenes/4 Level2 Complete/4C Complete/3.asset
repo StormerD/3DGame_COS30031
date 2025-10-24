@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 3
   m_EditorClassIdentifier: Assembly-CSharp::DialogueBoxScript
   text: They can operate for up to 30 years. That's enough to offset their production
-    easily!
+    costs easily!
   speakerImage: {fileID: 0}
   speakerName: You
   speakerShowsOnLeft: 0
