@@ -1,14 +1,11 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 
 /// <summary>
 /// this manager handles the listings on the Forge UI as well as any connections that the
 /// forge system needs to make with other systems (currency, weapon equipping, saving / loading data)
-/// it doesn't need to be in the scene unless there is a Forge object—the Forge object
-/// still needs the Forge.cs script on it, it will call into ForgeManager when needed
 /// </summary>
 public class ForgeManager : MonoBehaviour
 {
@@ -25,6 +22,8 @@ public class ForgeManager : MonoBehaviour
     public event Action<string, bool> OnListingPurchaseStateChange; // <string> is the weaponId purchased, bool is true if purchased, false if not
     public event Action<string, bool> OnListingUnlockedStateChange;
     public event Action<string> OnListingEquipped; // same as above.
+    public event Action OnForgeOpened;
+    public event Action OnForgeClosed;
 
     private Dictionary<string, GameObject> _weaponsById = new();
     private List<WeaponPurchaseData> _purchaseData;
@@ -32,7 +31,6 @@ public class ForgeManager : MonoBehaviour
     private Animator _forgeMenuAnimator;
     private bool _isInitializing = false;
     public bool IsInitializing => _isInitializing;
-
 
     void Awake()
     {
@@ -43,22 +41,35 @@ public class ForgeManager : MonoBehaviour
             string weaponId = w.GetComponent<WeaponBase>().GetWeaponData().weaponId;
             if (!_weaponsById.ContainsKey(weaponId)) _weaponsById.Add(weaponId, w);
         }
-        if (!player.TryGetComponent(out _playerLooter)) Debug.LogWarning("ForgeManager player needs an ILooter component to purchase weapons!");
-        if (!forgeMenu.TryGetComponent(out _forgeMenuAnimator)) Debug.LogWarning("ForgeMenu missing animator.");
+        if (player != null && !player.TryGetComponent(out _playerLooter)) Debug.LogWarning("ForgeManager player needs an ILooter component to purchase weapons!");
+        if (forgeMenu != null && !forgeMenu.TryGetComponent(out _forgeMenuAnimator)) Debug.LogWarning("ForgeMenu missing animator.");
     }
 
     void Start()
     {
-        SaveManager.instance.OnSaveDataChanged += ReloadWeaponPurchaseData;
+        if (FreezeEntitiesManager.instance != null)
+        {
+            OnForgeOpened += FreezeEntitiesManager.instance.StartFreeze;
+            OnForgeClosed += FreezeEntitiesManager.instance.EndFreeze;
+        }
+        else Debug.Log("Cannot add dialogue to freeze, as freezeentitiesmanager is null!");
+        
+        if (GameManager.instance == null) { Debug.LogWarning("GameManager null; forge does not know purchase state."); return; }
+
+        GameManager.instance.OnLoadComplete += ReloadWeaponPurchaseData;
         ReloadWeaponPurchaseData();
         if (_purchaseData.Count == 0) _purchaseData = GetDefaultWeaponPurchaseData();
 
-        for (int i = 0; i < forgeMenuScrollbox.childCount; i++)
+        if (forgeMenuScrollbox != null)
         {
-            if (forgeMenuScrollbox.GetChild(i).TryGetComponent(out ForgeItemListing listing))
+
+            for (int i = 0; i < forgeMenuScrollbox.childCount; i++)
             {
-                listing.OnEquipWeapon += EquipItem;
-                listing.OnTryPurchaseWeapon += PurchaseItem;
+                if (forgeMenuScrollbox.GetChild(i).TryGetComponent(out ForgeItemListing listing))
+                {
+                    listing.OnEquipWeapon += EquipItem;
+                    listing.OnTryPurchaseWeapon += PurchaseItem;
+                }
             }
         }
     }
@@ -67,18 +78,19 @@ public class ForgeManager : MonoBehaviour
     {
         forgeMenu.SetActive(true);
         _forgeMenuAnimator.SetTrigger("OpenMenu");
+        OnForgeOpened?.Invoke();
     }
-
 
     public void CloseForgeMenu()
     {
         _forgeMenuAnimator.SetTrigger("CloseMenu");
+        OnForgeClosed?.Invoke();
     }
 
     public GameObject GetWeaponByID(string id)
     {
         if (id != null && _weaponsById.ContainsKey(id)) return _weaponsById[id];
-        Debug.LogWarning("Requested weapon: " + id + ", not found!");
+        if (id != null) Debug.LogWarning("Requested weapon: " + id + ", not found!");
         return null;
     }
 
@@ -137,7 +149,7 @@ public class ForgeManager : MonoBehaviour
     private void ReloadWeaponPurchaseData()
     {
         _isInitializing = true; // ✅ prevent sounds during data load
-        _purchaseData = SaveManager.instance.GetWeaponsPurchased() ?? GetDefaultWeaponPurchaseData();
+        _purchaseData = GameManager.instance.GetWeaponsPurchased() ?? GetDefaultWeaponPurchaseData();
 
         // go through and send message out for each ForgeListing to update its data
         foreach (WeaponPurchaseData wpd in _purchaseData)
@@ -147,7 +159,7 @@ public class ForgeManager : MonoBehaviour
         }
 
         // also emit a weapon is equipped if necessary
-        string equippedWeapon = SaveManager.instance.GetEquippedWeapon() ?? "";
+        string equippedWeapon = GameManager.instance.GetEquippedWeapon() ?? "";
         if (equippedWeapon.Length != 0) OnListingEquipped?.Invoke(equippedWeapon);
         _isInitializing = false; // ✅ re-enable sounds after data load
     }

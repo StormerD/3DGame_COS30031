@@ -11,6 +11,8 @@ public class RebuildableObjectBase : MonoBehaviour, IInteractable
     public GameObject componentPrefab;
     public event Action<int> OnComponentsCollected;
     public event Action OnCompletedRebuild;
+    public AudioClip componentPlaced;
+    public AudioClip completionSound;
 
     private int _numCollected = 0;
     private HashSet<int> _componentIds;
@@ -56,11 +58,11 @@ public class RebuildableObjectBase : MonoBehaviour, IInteractable
 
     void Start()
     {
-        if (ActiveGameManager.instance != null)
+        if (GameManager.instance != null)
         {
-            OnCompletedRebuild += ActiveGameManager.instance.CurrentLevelComplete;
+            OnCompletedRebuild += GameManager.instance.CurrentLevelComplete;
         }
-        else Debug.LogWarning("ActiveGameManager is null; level complete events will not be emitted.");
+        else Debug.LogWarning("GameManager is null; level complete events will not be emitted.");
     }
 
     public void Interact(IInteractor interactor)
@@ -71,9 +73,12 @@ public class RebuildableObjectBase : MonoBehaviour, IInteractable
             Debug.Log("Collected components: " + componentsGathered);
             _numCollected += componentsGathered;
             OnComponentsCollected?.Invoke(componentsGathered);
-            if (_numCollected == numComponents) { Debug.Log("Completed rebuild!"); OnCompletedRebuild?.Invoke(); }
-
-            if (AudioManager.Instance != null) AudioManager.Instance.PlayComponentPlaced();
+            if (_numCollected == numComponents)
+            {
+                Debug.Log("Completed rebuild!");
+                if (AudioManager.Instance != null) AudioManager.Instance.PlayAudioClip(completionSound);
+                OnCompletedRebuild?.Invoke();
+            } else if (AudioManager.Instance != null) AudioManager.Instance.PlayAudioClip(componentPlaced);
         }
     }
 }

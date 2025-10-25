@@ -34,8 +34,8 @@ public class PlayerMovement2D : MonoBehaviour, IMover2D
     {
         _rb.interpolation = RigidbodyInterpolation2D.Interpolate;
         _inp.dash.performed += Dash;
-        PauseManager.instance.OnPause += FreezeActions;
-        PauseManager.instance.OnUnpause += UnfreezeActions;
+        FreezeEntitiesManager.instance.OnFreeze += FreezeActions;
+        FreezeEntitiesManager.instance.OnUnfreeze += UnfreezeActions;
     }
 
     // Update is called once per frame
@@ -120,6 +120,7 @@ public class PlayerMovement2D : MonoBehaviour, IMover2D
     public void FreezeActions()
     {
         canMove = false;
+        _rb.linearVelocity = Vector2.zero;
     }
 
     public void UnfreezeActions()

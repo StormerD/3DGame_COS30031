@@ -4,9 +4,14 @@ MonoImporter:
   externalObjects: {}
   serializedVersion: 2
   defaultReferences:
-  - dustPuffPrefab: {fileID: 359076714251711221, guid: 6f4cb0ab08810a345a2a7e05d65622d7, type: 3}
+    - dustPuffPrefab:
+        {
+          fileID: 359076714251711221,
+          guid: 6f4cb0ab08810a345a2a7e05d65622d7,
+          type: 3,
+        }
   executionOrder: 0
-  icon: {instanceID: 0}
-  userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  icon: { instanceID: 0 }
+  userData:
+  assetBundleName:
+  assetBundleVariant:

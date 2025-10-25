@@ -20,10 +20,9 @@ public class GameOverScreen : MonoBehaviour
         gameObject.SetActive(true);
     }
 
-    public void RestartGame()
+    public void RestartGame() // Todo: improve this UI. Restart should probably restart the level, not the game?
     {
-        ActiveGameManager.instance.gameHasStarted = false;
-        LevelManager.instance.LoadLevel("MainScene", 0.1f, -1);
+        
     }
 
     public void QuitGame()
