@@ -20,6 +20,7 @@ public class CurrencyUI : MonoBehaviour
 
     private void DisplayNewCurrency(CurrencyValues currencies)
     {
+        Debug.Log("Recieved new currency: " + currencies);
         if (currencies == null) { Debug.LogWarning("currencies null"); return; } 
         commonText.text = currencies.common.ToString();
         rareText.text = currencies.rare.ToString();
