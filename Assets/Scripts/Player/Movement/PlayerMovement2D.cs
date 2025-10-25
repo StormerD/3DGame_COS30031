@@ -56,9 +56,8 @@ public class PlayerMovement2D : MonoBehaviour, IMover2D
         // but only update when actually moving. this way if the player stops moving the last direction is saved
         _currentDirection = _rb.linearVelocity == Vector2.zero ? _currentDirection : _rb.linearVelocity.normalized;
         bool isMoving = inp.magnitude > 0.1f;
-        bool isGrounded = IsGrounded();
 
-        if (isGrounded && isMoving && Time.time > _dashStartedAt + dashLength)
+        if (isMoving && Time.time > _dashStartedAt + dashLength)
         {
             footstepTimer += Time.deltaTime;
             if (footstepTimer >= footstepInterval)
@@ -67,7 +66,8 @@ public class PlayerMovement2D : MonoBehaviour, IMover2D
                 if (dustPuffPrefab != null)
                 {
                     Vector3 spawnPos = transform.position + new Vector3(0, -0.5f, 0); // adjust Y for foot level
-                    Instantiate(dustPuffPrefab, spawnPos, Quaternion.identity);
+                    DustPool.Instance.PlayDust(spawnPos);
+
                 }
                 footstepTimer = 0f;
             }

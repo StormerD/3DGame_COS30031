@@ -53,8 +53,8 @@ public class PlayerMovement3D : MonoBehaviour, IMover3D
                 if (dustPuffPrefab != null)
                 {
                     Vector3 spawnPos = transform.position + new Vector3(0, -0.5f, 0); // adjust Y for foot level
-                    Instantiate(dustPuffPrefab, spawnPos, Quaternion.identity);
-            }
+                    DustPool.Instance.PlayDust(spawnPos);
+                }
 
                 footstepTimer = 0f;
             }
