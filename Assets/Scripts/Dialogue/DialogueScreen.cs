@@ -12,8 +12,10 @@ public class DialogueScreen : MonoBehaviour, IPointerClickHandler
 {
     #region vars
     public static DialogueScreen instance;
-    public event Action<string> OnDialogueStarted;
-    public event Action<string> OnDialogueEnded;
+    public event Action OnDialogueScreenOpen;
+    public event Action OnDialogueScreenClosed;
+    public event Action<string> OnWhichDialogueStarted;
+    public event Action<string> OnWhichDialogueEnded;
 
     [Header("Blank image is for speakers")]
     [SerializeField] private TMP_Text _dialogueTextBox;
@@ -56,7 +58,20 @@ public class DialogueScreen : MonoBehaviour, IPointerClickHandler
         if (instance == null) instance = this;
         else Destroy(gameObject);
 
-        OnDialogueEnded += CheckQueuedScenes;
+        OnWhichDialogueEnded += CheckQueuedScenes;
+    }
+
+    void Start()
+    {
+        if (GameManager.instance != null) OnWhichDialogueEnded += GameManager.instance.UpdateDialogueList;
+        else { Debug.LogWarning("GameManager null; dialogue screen cannot update saved dialogue"); }
+
+        if (FreezeEntitiesManager.instance != null)
+        {
+            OnDialogueScreenOpen += FreezeEntitiesManager.instance.StartFreeze;
+            OnDialogueScreenClosed += FreezeEntitiesManager.instance.EndFreeze;
+        }
+        else Debug.Log("Cannot add dialogue to freeze, as freezeentitiesmanager is null!");
     }
 
     public void OnPointerClick(PointerEventData ped)
@@ -103,7 +118,8 @@ public class DialogueScreen : MonoBehaviour, IPointerClickHandler
     IEnumerator RunDialogueScene(DialogueScene scene)
     {
         _sceneRunning = true;
-        OnDialogueStarted?.Invoke(scene.dialogueKey);
+        OnWhichDialogueStarted?.Invoke(scene.dialogueKey);
+        OnDialogueScreenOpen?.Invoke();
         for (int i = 0; i < scene.scripts.Count; i++)
         {
             ResetTextBox();
@@ -146,7 +162,8 @@ public class DialogueScreen : MonoBehaviour, IPointerClickHandler
             _fastWriteDialogue = false;
         }
         _sceneRunning = false;
-        OnDialogueEnded?.Invoke(scene.dialogueKey);
+        OnWhichDialogueEnded?.Invoke(scene.dialogueKey);
+        OnDialogueScreenClosed?.Invoke();
     }
 
     IEnumerator PrintTextToBox(DialogueBoxScript parameters)

@@ -11,14 +11,13 @@ public abstract class DialogueEventWatcherBase : MonoBehaviour
     private bool _dialogueSynced = false;
     protected virtual void Start()
     {
-        if (SaveManager.instance != null)
+        SyncDialogue();
+        if (GameManager.instance != null)
         {
-            SyncDialogue();
-            SaveManager.instance.OnSaveDataChanged += SyncDialogue;
+            GameManager.instance.OnLoadComplete += SyncDialogue;
         }
-        else Debug.LogWarning("Missing SaveManager instance");
-        DialogueScreen.instance.OnDialogueEnded += SomeDialogueCompleted;
-
+        else Debug.LogWarning("GameManager null; Dialogue does not know save state.");
+        DialogueScreen.instance.OnWhichDialogueEnded += SomeDialogueCompleted;
     }
     protected IEnumerator DelayedRequestDialogue(DialogueScene scene, float delay = 0)
     {
@@ -28,7 +27,7 @@ public abstract class DialogueEventWatcherBase : MonoBehaviour
     }
     protected bool HasSceneAlreadyHappened(string which)
     {
-        return SaveManager.instance.GetDialogueHasBeenPlayed(which);
+        return GameManager.instance != null && GameManager.instance.GetDialogueHasBeenPlayed(which);
     }
     private void SyncWrapper()
     {
