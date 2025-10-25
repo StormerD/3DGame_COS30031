@@ -22,7 +22,10 @@ public class PlayerLooter : MonoBehaviour, ILooter
         _requestShareCurrencyStream.UnregisterListener(EmitCurrency);
         _costsStream.UnregisterListener(UseCurrency);
     }
-    void EmitCurrency() => _shareCurrencyStream.RaiseEvent(_currencyValues);
+    void EmitCurrency()
+    {
+        _shareCurrencyStream.RaiseEvent(_currencyValues);
+    }
 
     void Awake() => _currencyValues = new();
 
@@ -49,7 +52,7 @@ public class PlayerLooter : MonoBehaviour, ILooter
                 _currencyValues.mythic += amount;
                 break;
         }
-        _shareCurrencyStream.RaiseEvent(_currencyValues);
+        EmitCurrency();
     }
 
     public int GetCurrency(CurrencyType type)
@@ -66,7 +69,7 @@ public class PlayerLooter : MonoBehaviour, ILooter
     public void SetCurrency()
     {
         _currencyValues = GameManager.instance.GetCurrency();
-        _shareCurrencyStream.RaiseEvent(_currencyValues);
+        EmitCurrency();
     }
     public void UseCurrency(CurrencyValues cost)
     {
@@ -77,6 +80,6 @@ public class PlayerLooter : MonoBehaviour, ILooter
         _currencyValues.rare -= Mathf.Abs(cost.rare);
         _currencyValues.mythic -= Mathf.Abs(cost.mythic);
 
-        _shareCurrencyStream.RaiseEvent(_currencyValues);
+        EmitCurrency();
     }
 }

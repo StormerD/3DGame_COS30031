@@ -81346,7 +81346,7 @@ PrefabInstance:
       objectReference: {fileID: 2709738328075119769, guid: d486ed36a4e604949a45a153731aaff6, type: 3}
     - target: {fileID: 3773872355296092491, guid: 2885aa5f9827f814abba74e48e9996dc, type: 3}
       propertyPath: m_Name
-      value: Player
+      value: homearea player
       objectReference: {fileID: 0}
     - target: {fileID: 6816457103706165846, guid: 2885aa5f9827f814abba74e48e9996dc, type: 3}
       propertyPath: m_Layer
