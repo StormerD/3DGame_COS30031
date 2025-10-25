@@ -14,13 +14,13 @@ public class Enemy3D : MonoBehaviour, IHealth
     private bool _hitThisFrame = false;
     private bool _isDead = false;
 
-    // private IObjectPool<Enemy3D> _enemyPool;
+    private IObjectPool<Enemy3D> _enemyPool;
     // <- animator goes here
 
-    // public void SetPool(IObjectPool<Enemy3D> pool)
-    // {
-    //     _enemyPool = pool;
-    // }
+    public void SetPool(IObjectPool<Enemy3D> pool)
+    {
+        _enemyPool = pool;
+    }
 
     void OnEnable() => _isDead = false;
     void OnDisable() => _isDead = true;
@@ -55,7 +55,7 @@ public class Enemy3D : MonoBehaviour, IHealth
             Debug.Log(gameObject.name + " is dead!");
             OnDeath?.Invoke();
             _isDead = true;
-            // _enemyPool.Release(this);
+            _enemyPool.Release(this);
         }
     }
 
