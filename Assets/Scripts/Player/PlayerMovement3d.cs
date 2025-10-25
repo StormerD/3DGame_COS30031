@@ -11,6 +11,10 @@ public class PlayerMovement3D : MonoBehaviour, IMover3D
     public float jumpForce = 10f;
     public float dashForce = 15f;
     public float dashCooldownSeconds = 1.5f;
+    public float footstepInterval = 0.4f; // Time between footsteps
+    private float footstepTimer = 0f;
+
+    public GameObject dustPuffPrefab;
 
     private Rigidbody _rb;
     private PlayerInput _inp;
@@ -28,6 +32,37 @@ public class PlayerMovement3D : MonoBehaviour, IMover3D
         _inp.dash.performed += Dash;
         _inp.jump.performed += Jump;
         _distanceToGround = GetComponent<Collider>().bounds.extents.y;
+    }
+
+    void Update()
+    {
+        Debug.Log("Update is running");
+        if (!_canMove) return;
+
+        Vector2 inp = _inp.move.ReadValue<Vector2>();
+        bool isMoving = inp != Vector2.zero;
+        bool isGrounded = IsGrounded();
+
+        if (isGrounded && isMoving)
+            {
+                footstepTimer += Time.deltaTime;
+                if (footstepTimer >= footstepInterval)
+            {
+                Debug.Log("Footsteps triggered");
+                AudioManager.Instance.PlayFootstep();
+                if (dustPuffPrefab != null)
+                {
+                    Vector3 spawnPos = transform.position + new Vector3(0, -0.5f, 0); // adjust Y for foot level
+                    DustPool.Instance.PlayDust(spawnPos);
+                }
+
+                footstepTimer = 0f;
+            }
+        }
+        else
+        {
+            footstepTimer = 0f;
+        }
     }
 
     // Update is called once per frame

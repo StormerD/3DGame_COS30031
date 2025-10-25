@@ -81716,6 +81716,10 @@ PrefabInstance:
       value: Pause
       objectReference: {fileID: 0}
     - target: {fileID: 1668686616039734458, guid: 2885aa5f9827f814abba74e48e9996dc, type: 3}
+      propertyPath: dustPuffPrefab
+      value: 
+      objectReference: {fileID: 359076714251711221, guid: 6f4cb0ab08810a345a2a7e05d65622d7, type: 3}
+    - target: {fileID: 1668686616039734458, guid: 2885aa5f9827f814abba74e48e9996dc, type: 3}
       propertyPath: dashParticlesPrefab
       value: 
       objectReference: {fileID: 2709738328075119769, guid: d486ed36a4e604949a45a153731aaff6, type: 3}
@@ -82585,6 +82589,52 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
+--- !u!1 &1637195111
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1637195113}
+  - component: {fileID: 1637195112}
+  m_Layer: 0
+  m_Name: DustPool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1637195112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1637195111}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9d8058f1989a7e41a077e3dd4a2f8cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DustPool
+  dustPrefab: {fileID: 359076714251711221, guid: 6f4cb0ab08810a345a2a7e05d65622d7, type: 3}
+  poolSize: 10
+--- !u!4 &1637195113
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1637195111}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1639044760
 GameObject:
   m_ObjectHideFlags: 0
@@ -84330,6 +84380,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8867810941286056943, guid: 4aed527469897784184aa5f634897652, type: 3}
+      propertyPath: footstepClips.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8867810941286056943, guid: 4aed527469897784184aa5f634897652, type: 3}
+      propertyPath: 'footstepClips.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 19bb5baf65c5e114bacf71bc4a2cdaec, type: 3}
+    - target: {fileID: 8867810941286056943, guid: 4aed527469897784184aa5f634897652, type: 3}
+      propertyPath: 'footstepClips.Array.data[1]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 996f80840724da14db3a69940038c876, type: 3}
+    - target: {fileID: 8867810941286056943, guid: 4aed527469897784184aa5f634897652, type: 3}
+      propertyPath: 'footstepClips.Array.data[2]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 10b7b0aefaf47df40ad72b3b5d467bd6, type: 3}
+    - target: {fileID: 8867810941286056943, guid: 4aed527469897784184aa5f634897652, type: 3}
+      propertyPath: 'footstepClips.Array.data[3]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 1c691386d0559824d919ea986eccccf9, type: 3}
+    - target: {fileID: 8867810941286056943, guid: 4aed527469897784184aa5f634897652, type: 3}
+      propertyPath: 'footstepClips.Array.data[4]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 3bda6cf2f0f20fa4b9e7349100e4fca6, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
