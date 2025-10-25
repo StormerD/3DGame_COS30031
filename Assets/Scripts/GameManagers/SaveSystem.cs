@@ -46,19 +46,11 @@ public class SaveData
 {
     public int slotIndex;       
     public int furthestUnlockedLevel; // furthest complete level is this - 1
-    public PlayerCurrency currency; 
+    public CurrencyValues playerCurrency; 
     public string equippedWeapon; // the player's currently equipped weapon
     public List<WeaponPurchaseData> weaponsPurchased; // if a weapon key is omitted here, it is not unlocked or purchased
     public List<string> dialoguesPlayed; // dialogue keys that have been played
     public int activeScene;
-}
-
-[Serializable]
-public class PlayerCurrency
-{
-    public int common = 0;
-    public int rare = 0;
-    public int mythic = 0;
 }
 
 [Serializable]

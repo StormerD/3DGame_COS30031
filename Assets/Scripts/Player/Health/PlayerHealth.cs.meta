@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: d7e1ab114a694044086bbf97d353e30d
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - _currentHealthStream: {fileID: 11400000, guid: 3ec533152e07d4a61b8e955f4c6e3761, type: 2}
+  - _maxHealthStream: {fileID: 11400000, guid: c7fe9ad0653f142e9abff5ad0e8ad567, type: 2}
+  - _playerDeathStream: {fileID: 11400000, guid: 7613c1fff96694aaa9d7e53fa978d0e7, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

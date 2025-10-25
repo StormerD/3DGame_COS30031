@@ -51,9 +51,10 @@ MonoBehaviour:
   - {fileID: 1667736680288488315, guid: 3c1327c8ffe124b8f8c8b94e9027df6d, type: 3}
   - {fileID: 4087904268931396438, guid: 47304c19acc294ec08f82d18aa634b22, type: 3}
   - {fileID: 1667736680288488315, guid: 3c1327c8ffe124b8f8c8b94e9027df6d, type: 3}
-  player: {fileID: 0}
   forgeMenu: {fileID: 0}
   forgeMenuScrollbox: {fileID: 0}
+  _purchaseRequestStream: {fileID: 11400000, guid: 18efbb7d3783740a0a6da3e1b70c3260, type: 2}
+  _costStream: {fileID: 11400000, guid: 46945eaafffa843fa9e4f04aebc762c3, type: 2}
 --- !u!114 &8029355547032946047
 MonoBehaviour:
   m_ObjectHideFlags: 0

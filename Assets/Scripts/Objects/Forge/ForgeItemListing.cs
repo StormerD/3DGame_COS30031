@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 public class ForgeItemListing : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
     public TMP_Text priceText;
-    public event Action<string, PurchasePrice> OnTryPurchaseWeapon;
+    public event Action<string, CurrencyValues> OnTryPurchaseWeapon;
     public event Action<string> OnEquipWeapon;
     // purchased, unlocked, equipped
     public event Action<bool, bool, bool> OnWeaponStateChanged;
@@ -16,11 +16,12 @@ public class ForgeItemListing : MonoBehaviour, IPointerClickHandler, IPointerEnt
 
     [Tooltip("This MUST be the same ID as the weapon ID set in the Weapon's WeaponData ScriptableObject.")]
     public WeaponPurchaseData weaponListing;
-    public PurchasePrice purchasePrice;
+    public CurrencyValues purchasePrice;
     public GameObject unlockedVersion;
     public GameObject lockedVersion;
 
     private bool _isEquipped = false;
+    private bool _isForgeOpen = false;
 
     void Awake()
     {
@@ -33,7 +34,12 @@ public class ForgeItemListing : MonoBehaviour, IPointerClickHandler, IPointerEnt
     {
         ForgeManager.instance.OnListingPurchaseStateChange += SomeWeaponPurchased;
         ForgeManager.instance.OnListingEquipped += SomeWeaponEquipped;
+        ForgeManager.instance.OnForgeOpened += SetForgeOpen;
+        ForgeManager.instance.OnForgeClosed += SetForgeClosed;
     }
+
+    private void SetForgeOpen() => _isForgeOpen = true;
+    private void SetForgeClosed() => _isForgeOpen = false;
 
     // decided to go with a subscription + filter structure here, where all buttons
     // listen to the events from ForgeManager and only take action when necessary
@@ -45,8 +51,9 @@ public class ForgeItemListing : MonoBehaviour, IPointerClickHandler, IPointerEnt
             _isEquipped = false;
         }
         else _isEquipped = true;
-        // When player equips an item
-        AudioManager.Instance.PlayEquipItemSound();
+        
+        // only play equipping sound when forge is open.
+        if (_isForgeOpen) AudioManager.Instance.PlayEquipItemSound();
         EmitWeaponStateChanged();
     }
 
@@ -54,15 +61,6 @@ public class ForgeItemListing : MonoBehaviour, IPointerClickHandler, IPointerEnt
     {
         if (whichId != weaponListing.weaponId) return;
         weaponListing.isPurchased = wasPurchased;
-
-        // ✅ Prevent sound when forge is initializing/loading
-        if (ForgeManager.instance != null && !ForgeManager.instance.IsInitializing)
-        {
-            if (wasPurchased)
-                AudioManager.Instance.PlayPurchaseSuccess();
-            else
-                AudioManager.Instance.PlayPurchaseError();
-        }
 
         EmitWeaponStateChanged();
     }

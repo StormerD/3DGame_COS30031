@@ -36,6 +36,6 @@ public class PlayerDataTracker : MonoBehaviour
         }
     }
 
-    public PlayerCurrency GetSaveableCurrency() => looter.GetSaveableCurrency();
+    public CurrencyValues GetSaveableCurrency() => looter.GetSaveableCurrency();
     public string GetEquippedWeapon() => weaponHandler.GetEquippedWeapon();
 }
