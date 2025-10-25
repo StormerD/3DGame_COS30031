@@ -1,13 +1,15 @@
-using System;
 using UnityEngine;
 
 [RequireComponent(typeof(PlayerInput))]
 public class PlayerHealth : MonoBehaviour, IHealth
 {
-    [SerializeField]
-    private int _maxHealth;
-    public event Action OnDeath; // can be used to trigger game over screen
-    public event Action<int, int> ChangedHealth; // used for telling healthbar UI to update
+    [Tooltip("The stream that this player will emit current health data on.")]
+    [SerializeField] private IntEventObject _currentHealthStream;
+    [Tooltip("The stream that this object will emit max health data on.")]
+    [SerializeField] private IntEventObject _maxHealthStream;
+    [SerializeField] private int _maxHealth;
+    [Tooltip("The stream used to signify a player's death.")]
+    [SerializeField] private BasicEventObject _playerDeathStream;
 
     private int _currentHealth;
     private bool _hitThisFrame = false;
@@ -15,15 +17,18 @@ public class PlayerHealth : MonoBehaviour, IHealth
     void Start()
     {
         _currentHealth = _maxHealth;
-        if (GameOverScreen.instance != null) OnDeath += GameOverScreen.instance.OpenMenu;
-        OnDeath += GetComponent<PlayerInput>().DisableSelectInput; // Player cannot take movement actions when dead
-
-        ChangedHealth?.Invoke(_currentHealth, _maxHealth); // update values for healthbar UI 
+        EmitHealthStreams();
     }
 
     void FixedUpdate()
     {
         _hitThisFrame = false;
+    }
+
+    private void EmitHealthStreams()
+    {
+        _currentHealthStream.RaiseEvent(_currentHealth);
+        _maxHealthStream.RaiseEvent(_maxHealth);
     }
 
     public void TakeDamage(int damageAmount)
@@ -36,12 +41,12 @@ public class PlayerHealth : MonoBehaviour, IHealth
             _currentHealth = 0;
         }
 
-        ChangedHealth?.Invoke(_currentHealth, _maxHealth);
-        Debug.Log("Player took : " + damageAmount + " danage! Current health: " + _currentHealth);
+        EmitHealthStreams();
+        Debug.Log("Player took : " + damageAmount + " damage! Current health: " + _currentHealth);
 
         if (_currentHealth <= 0)
         {
-            OnDeath?.Invoke(); // invoke player death systems (gameover screen, pause enemies, disable player inputs, etc.)
+            _playerDeathStream.RaiseEvent();
             Debug.Log("## Player has died ##");
         }
     }
@@ -55,7 +60,7 @@ public class PlayerHealth : MonoBehaviour, IHealth
         {
             _currentHealth = _maxHealth;
         }
-        ChangedHealth?.Invoke(_currentHealth, _maxHealth);
+        EmitHealthStreams();
     }
 
     public int GetCurrentHealth()

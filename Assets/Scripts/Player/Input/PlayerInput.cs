@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEngine.InputSystem.InputAction;
@@ -6,7 +5,7 @@ using static UnityEngine.InputSystem.InputAction;
 public class PlayerInput : MonoBehaviour
 {
     public InputAction dash, interact, move, attack, secondary, pause, jump;
-
+    [SerializeField] private BasicEventObject _playerDeathStream;
     private FrameInput _inputActions;
 
     void Awake()
@@ -19,6 +18,17 @@ public class PlayerInput : MonoBehaviour
         secondary = _inputActions.Player.Ability2;
         pause = _inputActions.Player.Pause;
         jump = _inputActions.Player.Jump;
+    }
+
+    void OnEnable()
+    {
+        _inputActions.Enable();
+        _playerDeathStream.RegisterListener(DisableSelectInput);
+    }
+    void OnDisable() 
+    {
+        _inputActions.Disable();
+        _playerDeathStream.UnregisterListener(DisableSelectInput);
     }
 
     void Start()
@@ -71,6 +81,4 @@ public class PlayerInput : MonoBehaviour
         if (PauseManager.instance != null) PauseManager.instance.Pause();
         else Debug.LogWarning("PauseManager null; cannot pause!");
     }
-    void OnEnable() => _inputActions.Enable();
-    void OnDisable() => _inputActions.Disable();
 }
