@@ -26,11 +26,6 @@ public class ForgeManager : MonoBehaviour
     public event Action OnForgeOpened;
     public event Action OnForgeClosed;
 
-    [SerializeField] private PurchaseEventObject _purchaseRequestStream;
-    [SerializeField] private PurchaseEventObject _costStream;
-    private CurrencyValues _latestPlayerBankStatement = null;
-    private string _latestListingClicked = null;
-
     private readonly Dictionary<string, GameObject> _weaponsById = new();
     private List<WeaponPurchaseData> _purchaseData;
     private Animator _forgeMenuAnimator;
@@ -59,9 +54,8 @@ public class ForgeManager : MonoBehaviour
         if (GameManager.instance == null) { Debug.LogWarning("GameManager null; forge does not know purchase state."); return; }
 
         GameManager.instance.OnLoadComplete += ReloadWeaponPurchaseData;
-        ReloadWeaponPurchaseData();
 
-        if (_purchaseData.Count == 0) _purchaseData = GetDefaultWeaponPurchaseData();
+        if (_purchaseData == null || _purchaseData.Count == 0) _purchaseData = GetDefaultWeaponPurchaseData();
 
         if (forgeMenuScrollbox != null)
         {
@@ -70,10 +64,12 @@ public class ForgeManager : MonoBehaviour
                 if (forgeMenuScrollbox.GetChild(i).TryGetComponent(out ForgeItemListing listing))
                 {
                     listing.OnEquipWeapon += EquipItem;
-                    // listing.OnTryPurchaseWeapon += ListingClicked;
+                    listing.OnPurchaseWeapon += WeaponPurchased;
                 }
             }
         }
+
+        StartCoroutine(WaitForAllListingsSubscribed());
     }
 
     public void OpenForgeMenu()
@@ -97,6 +93,12 @@ public class ForgeManager : MonoBehaviour
 
     public List<WeaponPurchaseData> GetWeaponPurchaseData() => _purchaseData;
 
+    private void WeaponPurchased(string id)
+    {
+        SetListingPurchased(id);
+        OnListingPurchaseStateChange?.Invoke(id, true);
+        EquipItem(id);
+    }
     public void EquipItem(string id)
     {
         // Double check that listing is purchased & unlocked
@@ -156,31 +158,11 @@ public class ForgeManager : MonoBehaviour
         return l;
     }
 
-    IEnumerator QueuePurchase()
+    private IEnumerator WaitForAllListingsSubscribed(float timeout = 1f)
     {
-        string idOnEnter = _latestListingClicked;
-        yield return new WaitUntil( // last condition here is in case of another listing being clicked; a second coroutine will be running
-            () => (_latestListingClicked != null && _latestPlayerBankStatement != null) || _latestListingClicked != idOnEnter
-        );
-        if (idOnEnter != _latestListingClicked) yield break;
+        float start = Time.time;
+        yield return new WaitUntil(() => OnListingPurchaseStateChange?.GetInvocationList().Length == availableWeapons.Count || Time.time > start + timeout);
 
-        if (!DoesListingSatisfy(_latestListingClicked, (i) => i.isUnlocked))
-        {
-            Debug.LogWarning("Trying to purchase weapon " + _latestListingClicked + " but it is locked.");
-            yield break;
-        }
-        
-        // if (_playerLooter.UseCurrency(price))
-        // {
-        //     SetListingPurchased(id);
-        //     OnListingPurchaseStateChange?.Invoke(id, true);
-        //     EquipItem(id);
-        //     AudioManager.Instance.PlayPurchaseSuccess();
-        // }
-        else
-        {
-            // Debug.LogWarning("Not enough currency to buy " + id);
-            AudioManager.Instance.PlayPurchaseError();
-        }
+        ReloadWeaponPurchaseData();
     }
 }
