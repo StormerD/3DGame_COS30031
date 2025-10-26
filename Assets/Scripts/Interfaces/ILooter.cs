@@ -8,17 +8,9 @@ public interface ILooter : ICurrencyHoarder
     {
         CollectCurrency(type, -Math.Abs(amount)); // abs ensures always negative here
     }
-    // Use an amount of currency. Returns true if you have enough money for it, and false if not.
-    public bool UseCurrency(PurchasePrice price)
-    {
-        if (GetCurrency(CurrencyType.COMMON) < price.common || GetCurrency(CurrencyType.RARE) < price.rare || GetCurrency(CurrencyType.MYTHIC) < price.mythic) return false;
-        UseCurrency(CurrencyType.COMMON, price.common);
-        UseCurrency(CurrencyType.RARE, price.rare);
-        UseCurrency(CurrencyType.MYTHIC, price.mythic);
-        return true;
-    }
+    void UseCurrency(CurrencyValues price);
     int GetCurrency(CurrencyType type);
-    PlayerCurrency GetSaveableCurrency();
+    CurrencyValues GetSaveableCurrency();
 }
 
 public enum CurrencyType

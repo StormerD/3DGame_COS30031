@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "DialogueScene", menuName = "Scriptable Objects/DialogueScene")]
+[CreateAssetMenu(fileName = "DialogueScene", menuName = "Dialogue Objects/DialogueScene")]
 public class DialogueScene : ScriptableObject
 {
     [Tooltip("A UNIQUE key to identify this scene with. This is how dialogue gets saved!")]

@@ -1,58 +1,30 @@
 using UnityEngine;
-using UnityEngine.UI;
-using Unity.VisualScripting;
 using TMPro;
 
 public class CurrencyUI : MonoBehaviour
 {
-    private PlayerLooter looter;
+    // _requestCurrencyStream is listened to by player currency - when it recieves a request, it emits on _playerCurrencyStream
+    [SerializeField] private PurchaseEventObject _playerCurrencyStream;
+    [SerializeField] private BasicEventObject _requestCurrencyStream;
     [SerializeField] private TextMeshProUGUI commonText;
     [SerializeField] private TextMeshProUGUI rareText;
     [SerializeField] private TextMeshProUGUI mythicText;
 
-    private void OnEnable()
-    {
-        looter = FindFirstObjectByType<PlayerLooter>();
-
-        if (looter != null)
-            looter.CurrencyChanged += UpdateCurrencyUI;
-        if (looter != null)
-            looter.CurrencyChanged += UpdateCurrencyUI;
-    }
-
-    private void OnDisable()
-    {
-        if (looter != null)
-            looter.CurrencyChanged -= UpdateCurrencyUI;
-    }
+    private void OnEnable() => _playerCurrencyStream.RegisterListener(DisplayNewCurrency);
+    private void OnDisable() =>  _playerCurrencyStream.UnregisterListener(DisplayNewCurrency);
 
     private void Start()
     {
-        PullCurrencyValuesDirectly();
-        if (GameManager.instance != null) GameManager.instance.OnLoadComplete += PullCurrencyValuesDirectly;
+        _requestCurrencyStream.RaiseEvent();
     }
 
-    private void PullCurrencyValuesDirectly()
+    private void DisplayNewCurrency(CurrencyValues currencies)
     {
-        commonText.text = looter.GetCurrency(CurrencyType.COMMON).ToString();
-        rareText.text   = looter.GetCurrency(CurrencyType.RARE).ToString();
-        mythicText.text = looter.GetCurrency(CurrencyType.MYTHIC).ToString();
-    }
-
-    private void UpdateCurrencyUI(CurrencyType type, int value)
-    {
-        switch (type)
-        {
-            case CurrencyType.COMMON:
-                commonText.text = value.ToString();
-                break;
-            case CurrencyType.RARE:
-                rareText.text = value.ToString();
-                break;
-            case CurrencyType.MYTHIC:
-                mythicText.text = value.ToString();
-                break;
-        }
+        Debug.Log("Recieved new currency: " + currencies);
+        if (currencies == null) { Debug.LogWarning("currencies null"); return; } 
+        commonText.text = currencies.common.ToString();
+        rareText.text = currencies.rare.ToString();
+        mythicText.text = currencies.mythic.ToString();
     }
 }
 

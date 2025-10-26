@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "DialogueBoxScript", menuName = "Scriptable Objects/DialogueBoxScript")]
+[CreateAssetMenu(fileName = "DialogueBoxScript", menuName = "Dialogue Objects/DialogueBoxScript")]
 public class DialogueBoxScript : ScriptableObject
 {
     [Header("Configuration for what is actually displayed")]

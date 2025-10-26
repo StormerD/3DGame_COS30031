@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class WorldChanger : MonoBehaviour
 {
-    [SerializeField] private EventObject triggersTransition;
+    [SerializeField] private BasicEventObject triggersTransition;
     [SerializeField] private GameObject destroyedWorldTilemap;
     [SerializeField] private GameObject destroyedWorldProps;
     [SerializeField] private GameObject healedWorldTilemap;

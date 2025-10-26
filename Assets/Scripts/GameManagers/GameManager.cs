@@ -112,7 +112,13 @@ public class GameManager : MonoBehaviour
 	public void CurrentLevelComplete()
 	{
 		if (_currentLevel < 1 || _currentLevel > LEVEL_AMOUNT) Debug.LogWarning("GameManager does not know the current level number; it currently has it set as: " + _currentLevel);
-		// todo assorted things
+		if (_currentSaveData != null)
+		{
+			_currentSaveData.furthestUnlockedLevel = _currentLevel + 1;
+		}
+		else Debug.LogWarning("Could not update level complete, as current save data is null.");
+
+		Save();
 	}
 	
 	#endregion
@@ -125,7 +131,7 @@ public class GameManager : MonoBehaviour
 		ClearActiveGame();
     }
 	public void Save(int to) => DoSave(to, GetFurthestUnlockedLevel());
-	public void SafeSave() => DoSave(slotIndex, GetFurthestUnlockedLevel());
+	public void Save() => DoSave(slotIndex, GetFurthestUnlockedLevel());
 	void DoSave(int sIndex, int furthestUnlockedLevel)
 	{
 		OnSaveStart?.Invoke();
@@ -135,7 +141,7 @@ public class GameManager : MonoBehaviour
 		{
 			slotIndex = sIndex,
 			furthestUnlockedLevel = furthestUnlockedLevel,
-			currency = _activePlayerData.GetSaveableCurrency(),
+			playerCurrency = _activePlayerData.GetSaveableCurrency(),
 			equippedWeapon = _activePlayerData.GetEquippedWeapon(),
 			weaponsPurchased = ForgeManager.instance != null ? ForgeManager.instance.GetWeaponPurchaseData() : _currentSaveData.weaponsPurchased,
 			dialoguesPlayed = _dialoguesPlayedSinceLastSave.ToList(),
@@ -195,7 +201,7 @@ public class GameManager : MonoBehaviour
 			{
 				slotIndex = slotIndex,
 				furthestUnlockedLevel = 1,
-				currency = new PlayerCurrency { common = 0, rare = 0, mythic = 0 },
+				playerCurrency = new CurrencyValues { common = 0, rare = 0, mythic = 0 },
 				equippedWeapon = "",
 				weaponsPurchased = null,
 				activeScene = -1,
@@ -244,7 +250,7 @@ public class GameManager : MonoBehaviour
 	// separate distinct pieces into individual getters so that components can get as needed (no reason for scene manager to have anything but furthest unlocked level, for instance)
 	public int GetFurthestUnlockedLevel() => ConfirmDataLoaded() ? _currentSaveData.furthestUnlockedLevel : 1;
 	public string GetEquippedWeapon() => ConfirmDataLoaded() ? _currentSaveData.equippedWeapon : "";
-	public PlayerCurrency GetCurrency() => ConfirmDataLoaded() ? _currentSaveData.currency : new PlayerCurrency();
+	public CurrencyValues GetCurrency() => ConfirmDataLoaded() ? _currentSaveData.playerCurrency : new CurrencyValues();
 	public List<WeaponPurchaseData> GetWeaponsPurchased() => ConfirmDataLoaded() ? _currentSaveData.weaponsPurchased : null;
 	public DateTime? GetSlotLastSavedTime(int whichSlot)
 	{
