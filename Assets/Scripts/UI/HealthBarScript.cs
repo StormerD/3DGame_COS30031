@@ -1,24 +1,47 @@
-using System;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class HealthBarScript : MonoBehaviour
 {
+    [SerializeField] private IntEventObject _playerCurrentHealthStream;
+    [SerializeField] private IntEventObject _playerMaxHealthStream;
     [SerializeField] private Slider _slider;
-    [SerializeField] private GameObject player;
+
+    private int _lastRecievedCurrentHealth = 0;
+    private int _lastRecievedMaxHealth = 0;
 
     void Awake()
     {
-        if (player == null) Debug.LogWarning("Healthbar does not have a reference to the player.");
-        if (!player.TryGetComponent(out PlayerHealth health)) Debug.LogWarning("Player does not have playerhealth.");
-        health.ChangedHealth += SetHealth;
+        if (_slider == null) Debug.LogWarning("Health UI does not have slider reference; assign in inspector!");
     }
-    
-    public void SetHealth(int current, int max)
+
+    void OnEnable()
     {
-        if (_slider == null) return;
-        
-        _slider.maxValue = max;
-        _slider.value = current;
+        _playerCurrentHealthStream.RegisterListener(CurrentHealthChanged);
+        _playerMaxHealthStream.RegisterListener(MaxHealthChanged);
+    }
+
+    void OnDisable()
+    {
+        _playerCurrentHealthStream.UnregisterListener(CurrentHealthChanged);
+        _playerMaxHealthStream.UnregisterListener(MaxHealthChanged);
+    }
+
+    private void MaxHealthChanged(int to)
+    {
+        _lastRecievedMaxHealth = to;
+        SetSliderValues();
+    }
+
+    private void CurrentHealthChanged(int to)
+    {
+        _lastRecievedCurrentHealth = to;
+        SetSliderValues();
+    }
+
+    public void SetSliderValues()
+    {        
+        _slider.maxValue = _lastRecievedMaxHealth;
+        _slider.value = _lastRecievedCurrentHealth;
     }
 }

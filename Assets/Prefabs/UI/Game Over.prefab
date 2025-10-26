@@ -665,6 +665,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df8e7d19bc1f24356a24b777c939ae77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerDeathStream: {fileID: 11400000, guid: 7613c1fff96694aaa9d7e53fa978d0e7, type: 2}
 --- !u!1 &9029225829681667937
 GameObject:
   m_ObjectHideFlags: 0

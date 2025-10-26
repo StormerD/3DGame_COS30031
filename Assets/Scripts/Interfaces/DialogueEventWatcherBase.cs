@@ -17,7 +17,11 @@ public abstract class DialogueEventWatcherBase : MonoBehaviour
             GameManager.instance.OnLoadComplete += SyncDialogue;
         }
         else Debug.LogWarning("GameManager null; Dialogue does not know save state.");
-        DialogueScreen.instance.OnWhichDialogueEnded += SomeDialogueCompleted;
+        if (DialogueScreen.instance != null)
+        {
+            DialogueScreen.instance.OnWhichDialogueEnded += SomeDialogueCompleted;
+        }
+        else Debug.LogError("Missing dialogue screen!");
     }
     protected IEnumerator DelayedRequestDialogue(DialogueScene scene, float delay = 0)
     {

@@ -3,10 +3,10 @@
 using System;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "DialogueEventTrigger", menuName = "Scriptable Objects/DialogueEventTrigger")]
+[CreateAssetMenu(fileName = "DialogueEventTrigger", menuName = "Dialogue Objects/DialogueEventTrigger")]
 public class DialogueEventTrigger : ScriptableObject
 {
-    public EventObject eventStream;
+    public BasicEventObject eventStream;
     public DialogueScene dialogueScene;
     public float dialogueRequestDelay = 0;
     private event Action OnEventHappened;

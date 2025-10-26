@@ -11,8 +11,11 @@ public class PlayerWeaponHandler2D : PlayerWeaponHandlerBase
         {
             string equippedWeapon = GameManager.instance.GetEquippedWeapon();
             GameObject realWeapon = ForgeManager.instance.GetWeaponByID(equippedWeapon);
-            if (!realWeapon.TryGetComponent(out _weaponScript)) Debug.LogWarning("Weapon " + realWeapon.name + " does not have a WeaponBase script.");
-            EquipWeapon(realWeapon);
+            if (realWeapon != null)
+            {
+                if (!realWeapon.TryGetComponent(out _weaponScript)) Debug.LogWarning("Weapon " + realWeapon.name + " does not have a WeaponBase script.");
+                EquipWeapon(realWeapon);
+            }
         }
 
         // really only used for debugging - happens when you start the game within a level (in editor) 

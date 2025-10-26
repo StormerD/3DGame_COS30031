@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(Animator))]
 public class MainMenuHandler : MonoBehaviour
@@ -31,11 +30,6 @@ public class MainMenuHandler : MonoBehaviour
     {
         startMenu.SetActive(false);
         savesMenu.SetActive(true);
-    }
-
-    public void SaveToSlot(int which)
-    {
-        GameManager.instance.Save(which);
     }
 
     public void StartGame(int slot)

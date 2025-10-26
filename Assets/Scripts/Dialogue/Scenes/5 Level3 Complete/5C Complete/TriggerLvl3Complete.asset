@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57bda393f76684f69aa25dc3f8d2510d, type: 3}
+  m_Name: TriggerLvl3Complete
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueEventTrigger
+  eventStream: {fileID: 11400000, guid: 0090b8a805db5469db8f1ea6249bdb72, type: 2}
+  dialogueScene: {fileID: 11400000, guid: 4b0f9220040584912a45231d10ab1e3a, type: 2}
+  dialogueRequestDelay: 0

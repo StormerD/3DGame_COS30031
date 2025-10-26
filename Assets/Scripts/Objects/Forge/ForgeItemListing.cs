@@ -6,21 +6,24 @@ using UnityEngine.EventSystems;
 public class ForgeItemListing : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
     public TMP_Text priceText;
-    public event Action<string, PurchasePrice> OnTryPurchaseWeapon;
     public event Action<string> OnEquipWeapon;
     // purchased, unlocked, equipped
     public event Action<bool, bool, bool> OnWeaponStateChanged;
     // true == hovered, false == not hovered
     public event Action<bool> OnHoverChanged;
-    public event Action ClickedLockedWeapon;
+    public event Action<string> OnPurchaseWeapon;
 
     [Tooltip("This MUST be the same ID as the weapon ID set in the Weapon's WeaponData ScriptableObject.")]
     public WeaponPurchaseData weaponListing;
-    public PurchasePrice purchasePrice;
+    public CurrencyValues purchasePrice;
     public GameObject unlockedVersion;
     public GameObject lockedVersion;
 
+    [SerializeField] private PurchaseEventObject _playerCurrencyStream;
+    [SerializeField] private PurchaseEventObject _playerCostsStream;
+    private CurrencyValues _playerCurrency;
     private bool _isEquipped = false;
+    private bool _isForgeOpen = false;
 
     void Awake()
     {
@@ -29,11 +32,20 @@ public class ForgeItemListing : MonoBehaviour, IPointerClickHandler, IPointerEnt
         lockedVersion.SetActive(!weaponListing.isUnlocked);
     }
 
+    private void OnEnable() => _playerCurrencyStream.RegisterListener(CurrencyUpdate);
+    private void OnDisable() =>  _playerCurrencyStream.UnregisterListener(CurrencyUpdate);
+    private void CurrencyUpdate(CurrencyValues to) => _playerCurrency = to;
+
     void Start()
     {
         ForgeManager.instance.OnListingPurchaseStateChange += SomeWeaponPurchased;
         ForgeManager.instance.OnListingEquipped += SomeWeaponEquipped;
+        ForgeManager.instance.OnForgeOpened += SetForgeOpen;
+        ForgeManager.instance.OnForgeClosed += SetForgeClosed;
     }
+
+    private void SetForgeOpen() => _isForgeOpen = true;
+    private void SetForgeClosed() => _isForgeOpen = false;
 
     // decided to go with a subscription + filter structure here, where all buttons
     // listen to the events from ForgeManager and only take action when necessary
@@ -45,8 +57,9 @@ public class ForgeItemListing : MonoBehaviour, IPointerClickHandler, IPointerEnt
             _isEquipped = false;
         }
         else _isEquipped = true;
-        // When player equips an item
-        AudioManager.Instance.PlayEquipItemSound();
+        
+        // only play equipping sound when forge is open
+        if (_isForgeOpen) AudioManager.Instance.PlayEquipItemSound();
         EmitWeaponStateChanged();
     }
 
@@ -54,15 +67,7 @@ public class ForgeItemListing : MonoBehaviour, IPointerClickHandler, IPointerEnt
     {
         if (whichId != weaponListing.weaponId) return;
         weaponListing.isPurchased = wasPurchased;
-
-        // ✅ Prevent sound when forge is initializing/loading
-        if (ForgeManager.instance != null && !ForgeManager.instance.IsInitializing)
-        {
-            if (wasPurchased)
-                AudioManager.Instance.PlayPurchaseSuccess();
-            else
-                AudioManager.Instance.PlayPurchaseError();
-        }
+        if (wasPurchased) priceText.text = "";
 
         EmitWeaponStateChanged();
     }
@@ -72,12 +77,19 @@ public class ForgeItemListing : MonoBehaviour, IPointerClickHandler, IPointerEnt
     public void OnPointerClick(PointerEventData pointerEventData)
     {
         if (weaponListing.isPurchased) { OnEquipWeapon?.Invoke(weaponListing.weaponId); }
-        else if (weaponListing.isUnlocked) OnTryPurchaseWeapon?.Invoke(weaponListing.weaponId, purchasePrice);
+        else if (weaponListing.isUnlocked)
+        {
+            if (_playerCurrency.EnoughToPurchase(purchasePrice))
+            {
+                _playerCostsStream.RaiseEvent(purchasePrice);
+                OnPurchaseWeapon?.Invoke(weaponListing.weaponId);
+                AudioManager.Instance.PlayPurchaseSuccess();
+            } else AudioManager.Instance.PlayPurchaseError();
+        }
         else
         {
-            Debug.Log("Clicked a locked weapon."); ClickedLockedWeapon?.Invoke();
-            // Play error sound
-            AudioManager.Instance.PlayPurchaseError();      // ✅ fail sound
+            Debug.Log("Clicked a locked weapon."); 
+            AudioManager.Instance.PlayPurchaseError();
         }
     }
 
