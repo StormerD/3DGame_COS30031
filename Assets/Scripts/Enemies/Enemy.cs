@@ -23,6 +23,8 @@ public class Enemy : MonoBehaviour, IHealth
     {
         _isDead = false;
         _currentHealth = unitData.maxHealth;
+        var attack = GetComponent<EnemyAttack>();
+        if (attack != null) attack.InitializeEnemyAttack();
     }
 
     void OnDisable() => _isDead = true;
