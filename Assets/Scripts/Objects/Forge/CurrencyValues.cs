@@ -27,6 +27,8 @@ public class CurrencyValues
 
         return parts.Count == 0 ? "" : string.Join(", ", parts);
     }
+
+    public bool EnoughToPurchase(CurrencyValues amount) => common >= amount.common && rare >= amount.rare && mythic > amount.mythic;
 }
 
 [Serializable]
