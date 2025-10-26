@@ -2,13 +2,10 @@ using UnityEngine;
 
 public class GameOverScreen : MonoBehaviour
 {
-    public static GameOverScreen instance;
+    [SerializeField] private BasicEventObject _playerDeathStream;
 
-    void Awake()
-    {
-        if (instance == null) instance = this;
-        else Destroy(gameObject);
-    }
+    void Awake() => _playerDeathStream.RegisterListener(OpenMenu);
+    void OnDestroy() =>  _playerDeathStream.UnregisterListener(OpenMenu);
 
     void Start()
     {

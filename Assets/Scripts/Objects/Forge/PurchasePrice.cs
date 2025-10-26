@@ -3,13 +3,13 @@ using System;
 using System.Collections.Generic;
 
 [Serializable]
-public struct PurchasePrice
+public class CurrencyValues
 {
     public int common;
     public int rare;
     public int mythic;
 
-    public PurchasePrice(int c = 0, int r = 0, int m = 0)
+    public CurrencyValues(int c = 0, int r = 0, int m = 0)
     {
         common = c;
         rare = r;

@@ -9,17 +9,19 @@ public class PlayerDataTracker : MonoBehaviour
     private static bool exists = false;
     private PlayerLooter looter;
     private PlayerWeaponHandlerBase weaponHandler;
+    private bool isActivePlayer = false;
 
     void Awake()
     {
         if (!exists) DontDestroyOnLoad(gameObject); // the first player created will persist across scenes
         else exists = true;
-    }
 
-    void Start()
-    {
         looter = GetComponent<PlayerLooter>();
         weaponHandler = GetComponent<PlayerWeaponHandlerBase>();
+    }
+
+    void OnEnable()
+    {
         if (GameManager.instance == null) Debug.LogWarning("GameManager is null; unable to register player.");
         else
         {
@@ -36,6 +38,6 @@ public class PlayerDataTracker : MonoBehaviour
         }
     }
 
-    public PlayerCurrency GetSaveableCurrency() => looter.GetSaveableCurrency();
+    public CurrencyValues GetSaveableCurrency() => looter.GetSaveableCurrency();
     public string GetEquippedWeapon() => weaponHandler.GetEquippedWeapon();
 }
