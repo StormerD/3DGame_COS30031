@@ -26,7 +26,7 @@ public class EnemyAttack : MonoBehaviour
 
     public void TryAttackPlayer()
     {
-        Debug.Log(gameObject.name + " is trying to attack");
+        // Debug.Log(gameObject.name + " is trying to attack");
         // check if attack is on cooldown
         if (!_attackReady) return; // don't attack if on cooldown
         _attackReady = false;

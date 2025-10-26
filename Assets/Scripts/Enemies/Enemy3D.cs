@@ -20,8 +20,11 @@ public class Enemy3D : MonoBehaviour, IHealth
         _enemyPool = pool;
     }
 
-    void OnEnable() => _isDead = false;
-    void OnDisable() => _isDead = true;
+    void OnEnable()
+    {
+        _isDead = false;
+        _currentHealth = unitData.maxHealth;
+    }    void OnDisable() => _isDead = true;
 
     void Awake()
     {

@@ -19,7 +19,11 @@ public class Enemy : MonoBehaviour, IHealth
         _enemyPool = pool;
     }
 
-    void OnEnable() => _isDead = false;
+    void OnEnable()
+    {
+        _isDead = false;
+        _currentHealth = unitData.maxHealth;
+    }
 
     void OnDisable() => _isDead = true;
 
@@ -44,6 +48,7 @@ public class Enemy : MonoBehaviour, IHealth
     public void TakeDamage(int amount)
     {
         if (_hitThisFrame || _isDead) return; // only take damage once per frame
+        Debug.Log("Ouch! " + gameObject.name + " hit for " + amount + ", current: " + _currentHealth);
         //_animator.SetTrigger("Hit");
         _hitThisFrame = true;
         _currentHealth -= amount;
