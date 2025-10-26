@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Data.Common;
 using UnityEngine;
 
 
@@ -50,10 +49,11 @@ public class ForgeManager : MonoBehaviour
             OnForgeClosed += FreezeEntitiesManager.instance.EndFreeze;
         }
         else Debug.Log("Cannot add dialogue to freeze, as freezeentitiesmanager is null!");
-        
-        if (GameManager.instance == null) { Debug.LogWarning("GameManager null; forge does not know purchase state."); return; }
 
-        GameManager.instance.OnLoadComplete += ReloadWeaponPurchaseData;
+        if (GameManager.instance != null)
+        {
+            GameManager.instance.OnLoadComplete += ReloadWeaponPurchaseData;
+        } else Debug.LogWarning("GameManager null; forge does not know purchase state. Using defaults.");
 
         if (_purchaseData == null || _purchaseData.Count == 0) _purchaseData = GetDefaultWeaponPurchaseData();
 
