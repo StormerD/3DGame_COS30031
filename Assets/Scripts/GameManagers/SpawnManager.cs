@@ -1,10 +1,17 @@
 using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.Pool;
 
 public class SpawnManager : MonoBehaviour
 {
     [SerializeField] private Transform[] _spawnPoints; // array of spawn point locations
+    private Transform _nextSpawnPoint; // chosen spawn for next enemy
+    private float _spawnRadius = 15f;
+    private Transform _player;
+
     [SerializeField] private float _timeBetweenSpawns = 5f;
     [SerializeField] private bool _disabled = false;
     private float _timeSinceLastSpawn;
@@ -18,12 +25,19 @@ public class SpawnManager : MonoBehaviour
         _enemyPool = new ObjectPool<Enemy>(CreateEnemy, OnGet, OnRelease);
         _timeSinceLastSpawn = Time.time + _timeBetweenSpawns;
         _disabled = false;
+        if (_player == null)
+        {
+            var p = GameObject.FindGameObjectsWithTag("Player");
+            if (p != null) _player = p[0].transform;
+        }
     }
 
     private void OnGet(Enemy enemy)
     {
-        Transform randomSpawnPoint = _spawnPoints[Random.Range(0, _spawnPoints.Length)];
-        enemy.transform.position = randomSpawnPoint.transform.position;
+        Transform spawn = _nextSpawnPoint != null && _nextSpawnPoint ? _nextSpawnPoint : _spawnPoints[Random.Range(0, _spawnPoints.Length)];
+        _nextSpawnPoint = null;
+        enemy.transform.position = spawn.position;
+
         enemy.gameObject.SetActive(true);
         _activeEnemies.Add(enemy);
     }
@@ -40,6 +54,21 @@ public class SpawnManager : MonoBehaviour
         enemy.gameObject.SetActive(false);
         enemy.SetPool(_enemyPool);
         return enemy;
+    }
+
+    private Transform PickSpawnInRange()
+    {
+        if (_player == null || _spawnPoints == null || _spawnPoints.Length == 0) return null;
+        float r2 = _spawnRadius * _spawnRadius;
+        var candidates = new List<Transform>();
+        foreach (var spawn in _spawnPoints)
+        {
+            if (spawn == null) continue;
+            if ((spawn.position - _player.position).sqrMagnitude <= r2)
+                candidates.Add(spawn);
+        }
+        if (candidates.Count == 0) return null;
+        return candidates[Random.Range(0, candidates.Count)];
     }
 
     public void DisableSpawner()
@@ -74,8 +103,13 @@ public class SpawnManager : MonoBehaviour
     {
         if (Time.time > _timeSinceLastSpawn && !_disabled)
         {
-            _enemyPool.Get();
-            _timeSinceLastSpawn = Time.time + _timeBetweenSpawns;
+            var spawn = PickSpawnInRange();
+            if (spawn != null)
+            {
+                _nextSpawnPoint = spawn;
+                _enemyPool.Get();
+                _timeSinceLastSpawn = Time.time + _timeBetweenSpawns;
+            }
         }
     }
 }
