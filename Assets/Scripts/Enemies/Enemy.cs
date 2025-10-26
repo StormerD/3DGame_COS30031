@@ -43,11 +43,17 @@ public class Enemy : MonoBehaviour, IHealth
 
     public void TakeDamage(int amount)
     {
+<<<<<<< Updated upstream
         if (_hitThisFrame) return; // only take damage once per frame
         Debug.Log("Ouch! " + gameObject.name + " hit for " + amount);
         //_animator.SetTrigger("Hit");
         _currentHealth -= amount;
+=======
+        if (_hitThisFrame || _isDead) return; // only take damage once per frame
+        _animator.SetTrigger("Hit");
+>>>>>>> Stashed changes
         _hitThisFrame = true;
+        _currentHealth -= amount;
         if (_currentHealth <= 0 && !_isDead)
         {
             Debug.Log(gameObject.name + " is dead!");
