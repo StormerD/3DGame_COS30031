@@ -16,7 +16,7 @@ public class RebuildableVisualizer2D : MonoBehaviour
 
     void Start()
     {
-        if (rebuildable == null && !TryGetComponent(out rebuildable)) Debug.LogError("Rebuildable is null, and there is not a rebuildable component script on this gameObject: " + gameObject.name);
+        if (rebuildable == null && !TryGetComponent(out rebuildable)) Debug.LogError("Rebuildable is null, and there is not a rebuildable component script on this gameObject.");
         else
         {
             rebuildable.OnComponentsCollected += ComponentCollected;

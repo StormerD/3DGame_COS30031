@@ -78,7 +78,7 @@ BoxCollider2D:
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
-  m_Material: {fileID: 6200000, guid: 2752dfbb613634e978aad9f66573e12c, type: 2}
+  m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -271,7 +271,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96e6d976ddf8c41dfb503642e78239b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerDataTracker
-  registrationPriority: 0
 --- !u!1 &6816457103706165846
 GameObject:
   m_ObjectHideFlags: 0

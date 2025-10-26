@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93f59b2ae768f461e81f69dd151d86b1, type: 3}
   m_Name: 3
   m_EditorClassIdentifier: Assembly-CSharp::DialogueBoxScript
-  text: Their main downside is they need to be installed in places with fair amounts
-    of wind.
+  text: They do need to be installed in places with fair amounts of wind, but that's
+    perfect for this area!
   speakerImage: {fileID: 0}
   speakerName: You
   speakerShowsOnLeft: 0

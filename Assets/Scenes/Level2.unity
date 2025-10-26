@@ -2419,11 +2419,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rebuildSprites:
-  - {fileID: 5402927063717226266, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
-  - {fileID: 5402927063717226266, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
+  - {fileID: 7747323849799075760, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
   - {fileID: 5402927063717226266, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
   - {fileID: 8025824312764125203, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
-  - {fileID: 7387743474717907322, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
   - {fileID: 7387743474717907322, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
   completeBuildEffects: {fileID: 0}
   rebuildable: {fileID: 644060858}
@@ -2474,7 +2472,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 5402927063717226266, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
+  m_Sprite: {fileID: 7747323849799075760, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -3865,10 +3863,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rebuildSprites:
-  - {fileID: 8025824312764125203, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
-  - {fileID: 8025824312764125203, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
-  - {fileID: 8025824312764125203, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
-  - {fileID: 8025824312764125203, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
+  - {fileID: 7747323849799075760, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
+  - {fileID: 5402927063717226266, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
   - {fileID: 8025824312764125203, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
   - {fileID: 7387743474717907322, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
   completeBuildEffects: {fileID: 4584691143367798422, guid: 2a137a8cd15cd49eb8efafc00479c897, type: 3}
@@ -3920,7 +3916,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 8025824312764125203, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
+  m_Sprite: {fileID: 7747323849799075760, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -4009,10 +4005,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rebuildSprites:
   - {fileID: 7747323849799075760, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
-  - {fileID: 7747323849799075760, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
   - {fileID: 5402927063717226266, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
   - {fileID: 8025824312764125203, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
-  - {fileID: 7387743474717907322, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
   - {fileID: 7387743474717907322, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
   completeBuildEffects: {fileID: 0}
   rebuildable: {fileID: 644060858}
@@ -4722,10 +4716,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rebuildSprites:
   - {fileID: 7747323849799075760, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
-  - {fileID: 7747323849799075760, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
   - {fileID: 5402927063717226266, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
   - {fileID: 8025824312764125203, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
-  - {fileID: 7387743474717907322, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
   - {fileID: 7387743474717907322, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
   completeBuildEffects: {fileID: 0}
   rebuildable: {fileID: 644060858}
@@ -8567,8 +8559,6 @@ MonoBehaviour:
     component!
   numComponents: 5
   componentPrefab: {fileID: 8693533013562325051, guid: bfdfe8d4380aa4b59abac05fab9302ad, type: 3}
-  componentPlaced: {fileID: 8300000, guid: 97a4239fb5d3b48c2b07d86304c81135, type: 3}
-  completionSound: {fileID: 8300000, guid: bf163f2e58e1d47218416a6d73d3ad23, type: 3}
 --- !u!61 &644060859
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -75805,10 +75795,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rebuildSprites:
   - {fileID: 7747323849799075760, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
-  - {fileID: 7747323849799075760, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
   - {fileID: 5402927063717226266, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
   - {fileID: 8025824312764125203, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
-  - {fileID: 7387743474717907322, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
   - {fileID: 7387743474717907322, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
   completeBuildEffects: {fileID: 0}
   rebuildable: {fileID: 644060858}
@@ -77522,11 +77510,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rebuildSprites:
-  - {fileID: 5402927063717226266, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
-  - {fileID: 5402927063717226266, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
+  - {fileID: 7747323849799075760, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
   - {fileID: 5402927063717226266, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
   - {fileID: 8025824312764125203, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
-  - {fileID: 7387743474717907322, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
   - {fileID: 7387743474717907322, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
   completeBuildEffects: {fileID: 4584691143367798422, guid: 2a137a8cd15cd49eb8efafc00479c897, type: 3}
   rebuildable: {fileID: 644060858}
@@ -77577,7 +77563,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 5402927063717226266, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
+  m_Sprite: {fileID: 7747323849799075760, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -77634,11 +77620,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rebuildSprites:
-  - {fileID: 5402927063717226266, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
-  - {fileID: 5402927063717226266, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
+  - {fileID: 7747323849799075760, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
   - {fileID: 5402927063717226266, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
   - {fileID: 8025824312764125203, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
-  - {fileID: 7387743474717907322, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
   - {fileID: 7387743474717907322, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
   completeBuildEffects: {fileID: 4584691143367798422, guid: 2a137a8cd15cd49eb8efafc00479c897, type: 3}
   rebuildable: {fileID: 644060858}
@@ -77689,7 +77673,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 5402927063717226266, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
+  m_Sprite: {fileID: 7747323849799075760, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -77749,8 +77733,6 @@ MonoBehaviour:
   - {fileID: 7747323849799075760, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
   - {fileID: 5402927063717226266, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
   - {fileID: 8025824312764125203, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
-  - {fileID: 7387743474717907322, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
-  - {fileID: 7387743474717907322, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
   - {fileID: 7387743474717907322, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
   completeBuildEffects: {fileID: 4584691143367798422, guid: 2a137a8cd15cd49eb8efafc00479c897, type: 3}
   rebuildable: {fileID: 644060858}
@@ -79332,8 +79314,6 @@ MonoBehaviour:
   - {fileID: 5402927063717226266, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
   - {fileID: 8025824312764125203, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
   - {fileID: 7387743474717907322, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
-  - {fileID: 7387743474717907322, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
-  - {fileID: 7387743474717907322, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
   completeBuildEffects: {fileID: 0}
   rebuildable: {fileID: 644060858}
 --- !u!212 &1419698346
@@ -79570,8 +79550,6 @@ MonoBehaviour:
   - {fileID: 7747323849799075760, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
   - {fileID: 5402927063717226266, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
   - {fileID: 8025824312764125203, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
-  - {fileID: 7387743474717907322, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
-  - {fileID: 7387743474717907322, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
   - {fileID: 7387743474717907322, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
   completeBuildEffects: {fileID: 0}
   rebuildable: {fileID: 644060858}
@@ -81490,10 +81468,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rebuildSprites:
-  - {fileID: 8025824312764125203, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
-  - {fileID: 8025824312764125203, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
-  - {fileID: 8025824312764125203, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
-  - {fileID: 8025824312764125203, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
+  - {fileID: 7747323849799075760, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
+  - {fileID: 5402927063717226266, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
   - {fileID: 8025824312764125203, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
   - {fileID: 7387743474717907322, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
   completeBuildEffects: {fileID: 0}
@@ -81545,7 +81521,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 8025824312764125203, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
+  m_Sprite: {fileID: 7747323849799075760, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -81935,11 +81911,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rebuildSprites:
-  - {fileID: 5402927063717226266, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
-  - {fileID: 5402927063717226266, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
+  - {fileID: 7747323849799075760, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
   - {fileID: 5402927063717226266, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
   - {fileID: 8025824312764125203, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
-  - {fileID: 7387743474717907322, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
   - {fileID: 7387743474717907322, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
   completeBuildEffects: {fileID: 0}
   rebuildable: {fileID: 644060858}
@@ -81990,7 +81964,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 5402927063717226266, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
+  m_Sprite: {fileID: 7747323849799075760, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -82613,10 +82587,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rebuildSprites:
   - {fileID: 7747323849799075760, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
-  - {fileID: 7747323849799075760, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
   - {fileID: 5402927063717226266, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
   - {fileID: 8025824312764125203, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
-  - {fileID: 7387743474717907322, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
   - {fileID: 7387743474717907322, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
   completeBuildEffects: {fileID: 0}
   rebuildable: {fileID: 644060858}
@@ -83106,9 +83078,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rebuildSprites:
-  - {fileID: 5402927063717226266, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
-  - {fileID: 5402927063717226266, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
-  - {fileID: 5402927063717226266, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
+  - {fileID: 7747323849799075760, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
   - {fileID: 5402927063717226266, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
   - {fileID: 8025824312764125203, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
   - {fileID: 7387743474717907322, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
@@ -83161,7 +83131,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 8025824312764125203, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
+  m_Sprite: {fileID: 7747323849799075760, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -83348,8 +83318,6 @@ MonoBehaviour:
   - {fileID: 7747323849799075760, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
   - {fileID: 5402927063717226266, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
   - {fileID: 8025824312764125203, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
-  - {fileID: 7387743474717907322, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
-  - {fileID: 7387743474717907322, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
   - {fileID: 7387743474717907322, guid: 1c1ad3987b8894daea7f3094f58bfd34, type: 3}
   completeBuildEffects: {fileID: 0}
   rebuildable: {fileID: 644060858}
