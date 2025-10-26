@@ -59,6 +59,8 @@ SpriteRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -80,6 +82,7 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
@@ -203,13 +206,11 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5e5a299dded7345459175460ae6a395c, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: 
-  lootTable: {fileID: 11400000, guid: 516c17e7e7d1747df896930c7385ae2c, type: 2}
-  commonObject: {fileID: 3042095367524939837, guid: 52635cb2c45960846a0818f7ad115da2, type: 3}
-  rareObject: {fileID: 3042095367524939837, guid: 9d3f24511b6e06549bcbb0fbda4c41af, type: 3}
-  mythicObject: {fileID: 3042095367524939837, guid: 925a7fed5860a534192264d4c9331c1c, type: 3}
-  _burstForce: 25
-  _dampening: 5
+  m_EditorClassIdentifier: Assembly-CSharp::LootContainer
+  lootTable: {fileID: 11400000, guid: 22c7b02dc67673e4ebea5680c93d6c32, type: 2}
+  _burstForce: 5
+  _dampening: 2
+  _lootBasePrefab: {fileID: 4088685355471976342, guid: 85d98cdda85c70542b722f5c2e6145e7, type: 3}
 --- !u!114 &-8525181828771144778
 MonoBehaviour:
   m_ObjectHideFlags: 0

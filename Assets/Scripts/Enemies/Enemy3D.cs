@@ -1,5 +1,3 @@
-
-
 using System;
 using UnityEngine;
 using UnityEngine.Pool;
@@ -45,7 +43,7 @@ public class Enemy3D : MonoBehaviour, IHealth
 
     public void TakeDamage(int amount)
     {
-        if (_hitThisFrame) return;
+        if (_hitThisFrame) return; // only take damage once per frame
         Debug.Log("Ouch! " + gameObject.name + " hit for " + amount);
         //_animator.SetTrigger("Hit");
         _currentHealth -= amount;

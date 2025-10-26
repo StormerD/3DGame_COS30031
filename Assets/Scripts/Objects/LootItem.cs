@@ -1,28 +1,36 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Pool;
 
-// check collider and sprite renderer exist
+// check sprite renderer and collider exists
 [RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(Collider2D))]
-public class CurrencyLoot : MonoBehaviour, IPickupable
+public class LootItem : MonoBehaviour, IPickupable
 {
     public event Action InteractedWith;
-    public CurrencyType currencyType; // - COMMON - RARE - MYTHIC
     [Header("Currency Sprites")]
     public Sprite[] commonLootSprites;
     public Sprite[] rareLootSprites;
     public Sprite[] mythicLootSprites;
+    public CurrencyType currencyType { get; private set; } // - COMMON - RARE - MYTHIC
 
+    private IObjectPool<LootItem> _lootPool;
     private SpriteRenderer sr;
 
-    void Awake()
+    public void SetPool(IObjectPool<LootItem> pool)
     {
-        // assign and check sprite renderer
-        sr = GetComponent<SpriteRenderer>();
-        // sprite selection logic
+        _lootPool = pool;
+    }
+
+    public void ApplyRarity(CurrencyType rarity)
+    {
+        currencyType = rarity;
+        if (sr == null) sr = GetComponent<SpriteRenderer>();
+        if (sr == null) return;
+
         Sprite selectedSprite = null;
-        switch (currencyType)
+        switch (rarity)
         {
             case CurrencyType.COMMON:
                 if (commonLootSprites != null && commonLootSprites.Length > 0)
@@ -38,7 +46,9 @@ public class CurrencyLoot : MonoBehaviour, IPickupable
                 break;
         }
         if (selectedSprite != null)
+        {
             sr.sprite = selectedSprite;
+        }
 
         // handle lifetime of item
         float destroyTime = UnityEngine.Random.Range(9f, 10f);
@@ -85,7 +95,9 @@ public class CurrencyLoot : MonoBehaviour, IPickupable
     public void Pickup(IInteractor interactor)
     {
         interactor.CollectCurrency(currencyType);
-        gameObject.SetActive(false); // for pooling
+        // pool item
+        if (_lootPool != null) _lootPool.Release(this);
+        else gameObject.SetActive(false);
     }
 
     void OnTriggerEnter2D(Collider2D collision)

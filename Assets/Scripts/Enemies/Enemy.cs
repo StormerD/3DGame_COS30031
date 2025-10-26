@@ -23,6 +23,11 @@ public class Enemy : MonoBehaviour, IHealth
 
     void OnDisable() => _isDead = true;
 
+    void Awake()
+    {
+        gameObject.layer = LayerMask.NameToLayer("Enemy"); // in case we forget to set the layer, should set it auto
+    }
+
     void Start()
     {
         _currentHealth = unitData.maxHealth;
@@ -39,11 +44,13 @@ public class Enemy : MonoBehaviour, IHealth
     public void TakeDamage(int amount)
     {
         if (_hitThisFrame) return; // only take damage once per frame
-        _animator.SetTrigger("Hit");
+        Debug.Log("Ouch! " + gameObject.name + " hit for " + amount);
+        //_animator.SetTrigger("Hit");
         _currentHealth -= amount;
         _hitThisFrame = true;
         if (_currentHealth <= 0 && !_isDead)
         {
+            Debug.Log(gameObject.name + " is dead!");
             OnDeath?.Invoke();
             _isDead = true;
             _enemyPool.Release(this);

@@ -9,11 +9,9 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private bool _disabled = false;
     private float _timeSinceLastSpawn;
 
-
     [SerializeField] private Enemy _enemyPrefab;
     private IObjectPool<Enemy> _enemyPool;
     private readonly HashSet<Enemy> _activeEnemies = new HashSet<Enemy>(); // store currently active enemies in a HashSet
-
 
     private void Awake()
     {
@@ -74,11 +72,10 @@ public class SpawnManager : MonoBehaviour
 
     void Update()
     {
-        if (Time.time > _timeSinceLastSpawn)
+        if (Time.time > _timeSinceLastSpawn && !_disabled)
         {
             _enemyPool.Get();
             _timeSinceLastSpawn = Time.time + _timeBetweenSpawns;
-
         }
     }
 }
