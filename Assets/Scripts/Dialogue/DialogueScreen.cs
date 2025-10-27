@@ -11,6 +11,8 @@ using UnityEngine.UI;
 public class DialogueScreen : MonoBehaviour, IPointerClickHandler
 {
     #region vars
+    [SerializeField] private BasicEventObject FreezeRequestStartStream;
+    [SerializeField] private BasicEventObject FreezeRequestEndStream;
     public static DialogueScreen instance;
     public event Action OnDialogueScreenOpen;
     public event Action OnDialogueScreenClosed;
@@ -61,17 +63,22 @@ public class DialogueScreen : MonoBehaviour, IPointerClickHandler
         OnWhichDialogueEnded += CheckQueuedScenes;
     }
 
+    void OnEnable()
+    {
+        if (FreezeRequestEndStream == null || FreezeRequestEndStream == null) Debug.LogWarning("Dialogue screen missing references to freeze streams!");
+        OnDialogueScreenOpen += FreezeRequestStartStream.RaiseEvent;
+        OnDialogueScreenClosed += FreezeRequestEndStream.RaiseEvent;
+    }
+    void OnDisable()
+    {
+        OnDialogueScreenOpen -= FreezeRequestStartStream.RaiseEvent;
+        OnDialogueScreenClosed -= FreezeRequestEndStream.RaiseEvent;
+    }
+
     void Start()
     {
         if (GameManager.instance != null) OnWhichDialogueEnded += GameManager.instance.UpdateDialogueList;
         else { Debug.LogWarning("GameManager null; dialogue screen cannot update saved dialogue"); }
-
-        if (FreezeEntitiesManager.instance != null)
-        {
-            OnDialogueScreenOpen += FreezeEntitiesManager.instance.StartFreeze;
-            OnDialogueScreenClosed += FreezeEntitiesManager.instance.EndFreeze;
-        }
-        else Debug.Log("Cannot add dialogue to freeze, as freezeentitiesmanager is null!");
     }
 
     public void OnPointerClick(PointerEventData ped)

@@ -628,6 +628,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2a9258cb47f148598f9a8dc1f2f4dad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DialogueBox
+  FreezeRequestStartStream: {fileID: 11400000, guid: fc232e35579e44d139bd11bf9d194225, type: 2}
+  FreezeRequestEndStream: {fileID: 11400000, guid: 838eba47edf3440cda37ba92a7bd8589, type: 2}
   _dialogueTextBox: {fileID: 213248115226575407}
   defaultBlankImage: {fileID: 2800000, guid: 2633a54a0b8bac54497e7637f7a54298, type: 3}
   _leftSpeakerImage: {fileID: 1638523204830222578}

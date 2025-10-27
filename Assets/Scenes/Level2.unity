@@ -1104,6 +1104,7 @@ MonoBehaviour:
   - {fileID: 88187596}
   - {fileID: 730950269}
   _timeBetweenSpawns: 5
+  _disabled: 0
   _enemyPrefab: {fileID: 4431303542737422339, guid: 2233787022ff247c9985e3a1e6bf2a30, type: 3}
 --- !u!1 &164952585
 GameObject:
@@ -4894,6 +4895,63 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e19fcfb7f43f742358c11d45d3d3a9fd, type: 3}
+--- !u!1001 &531105652
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3223324250413090084, guid: 8b0b3363df57040ebbba50a5a814a260, type: 3}
+      propertyPath: m_Name
+      value: DustPool
+      objectReference: {fileID: 0}
+    - target: {fileID: 9152358783190151587, guid: 8b0b3363df57040ebbba50a5a814a260, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9152358783190151587, guid: 8b0b3363df57040ebbba50a5a814a260, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9152358783190151587, guid: 8b0b3363df57040ebbba50a5a814a260, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9152358783190151587, guid: 8b0b3363df57040ebbba50a5a814a260, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9152358783190151587, guid: 8b0b3363df57040ebbba50a5a814a260, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9152358783190151587, guid: 8b0b3363df57040ebbba50a5a814a260, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9152358783190151587, guid: 8b0b3363df57040ebbba50a5a814a260, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9152358783190151587, guid: 8b0b3363df57040ebbba50a5a814a260, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9152358783190151587, guid: 8b0b3363df57040ebbba50a5a814a260, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9152358783190151587, guid: 8b0b3363df57040ebbba50a5a814a260, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 8b0b3363df57040ebbba50a5a814a260, type: 3}
 --- !u!1 &533557903
 GameObject:
   m_ObjectHideFlags: 0
@@ -155268,6 +155326,7 @@ SceneRoots:
   - {fileID: 1131134289}
   - {fileID: 27089385}
   - {fileID: 292139096}
+  - {fileID: 531105652}
   - {fileID: 1444254642}
   - {fileID: 1119003016}
   - {fileID: 768045121}

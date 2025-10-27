@@ -126,12 +126,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d7ee252c082945a2ab02bb9b3349202, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _freezeStream: {fileID: 11400000, guid: 3a2fae2a12dc44bfb95c26b9fb4395c9, type: 2}
   playerSpeed: 5
   dashSpeed: 15
   dashLength: 0.2
   dashCooldownSeconds: 0.5
   canMove: 1
-  dashParticlesPrefab: {fileID: 0}
+  footstepInterval: 0.4
+  dustPuffPrefab: {fileID: 359076714251711221, guid: 6f4cb0ab08810a345a2a7e05d65622d7, type: 3}
+  dashParticlesPrefab: {fileID: 2709738328075119769, guid: d486ed36a4e604949a45a153731aaff6, type: 3}
 --- !u!114 &8951823929952925354
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -222,6 +225,7 @@ MonoBehaviour:
     m_SingletonActionBindings: []
     m_Flags: 0
   _playerDeathStream: {fileID: 11400000, guid: 7613c1fff96694aaa9d7e53fa978d0e7, type: 2}
+  _freezeStream: {fileID: 11400000, guid: 3a2fae2a12dc44bfb95c26b9fb4395c9, type: 2}
 --- !u!114 &310496380535155249
 MonoBehaviour:
   m_ObjectHideFlags: 0

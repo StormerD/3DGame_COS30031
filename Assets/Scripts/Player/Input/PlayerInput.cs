@@ -6,6 +6,7 @@ public class PlayerInput : MonoBehaviour
 {
     public InputAction dash, interact, move, attack, secondary, pause, jump;
     [SerializeField] private BasicEventObject _playerDeathStream;
+    [SerializeField] private IntEventObject _freezeStream;
     private FrameInput _inputActions;
 
     void Awake()
@@ -24,22 +25,24 @@ public class PlayerInput : MonoBehaviour
     {
         _inputActions.Enable();
         _playerDeathStream.RegisterListener(DisableSelectInput);
+        _freezeStream.RegisterListener(FreezeEvent);
     }
     void OnDisable() 
     {
         _inputActions.Disable();
         _playerDeathStream.UnregisterListener(DisableSelectInput);
+        _freezeStream.UnregisterListener(FreezeEvent);
     }
 
     void Start()
     {
         pause.performed += PauseWrapper;
-        if (FreezeEntitiesManager.instance != null)
-        {
-            FreezeEntitiesManager.instance.OnFreeze += DisableSelectInput;
-            FreezeEntitiesManager.instance.OnUnfreeze += EnableSelectInput;
-        }
-        else Debug.LogWarning("FreezeEntitiesManager null; player will never be frozen.");
+    }
+    
+    private void FreezeEvent(int state)
+    {
+        if (state == 0) EnableSelectInput();
+        else DisableSelectInput();
     }
 
     public void DisableSelectInput()
