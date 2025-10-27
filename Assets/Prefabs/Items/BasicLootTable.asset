@@ -10,12 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4b7818e2584e84c04a8c61e91ce0125a, type: 3}
-  m_Name: CommonChestLootTable
-  m_EditorClassIdentifier: 
-  commonObjectMin: 8
-  commonObjectMax: 15
-  rareObjectMin: 3
-  rareObjectMax: 10
-  mythicObjectMin: 0
-  mythicObjectMax: 5
-  specialDrops: []
+  m_Name: BasicLootTable
+  m_EditorClassIdentifier: Assembly-CSharp::LootTable
+  totalDropsMin: 3
+  totalDropsMax: 5
+  commonChance: 0.75
+  rareChance: 0.2
+  mythicChance: 0.05

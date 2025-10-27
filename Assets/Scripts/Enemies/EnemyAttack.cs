@@ -1,8 +1,8 @@
+using System.Collections;
 using UnityEngine;
 
 public class EnemyAttack : MonoBehaviour
 {
-
     public EnemyData unitData;
 
     // logic to keep track of attack instances
@@ -10,42 +10,100 @@ public class EnemyAttack : MonoBehaviour
     private bool _attackRequested = false;
     private float _nextAttackTime = 0f; // time next attack is allowed
 
+    [Header("Lunge")]
+    [SerializeField] private float lungeDistance = 2f;
+    [SerializeField] private float lungeDuration = 0.1f;
+    [SerializeField] private AnimationCurve lungeCurve = null;
+    [SerializeField] private LayerMask playerMask = 0;
+    private Collider2D _hurtBox = null;
+
+    private Rigidbody2D _rb;
+    private bool _isLunging = false;
+    private bool _damageWindow = false;
+    private bool _hitThisLunge = false;
+
+    void Awake()
+    {
+        _rb = GetComponent<Rigidbody2D>();
+        InitializeEnemyAttack();
+    }
+
+    public void InitializeEnemyAttack()
+    {
+        if (_hurtBox == null) _hurtBox = GetComponent<Collider2D>(); ;
+        if (lungeCurve == null) lungeCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
+        if (playerMask == 0) playerMask = LayerMask.GetMask("Player");
+        _rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+
+        _attackReady = true;
+        _attackRequested = false;
+        _nextAttackTime = 0f;
+        _isLunging = false;
+        _damageWindow = false;
+        _hitThisLunge = false;
+    }
+
     void Update()
     {
-        // 
-        if (Time.time > _nextAttackTime && !_attackReady)
-        {
-            _attackReady = true;
-        }
+        if (Time.time > _nextAttackTime && !_attackReady) _attackReady = true;
     }
 
     void FixedUpdate()
     {
-        if (_attackRequested) AttackPlayer();
+        if (_attackRequested && !_isLunging) AttackPlayer();
     }
 
     public void TryAttackPlayer()
     {
-        Debug.Log(gameObject.name + " is trying to attack");
+        // Debug.Log(gameObject.name + " is trying to attack");
         // check if attack is on cooldown
         if (!_attackReady) return; // don't attack if on cooldown
         _attackReady = false;
-        _nextAttackTime = Time.time + 1f / unitData.attacksPerSec; // set time of next allowed attack
         _attackRequested = true;
 
     }
 
     private void AttackPlayer()
     {
-        if (!_attackRequested) return;
         _attackRequested = false;
-        RaycastHit2D rayHit = new RaycastHit2D();
-        rayHit = Physics2D.Raycast(transform.position, transform.up, unitData.attackRange, LayerMask.GetMask("Player")); // send raycast in the direction the enemy is facing and detect for player
-        Debug.DrawRay(transform.position, transform.up * unitData.attackRange, Color.red, 2f);
-        if (rayHit.collider != null && rayHit.collider.TryGetComponent<IHealth>(out var playerHealth))
+        StartCoroutine(LungeAndHit());
+    }
+
+    private IEnumerator LungeAndHit()
+    {
+        Debug.Log("Enemy Lunging");
+        _isLunging = true;
+        _hitThisLunge = false;
+        _damageWindow = true;
+
+        Vector2 start = _rb.position;
+        Vector2 dir = (Vector2)transform.up;
+        Vector2 end = start + dir * lungeDistance;
+
+        float t = 0f;
+        while (t < lungeDuration)
         {
-            playerHealth.TakeDamage(unitData.damage);
+            t += Time.fixedDeltaTime;
+            float p = Mathf.Clamp01(t / lungeDuration);
+            float eased = lungeCurve.Evaluate(p);
+            _rb.MovePosition(Vector2.Lerp(start, end, eased));
+            yield return new WaitForFixedUpdate();
         }
 
+        _damageWindow = false;
+        _nextAttackTime = Time.time + unitData.timeBetweenAttacks; // set time of next allowed attack
+        _isLunging = false;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collider)
+    {
+        if (!_damageWindow || _hitThisLunge) return;
+        if ((playerMask.value & (1 << collider.gameObject.layer)) == 0) return;
+        if (collider.TryGetComponent<IHealth>(out var hp))
+        {
+            Debug.Log("Enemy Hit Player!");
+            hp.TakeDamage(unitData.damage);
+            _hitThisLunge = true;
+        }
     }
 }
