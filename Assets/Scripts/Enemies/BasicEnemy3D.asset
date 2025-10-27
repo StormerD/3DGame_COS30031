@@ -15,6 +15,6 @@ MonoBehaviour:
   maxHealth: 5
   moveSpeed: 2
   damage: 1
-  attackRange: 2
-  timeBetweenAttacks: 1
+  attackRange: 5
+  timeBetweenAttacks: 3
   rotationSpeed: 100
