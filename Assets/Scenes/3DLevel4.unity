@@ -837,80 +837,6 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_RenderingLayers: 1
   m_ShadowRenderingLayers: 1
---- !u!1 &947474322
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 947474324}
-  - component: {fileID: 947474323}
-  - component: {fileID: 947474325}
-  m_Layer: 0
-  m_Name: RebuildableReactor
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!65 &947474323
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 947474322}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!4 &947474324
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 947474322}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.21, y: 7.02049, z: -0.03}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &947474325
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 947474322}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6871d9830c3bb4e58b64d80aa5f5c012, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::RebuildableObject3D
-  info: This script creates 'components' in the editor as children of this object,
-    instead of having us create them manually and linking them to this object. To
-    create them, open the context menu (three dots next to script name) and click
-    'RecreateComponents' at the bottom of the menu. The created objects can be moved
-    to their position freely. Make sure to have put the correct prefab in the prefab
-    component!
-  numComponents: 3
-  componentPrefab: {fileID: 919132149417386633}
 --- !u!1001 &1470163742
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1014,6 +940,8 @@ MonoBehaviour:
   jumpForce: 7
   dashForce: 20
   dashCooldownSeconds: 1.5
+  footstepInterval: 0.4
+  dustPuffPrefab: {fileID: 0}
 --- !u!136 &1551612031
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1184,6 +1112,8 @@ MonoBehaviour:
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
+  _playerDeathStream: {fileID: 0}
+  _freezeStream: {fileID: 0}
 --- !u!54 &1551612036
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1244,6 +1174,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a52321be7ceaf4d43baf346db09e75e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerLooter
+  _shareCurrencyStream: {fileID: 0}
+  _requestShareCurrencyStream: {fileID: 0}
+  _costsStream: {fileID: 0}
 --- !u!114 &1551612040
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1296,7 +1229,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 543450653336959027}
+  - component: {fileID: 3469287837320705944}
   - component: {fileID: 3469287837320705942}
   - component: {fileID: 1711813855405245276}
   - component: {fileID: 3469287837320705943}
@@ -1313,7 +1246,7 @@ MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 919132149417386633}
+  m_GameObject: {fileID: 1768414135}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -1364,7 +1297,7 @@ MeshFilter:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 919132149417386633}
+  m_GameObject: {fileID: 1768414135}
   m_Mesh: {fileID: 706187461622552807, guid: 5b7c9cfa15c3e43408277ef24d442750, type: 3}
 --- !u!136 &3469287837320705943
 CapsuleCollider:
@@ -1372,7 +1305,7 @@ CapsuleCollider:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 919132149417386633}
+  m_GameObject: {fileID: 1768414135}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -1389,10 +1322,26 @@ CapsuleCollider:
   m_Height: 0.0136479
   m_Direction: 1
   m_Center: {x: -5.8207655e-10, y: -6.984919e-10, z: 9.313225e-10}
+--- !u!4 &3469287837320705944
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1768414135}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 8.76, z: 0}
+  m_LocalScale: {x: 50, y: 50, z: 50}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 3469287837320705944}
   - {fileID: 813214156}
   - {fileID: 813535492}
   - {fileID: 1551612034}
@@ -1400,6 +1349,4 @@ SceneRoots:
   - {fileID: 44217061}
   - {fileID: 924978}
   - {fileID: 1470163742}
-  - {fileID: 543450653336959027}
   - {fileID: 31963596}
-  - {fileID: 947474324}
