@@ -3357,6 +3357,38 @@ PrefabInstance:
       propertyPath: m_fontSize
       value: 40
       objectReference: {fileID: 0}
+    - target: {fileID: 2320194558137865186, guid: 8d402a330e9274efdad71fb65260145f, type: 3}
+      propertyPath: m_fontSize
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 2320194558137865186, guid: 8d402a330e9274efdad71fb65260145f, type: 3}
+      propertyPath: m_TextWrappingMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2376667134736618998, guid: 8d402a330e9274efdad71fb65260145f, type: 3}
+      propertyPath: m_fontSize
+      value: 25.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2376667134736618998, guid: 8d402a330e9274efdad71fb65260145f, type: 3}
+      propertyPath: m_fontSizeMin
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 2601494599726488405, guid: 8d402a330e9274efdad71fb65260145f, type: 3}
+      propertyPath: m_fontSize
+      value: 25.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2601494599726488405, guid: 8d402a330e9274efdad71fb65260145f, type: 3}
+      propertyPath: m_fontSizeMin
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 6448530412508600939, guid: 8d402a330e9274efdad71fb65260145f, type: 3}
+      propertyPath: m_fontSize
+      value: 25.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6448530412508600939, guid: 8d402a330e9274efdad71fb65260145f, type: 3}
+      propertyPath: m_fontSizeMin
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 6665718058614147537, guid: 8d402a330e9274efdad71fb65260145f, type: 3}
       propertyPath: m_fontSize
       value: 51.75
@@ -3568,10 +3600,8 @@ PrefabInstance:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 710989981}
   - {fileID: 196450559}
   - {fileID: 233835006}
-  - {fileID: 5404430609606305472}
   - {fileID: 1824765669}
   - {fileID: 2002071406}
   - {fileID: 655016360}
@@ -3585,3 +3615,5 @@ SceneRoots:
   - {fileID: 1313446601}
   - {fileID: 1296672880}
   - {fileID: 1441617856}
+  - {fileID: 710989981}
+  - {fileID: 5404430609606305472}
