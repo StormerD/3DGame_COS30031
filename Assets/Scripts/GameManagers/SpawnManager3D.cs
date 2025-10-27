@@ -28,8 +28,8 @@ public class SpawnManager3D : MonoBehaviour
             enabled = false;
             return;
         }
-        var p = GameObject.FindGameObjectsWithTag("Player");
-        if (p != null) _player = p[0].transform;
+        var p = GameObject.FindGameObjectWithTag("Player");
+        if (p) _player = p.transform;
         else Debug.LogError($"SpawnManager3D: No GameObject with tag 'player' found.");
 
         _enemyPool = new ObjectPool<Enemy3D>(CreateEnemy, OnGet, OnRelease);

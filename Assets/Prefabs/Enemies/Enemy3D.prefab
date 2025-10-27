@@ -11,11 +11,12 @@ GameObject:
   - component: {fileID: 1896269416953309651}
   - component: {fileID: 2743897516041260638}
   - component: {fileID: 6542946662087877417}
-  - component: {fileID: 4485983680559908427}
   - component: {fileID: 8087847835511742916}
+  - component: {fileID: 4485983680559908427}
   - component: {fileID: 7255734371660923508}
   - component: {fileID: 8188831228013200812}
   - component: {fileID: 9213391235502921134}
+  - component: {fileID: -5846152948354568177}
   m_Layer: 11
   m_Name: Enemy3D
   m_TagString: Enemy
@@ -94,29 +95,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &4485983680559908427
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6125480920691683340}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &8087847835511742916
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -144,6 +122,29 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 112
   m_CollisionDetection: 1
+--- !u!136 &4485983680559908427
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6125480920691683340}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!195 &7255734371660923508
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -178,7 +179,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39723791f7740434aa10191f01b113cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy3D
-  unitData: {fileID: 11400000, guid: 9c6891085094e47c5a9bd932a6e1347e, type: 2}
+  unitData: {fileID: 11400000, guid: 1559aa38c1d264145979ea4941f37963, type: 2}
 --- !u!114 &9213391235502921134
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -191,4 +192,47 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d539f14162080d34899f4f3fd4ff8a42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  player: {fileID: 2670274044819914988, guid: 0162b9599c7470642bf79cc5b3101f0f, type: 3}
+  unitData: {fileID: 11400000, guid: 1559aa38c1d264145979ea4941f37963, type: 2}
+  player: {fileID: 5954415889548703815, guid: 0162b9599c7470642bf79cc5b3101f0f, type: 3}
+  repathInterval: 0.1
+--- !u!114 &-5846152948354568177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6125480920691683340}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ece980f0b9cdb7b4988a02ac535f0349, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyAttack3D
+  unitData: {fileID: 11400000, guid: 1559aa38c1d264145979ea4941f37963, type: 2}
+  lungeDuration: 0.5
+  lungeCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  playerMask:
+    serializedVersion: 2
+    m_Bits: 256
