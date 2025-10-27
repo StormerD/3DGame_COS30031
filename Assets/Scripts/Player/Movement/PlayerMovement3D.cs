@@ -36,7 +36,7 @@ public class PlayerMovement3D : MonoBehaviour, IMover3D
 
     void Update()
     {
-        Debug.Log("Update is running");
+        // Debug.Log("Update is running");
         if (!_canMove) return;
 
         Vector2 inp = _inp.move.ReadValue<Vector2>();
@@ -48,7 +48,7 @@ public class PlayerMovement3D : MonoBehaviour, IMover3D
                 footstepTimer += Time.deltaTime;
                 if (footstepTimer >= footstepInterval)
             {
-                Debug.Log("Footsteps triggered");
+                // Debug.Log("Footsteps triggered");
                 AudioManager.Instance.PlayFootstep();
                 if (dustPuffPrefab != null)
                 {
