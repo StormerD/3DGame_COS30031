@@ -1,18 +1,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(SpriteRenderer))]
 public class RebuildableVisualizer3D : MonoBehaviour
 {
-    [Tooltip("The object's sprites (in order from least built to most built)")]
-    public List<Sprite> rebuildSprites;
+    [Tooltip("Object prefabs, from least built to most built. Include the base state as well.")]
+    public List<GameObject> rebuildPrefabs;
     public ParticleSystem completeBuildEffects;
     [Tooltip("If the RebuildableObject script is attached to the same game object, no need to set this value. This is only used so that multiple objects can change their sprite!")]
-    public RebuildableObject2D rebuildable;
+    public RebuildableObject3D rebuildable;
 
     private int collectedComponents = 0;
     private int maxNumComponents;
-    private SpriteRenderer _sr;
 
     void Start()
     {
@@ -22,7 +20,8 @@ public class RebuildableVisualizer3D : MonoBehaviour
             rebuildable.OnComponentsCollected += ComponentCollected;
             maxNumComponents = rebuildable.numComponents;
         }
-        _sr = GetComponent<SpriteRenderer>();
+
+        NewRebuildLevel();
     }
 
     private void ComponentCollected(int howMany)
@@ -30,14 +29,16 @@ public class RebuildableVisualizer3D : MonoBehaviour
         collectedComponents += howMany;
         collectedComponents = Mathf.Clamp(collectedComponents, 0, maxNumComponents);
 
-        int spriteIndex = Mathf.RoundToInt((float)collectedComponents / maxNumComponents * (rebuildSprites.Count - 1));
-
-        _sr.sprite = rebuildSprites[spriteIndex];
+        int prefabIndex = Mathf.RoundToInt((float)collectedComponents / maxNumComponents * (rebuildPrefabs.Count - 1));
 
         if (collectedComponents == maxNumComponents && completeBuildEffects != null)
         {
-
             Destroy(Instantiate(completeBuildEffects, transform.position, Quaternion.identity), 3f);
         }
+    }
+
+    private void NewRebuildLevel()
+    {
+        
     }
 }

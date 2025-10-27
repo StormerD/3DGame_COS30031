@@ -110,14 +110,14 @@ public class DialogueScreen : MonoBehaviour, IPointerClickHandler
 
     private void ToggleLeftSpeaker(bool on, DialogueBoxScript script)
     {
-        _leftSpeakerImage.texture = on ? script.speakerImage : defaultBlankImage;
+        _leftSpeakerImage.texture = on && script.speakerImage != null ? script.speakerImage : defaultBlankImage;
         _leftSpeakerNameText.text = on ? script.speakerName : "";
         _leftSpeakerNameBox.SetActive(on);
     }
     
     private void ToggleRightSpeaker(bool on, DialogueBoxScript script)
     {
-        _rightSpeakerImage.texture = on ? script.speakerImage : defaultBlankImage;
+       _rightSpeakerImage.texture = on && script.speakerImage != null ? script.speakerImage : defaultBlankImage;
         _rightSpeakerNameText.text = on ? script.speakerName : "";
         _rightSpeakerNameBox.SetActive(on);
     }

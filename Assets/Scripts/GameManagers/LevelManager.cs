@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 /// <summary>
 /// this manager dispatches the currently furthest unlocked level to all of the loaders.
@@ -32,21 +31,22 @@ public class LevelLoaderManager : MonoBehaviour
     {
         if (GameManager.instance == null) { Debug.LogWarning("GameManager null; levels will not load normally."); return; }
 
-        int latestUnlock = GameManager.instance.GetFurthestUnlockedLevel();
-        string equippedWeapon = GameManager.instance.GetEquippedWeapon();
-        bool hasWeaponBeenEquipped = equippedWeapon != null && equippedWeapon != "";
-
-        StartCoroutine(WaitUntilAllLevelLoadersSubscribed(latestUnlock, hasWeaponBeenEquipped));
+        StartCoroutine(WaitUntilAllLevelLoadersSubscribed());
     }
 
     private void ForgeOpened() => OnForgeHasBeenOpened?.Invoke();
 
-    IEnumerator WaitUntilAllLevelLoadersSubscribed(int latestUnlock, bool weaponEquipped, float timeout = 3f)
+    IEnumerator WaitUntilAllLevelLoadersSubscribed(float timeout = 3f)
     {
         int levelMax = GameManager.LEVEL_AMOUNT;
         float startTime = Time.time;
         yield return new WaitUntil(() => (OnLevelUnlockChanged != null && OnLevelUnlockChanged?.GetInvocationList().Length == levelMax) || Time.time > startTime + timeout);
+
+        int latestUnlock = GameManager.instance.GetFurthestUnlockedLevel();
+        string equippedWeapon = GameManager.instance.GetEquippedWeapon();
+        bool hasWeaponBeenEquipped = equippedWeapon != null && equippedWeapon != "";
+
         OnLevelUnlockChanged?.Invoke(latestUnlock);
-        if (weaponEquipped) ForgeOpened();
+        if (hasWeaponBeenEquipped) ForgeOpened();
     }
 }
