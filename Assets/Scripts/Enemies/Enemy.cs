@@ -51,7 +51,7 @@ public class Enemy : MonoBehaviour, IHealth
     {
         if (_hitThisFrame || _isDead) return; // only take damage once per frame
         Debug.Log("Ouch! " + gameObject.name + " hit for " + amount + ", current: " + _currentHealth);
-        //_animator.SetTrigger("Hit");
+        _animator.SetTrigger("Hit");
         _hitThisFrame = true;
         _currentHealth -= amount;
         if (_currentHealth <= 0 && !_isDead)
