@@ -27,8 +27,8 @@ public class SpawnManager : MonoBehaviour
         _disabled = false;
         if (_player == null)
         {
-            var p = GameObject.FindGameObjectsWithTag("Player");
-            if (p != null) _player = p[0].transform;
+            var p = GameObject.FindGameObjectWithTag("Player");
+            if (p) _player = p.transform;
         }
     }
 
