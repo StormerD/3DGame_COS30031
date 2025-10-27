@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ExampleOutline
-  m_Shader: {fileID: -6465566751694194690, guid: 914733da31b724bd7a40827d279fd7b1, type: 3}
+  m_Name: Power cell
+  m_Shader: {fileID: -6465566751694194690, guid: e59e401ec094d4dfab8e7d3c7f0d6c4c, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -96,14 +96,12 @@ Material:
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _DstBlendAlpha: 0
-    - _Enabled: 1
     - _EnvironmentReflections: 1
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _Metallic: 0
     - _OcclusionStrength: 1
-    - _Outline_Size: 0.05
     - _Parallax: 0.005
     - _QueueControl: 0
     - _QueueOffset: 0
@@ -117,16 +115,18 @@ Material:
     - _WorkflowMode: 1
     - _XRMotionVectorsPass: 1
     - _ZWrite: 1
+    - _emission_POWER: 8
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _OutlineColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Outline_Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Emission_Color: {r: 0.4058082, g: 1, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
+    - _basee_color: {r: 0.85882354, g: 0.39702582, b: 0.2392157, a: 1}
+    - _scroll_speed: {r: 0.05, g: 0.2, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
---- !u!114 &2169869377008879773
+--- !u!114 &1591859190047000098
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}

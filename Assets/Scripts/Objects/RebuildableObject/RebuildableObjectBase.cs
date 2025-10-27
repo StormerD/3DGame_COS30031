@@ -1,5 +1,3 @@
-
-
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -43,10 +41,9 @@ public class RebuildableObjectBase : MonoBehaviour, IInteractable
     // Game functions
     void Awake()
     {
-        if (componentPrefab != null && !componentPrefab.TryGetComponent<IInteractable>(out _))
-        {
-            Debug.LogError("Rebuildable object component prefab requires a Pickupable script.");
-        }
+        if (componentPrefab == null) Debug.LogError("Rebuildable requires a component prefab.");
+        if (!componentPrefab.TryGetComponent<IItem>(out _)) Debug.LogError("Rebuildable object component prefab requires an Item script.");
+        
         _componentIds = new HashSet<int>();
         for (int i = 0; i < transform.childCount; i++)
         {
