@@ -19,6 +19,9 @@ public class ForgeManager : MonoBehaviour
     [Tooltip("This should be the actual scrollbox (part of the forge menu) where the forge purchase listings will go.")]
     public RectTransform forgeMenuScrollbox;
 
+    [SerializeField] private BasicEventObject FreezeRequestStartStream;
+    [SerializeField] private BasicEventObject FreezeRequestEndStream;
+
     public event Action<string, bool> OnListingPurchaseStateChange; // <string> is the weaponId purchased, bool is true if purchased, false if not
     public event Action<string, bool> OnListingUnlockedStateChange;
     public event Action<string> OnListingEquipped; // same as above.
@@ -41,15 +44,20 @@ public class ForgeManager : MonoBehaviour
         if (forgeMenu != null && !forgeMenu.TryGetComponent(out _forgeMenuAnimator)) Debug.LogWarning("ForgeMenu missing animator.");
     }
 
+    void OnEnable()
+    {
+        if (FreezeRequestEndStream == null || FreezeRequestEndStream == null) Debug.LogWarning("Forge manager missing references to freeze streams!");
+        OnForgeOpened += FreezeRequestStartStream.RaiseEvent;
+        OnForgeClosed += FreezeRequestEndStream.RaiseEvent;
+    }
+    void OnDisable()
+    {
+        OnForgeOpened -= FreezeRequestStartStream.RaiseEvent;
+        OnForgeClosed -= FreezeRequestEndStream.RaiseEvent;
+    }
+
     void Start()
     {
-        if (FreezeEntitiesManager.instance != null)
-        {
-            OnForgeOpened += FreezeEntitiesManager.instance.StartFreeze;
-            OnForgeClosed += FreezeEntitiesManager.instance.EndFreeze;
-        }
-        else Debug.Log("Cannot add dialogue to freeze, as freezeentitiesmanager is null!");
-
         if (GameManager.instance != null)
         {
             GameManager.instance.OnLoadComplete += ReloadWeaponPurchaseData;
@@ -163,6 +171,6 @@ public class ForgeManager : MonoBehaviour
         float start = Time.time;
         yield return new WaitUntil(() => OnListingPurchaseStateChange?.GetInvocationList().Length == availableWeapons.Count || Time.time > start + timeout);
 
-        ReloadWeaponPurchaseData();
+        if (GameManager.instance != null) ReloadWeaponPurchaseData();
     }
 }

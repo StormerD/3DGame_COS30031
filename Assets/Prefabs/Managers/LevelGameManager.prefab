@@ -53,8 +53,8 @@ MonoBehaviour:
   - {fileID: 1667736680288488315, guid: 3c1327c8ffe124b8f8c8b94e9027df6d, type: 3}
   forgeMenu: {fileID: 0}
   forgeMenuScrollbox: {fileID: 0}
-  _purchaseRequestStream: {fileID: 11400000, guid: 18efbb7d3783740a0a6da3e1b70c3260, type: 2}
-  _costStream: {fileID: 11400000, guid: 46945eaafffa843fa9e4f04aebc762c3, type: 2}
+  FreezeRequestStartStream: {fileID: 11400000, guid: fc232e35579e44d139bd11bf9d194225, type: 2}
+  FreezeRequestEndStream: {fileID: 11400000, guid: 838eba47edf3440cda37ba92a7bd8589, type: 2}
 --- !u!114 &8029355547032946047
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -67,6 +67,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f69738238a70948df9b7f29819b2b1cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  FreezeRequestStartStream: {fileID: 11400000, guid: fc232e35579e44d139bd11bf9d194225, type: 2}
+  FreezeRequestEndStream: {fileID: 11400000, guid: 838eba47edf3440cda37ba92a7bd8589, type: 2}
 --- !u!114 &2805340995070385376
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -79,3 +81,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60933bc63379f4374bb8832e61ba2618, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FreezeEntitiesManager
+  FreezeStream: {fileID: 11400000, guid: 3a2fae2a12dc44bfb95c26b9fb4395c9, type: 2}
+  FreezeStartRequestStream: {fileID: 11400000, guid: fc232e35579e44d139bd11bf9d194225, type: 2}
+  FreezeEndRequestStream: {fileID: 11400000, guid: 838eba47edf3440cda37ba92a7bd8589, type: 2}

@@ -4,6 +4,7 @@ using static UnityEngine.InputSystem.InputAction;
 [RequireComponent(typeof(Rigidbody2D), typeof(PlayerInput))]
 public class PlayerMovement2D : MonoBehaviour, IMover2D
 {
+    [SerializeField] private IntEventObject _freezeStream;
     public float playerSpeed = 5f;
     public float dashSpeed = 15f;
     public float dashLength = 0.3f;
@@ -29,13 +30,21 @@ public class PlayerMovement2D : MonoBehaviour, IMover2D
         _rb = GetComponent<Rigidbody2D>();
     }
 
+    void OnEnable()
+    {
+        _freezeStream.RegisterListener(FreezeEvent);
+    }
+
+    void OnDisable()
+    {
+        _freezeStream.UnregisterListener(FreezeEvent);
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         _rb.interpolation = RigidbodyInterpolation2D.Interpolate;
         _inp.dash.performed += Dash;
-        FreezeEntitiesManager.instance.OnFreeze += FreezeActions;
-        FreezeEntitiesManager.instance.OnUnfreeze += UnfreezeActions;
     }
 
     // Update is called once per frame
@@ -116,6 +125,12 @@ public class PlayerMovement2D : MonoBehaviour, IMover2D
     }
 
     public Vector2 GetCurrentDirection() => _currentDirection;
+
+    private void FreezeEvent(int state)
+    {
+        if (state == 0) UnfreezeActions();
+        else FreezeActions();
+    }
 
     public void FreezeActions()
     {

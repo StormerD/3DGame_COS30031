@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 60933bc63379f4374bb8832e61ba2618
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - FreezeStream: {fileID: 11400000, guid: 3a2fae2a12dc44bfb95c26b9fb4395c9, type: 2}
+  - FreezeStartRequestStream: {fileID: 11400000, guid: fc232e35579e44d139bd11bf9d194225, type: 2}
+  - FreezeEndRequestStream: {fileID: 11400000, guid: 838eba47edf3440cda37ba92a7bd8589, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
