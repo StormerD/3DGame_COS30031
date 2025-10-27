@@ -30,7 +30,8 @@ public class EnemyAttack : MonoBehaviour
 
     public void InitializeEnemyAttack()
     {
-        if (_hurtBox == null) _hurtBox = GetComponent<Collider2D>(); ;
+        if (_rb == null) _rb = GetComponent<Rigidbody2D>();
+        if (_hurtBox == null) _hurtBox = GetComponent<Collider2D>();
         if (lungeCurve == null) lungeCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
         if (playerMask == 0) playerMask = LayerMask.GetMask("Player");
         _rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
