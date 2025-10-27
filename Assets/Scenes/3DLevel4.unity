@@ -1275,18 +1275,12 @@ MonoBehaviour:
   weapon3DTranslations:
   - {fileID: 1658126677594620924, guid: dd2c69bd171d644ec880bc87b3bdcc2c, type: 3}
   - {fileID: 4031752658481073270, guid: e7badf7ae2bbe418e8d7b05f0a35d78d, type: 3}
-<<<<<<< Updated upstream
 --- !u!114 &1551612042
 MonoBehaviour:
-=======
---- !u!4 &543450653336959027
-Transform:
->>>>>>> Stashed changes
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-<<<<<<< Updated upstream
   m_GameObject: {fileID: 1551612029}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -1295,18 +1289,6 @@ Transform:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerDataTracker
   registrationPriority: 5
 --- !u!1 &1768414135
-=======
-  m_GameObject: {fileID: 919132149417386633}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5.21, y: 6.91, z: 1.09}
-  m_LocalScale: {x: 118.73731, y: 118.73731, z: 118.73731}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &919132149417386633
->>>>>>> Stashed changes
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
