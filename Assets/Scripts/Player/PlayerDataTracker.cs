@@ -9,8 +9,7 @@ public class PlayerDataTracker : MonoBehaviour
     private static bool exists = false;
     private PlayerLooter looter;
     private PlayerWeaponHandlerBase weaponHandler;
-    private bool isActivePlayer = false;
-
+    
     void Awake()
     {
         if (!exists) DontDestroyOnLoad(gameObject); // the first player created will persist across scenes
