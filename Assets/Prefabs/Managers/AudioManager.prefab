@@ -45,6 +45,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b58b2305147cb749a34015c0e8637fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  footstepClips:
+  - {fileID: 8300000, guid: 19bb5baf65c5e114bacf71bc4a2cdaec, type: 3}
+  - {fileID: 8300000, guid: 996f80840724da14db3a69940038c876, type: 3}
+  - {fileID: 8300000, guid: 10b7b0aefaf47df40ad72b3b5d467bd6, type: 3}
+  - {fileID: 8300000, guid: 1c691386d0559824d919ea986eccccf9, type: 3}
+  - {fileID: 8300000, guid: 3bda6cf2f0f20fa4b9e7349100e4fca6, type: 3}
   dashClip: {fileID: 8300000, guid: 6a24e0b9dba7f654ab41f5459ee336a3, type: 3}
   attackClip: {fileID: 8300000, guid: 54fb309e86f0b2d4f89b5c85f0ba0c68, type: 3}
   purchaseErrorSound: {fileID: 8300000, guid: 8c3eb9f6ddd1c9f4b8066f50ff38cb0e, type: 3}
