@@ -5,6 +5,10 @@ using UnityEngine.Pool;
 public class SpawnManager3D : MonoBehaviour
 {
     [SerializeField] private Transform[] _spawnPoints; // array of spawn point locations
+    private Transform _nextSpawnPoint; // chosen spawn for next enemy
+    private float _spawnRadius = 15f;
+    private Transform _player;
+
     [SerializeField] private float _timeBetweenSpawns = 5f;
     [SerializeField] private bool _disabled = false;
     private float _timeSinceLastSpawn;
@@ -15,15 +19,39 @@ public class SpawnManager3D : MonoBehaviour
 
     private void Awake()
     {
+        if (_spawnPoints == null || _spawnPoints.Length == 0)
+            PopulateSpawnPoints();
+        
+        if (_enemyPrefab == null)
+        {
+            Debug.LogError($"SpawnManager3D on '{name}': Enemy prefab not assigned.");
+            enabled = false;
+            return;
+        }
+        var p = GameObject.FindGameObjectsWithTag("Player");
+        if (p != null) _player = p[0].transform;
+        else Debug.LogError($"SpawnManager3D: No GameObject with tag 'player' found.");
+
         _enemyPool = new ObjectPool<Enemy3D>(CreateEnemy, OnGet, OnRelease);
         _timeSinceLastSpawn = Time.time + _timeBetweenSpawns;
         _disabled = false;
+
+    }
+
+    private void PopulateSpawnPoints()
+    {
+        int n = transform.childCount;
+        _spawnPoints = n == 0 ? System.Array.Empty<Transform>() : new Transform[n];
+        for (int i = 0; i < n; i++)
+            _spawnPoints[i] = transform.GetChild(i);
     }
 
     private void OnGet(Enemy3D enemy)
     {
-        Transform randomSpawnPoint = _spawnPoints[Random.Range(0, _spawnPoints.Length)];
-        enemy.transform.position = randomSpawnPoint.transform.position;
+        Transform spawn = _nextSpawnPoint != null && _nextSpawnPoint ? _nextSpawnPoint : _spawnPoints[Random.Range(0, _spawnPoints.Length)];
+        _nextSpawnPoint = null;
+        enemy.transform.position = spawn.position;
+
         enemy.gameObject.SetActive(true);
         _activeEnemies.Add(enemy);
     }
@@ -40,6 +68,21 @@ public class SpawnManager3D : MonoBehaviour
         enemy.gameObject.SetActive(false);
         enemy.SetPool(_enemyPool);
         return enemy;
+    }
+
+    private Transform PickSpawnInRange()
+    {
+        if (_player == null || _spawnPoints == null || _spawnPoints.Length == 0) return null;
+        float r2 = _spawnRadius * _spawnRadius;
+        var candidates = new List<Transform>();
+        foreach (var spawn in _spawnPoints)
+        {
+            if (spawn == null) continue;
+            if ((spawn.position - _player.position).sqrMagnitude <= r2)
+                candidates.Add(spawn);
+        }
+        if (candidates.Count == 0) return null;
+        return candidates[Random.Range(0, candidates.Count)];
     }
 
     public void DisableSpawner()
@@ -74,8 +117,13 @@ public class SpawnManager3D : MonoBehaviour
     {
         if (Time.time > _timeSinceLastSpawn && !_disabled)
         {
-            _enemyPool.Get();
-            _timeSinceLastSpawn = Time.time + _timeBetweenSpawns;
+            var spawn = PickSpawnInRange();
+            if (spawn != null)
+            {
+                _nextSpawnPoint = spawn;
+                _enemyPool.Get();
+                _timeSinceLastSpawn = Time.time + _timeBetweenSpawns;
+            }
         }
     }
 }
