@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,11 +14,13 @@ public class ForgeManager : MonoBehaviour
 
     [Tooltip("Ensure these GameObjects have an IWeapon script attached, with WeaponData correctly set in the IWeapon script")]
     public List<GameObject> availableWeapons;
-    public GameObject player;
     [Tooltip("This should be the reference to the entire ForgeMenu canvas object that will be turned on / off.")]
     public GameObject forgeMenu;
     [Tooltip("This should be the actual scrollbox (part of the forge menu) where the forge purchase listings will go.")]
     public RectTransform forgeMenuScrollbox;
+
+    [SerializeField] private BasicEventObject FreezeRequestStartStream;
+    [SerializeField] private BasicEventObject FreezeRequestEndStream;
 
     public event Action<string, bool> OnListingPurchaseStateChange; // <string> is the weaponId purchased, bool is true if purchased, false if not
     public event Action<string, bool> OnListingUnlockedStateChange;
@@ -25,12 +28,9 @@ public class ForgeManager : MonoBehaviour
     public event Action OnForgeOpened;
     public event Action OnForgeClosed;
 
-    private Dictionary<string, GameObject> _weaponsById = new();
+    private readonly Dictionary<string, GameObject> _weaponsById = new();
     private List<WeaponPurchaseData> _purchaseData;
-    private ILooter _playerLooter;
     private Animator _forgeMenuAnimator;
-    private bool _isInitializing = false;
-    public bool IsInitializing => _isInitializing;
 
     void Awake()
     {
@@ -41,42 +41,47 @@ public class ForgeManager : MonoBehaviour
             string weaponId = w.GetComponent<WeaponBase>().GetWeaponData().weaponId;
             if (!_weaponsById.ContainsKey(weaponId)) _weaponsById.Add(weaponId, w);
         }
-        if (player != null && !player.TryGetComponent(out _playerLooter)) Debug.LogWarning("ForgeManager player needs an ILooter component to purchase weapons!");
         if (forgeMenu != null && !forgeMenu.TryGetComponent(out _forgeMenuAnimator)) Debug.LogWarning("ForgeMenu missing animator.");
+    }
+
+    void OnEnable()
+    {
+        if (FreezeRequestEndStream == null || FreezeRequestEndStream == null) Debug.LogWarning("Forge manager missing references to freeze streams!");
+        OnForgeOpened += FreezeRequestStartStream.RaiseEvent;
+        OnForgeClosed += FreezeRequestEndStream.RaiseEvent;
+    }
+    void OnDisable()
+    {
+        OnForgeOpened -= FreezeRequestStartStream.RaiseEvent;
+        OnForgeClosed -= FreezeRequestEndStream.RaiseEvent;
     }
 
     void Start()
     {
-        if (FreezeEntitiesManager.instance != null)
+        if (GameManager.instance != null)
         {
-            OnForgeOpened += FreezeEntitiesManager.instance.StartFreeze;
-            OnForgeClosed += FreezeEntitiesManager.instance.EndFreeze;
-        }
-        else Debug.Log("Cannot add dialogue to freeze, as freezeentitiesmanager is null!");
-        
-        if (GameManager.instance == null) { Debug.LogWarning("GameManager null; forge does not know purchase state."); return; }
+            GameManager.instance.OnLoadComplete += ReloadWeaponPurchaseData;
+        } else Debug.LogWarning("GameManager null; forge does not know purchase state. Using defaults.");
 
-        GameManager.instance.OnLoadComplete += ReloadWeaponPurchaseData;
-        ReloadWeaponPurchaseData();
-        if (_purchaseData.Count == 0) _purchaseData = GetDefaultWeaponPurchaseData();
+        if (_purchaseData == null || _purchaseData.Count == 0) _purchaseData = GetDefaultWeaponPurchaseData();
 
         if (forgeMenuScrollbox != null)
         {
-
             for (int i = 0; i < forgeMenuScrollbox.childCount; i++)
             {
                 if (forgeMenuScrollbox.GetChild(i).TryGetComponent(out ForgeItemListing listing))
                 {
                     listing.OnEquipWeapon += EquipItem;
-                    listing.OnTryPurchaseWeapon += PurchaseItem;
+                    listing.OnPurchaseWeapon += WeaponPurchased;
                 }
             }
         }
+
+        StartCoroutine(WaitForAllListingsSubscribed());
     }
 
     public void OpenForgeMenu()
     {
-        forgeMenu.SetActive(true);
         _forgeMenuAnimator.SetTrigger("OpenMenu");
         OnForgeOpened?.Invoke();
     }
@@ -96,29 +101,11 @@ public class ForgeManager : MonoBehaviour
 
     public List<WeaponPurchaseData> GetWeaponPurchaseData() => _purchaseData;
 
-    public void PurchaseItem(string id, PurchasePrice price)
+    private void WeaponPurchased(string id)
     {
-        if (_isInitializing)
-        return; // ✅ skip accidental purchases during load
-
-        if (!DoesListingSatisfy(id, (i) => i.isUnlocked))
-        {
-            Debug.LogWarning("Trying to equip weapon " + id + " but it is locked.");
-            return;
-
-        }
-        if (_playerLooter.UseCurrency(price))
-        {
-            SetListingPurchased(id);
-            OnListingPurchaseStateChange?.Invoke(id, true);
-            EquipItem(id);
-            AudioManager.Instance.PlayPurchaseSuccess();
-        }
-        else
-        {
-            Debug.LogWarning("Not enough currency to buy " + id);
-            AudioManager.Instance.PlayPurchaseError();
-        }
+        SetListingPurchased(id);
+        OnListingPurchaseStateChange?.Invoke(id, true);
+        EquipItem(id);
     }
     public void EquipItem(string id)
     {
@@ -148,7 +135,6 @@ public class ForgeManager : MonoBehaviour
     private void SetListingUnlocked(string id) => _purchaseData.Find(l => l.weaponId == id)!.isUnlocked = true;
     private void ReloadWeaponPurchaseData()
     {
-        _isInitializing = true; // ✅ prevent sounds during data load
         _purchaseData = GameManager.instance.GetWeaponsPurchased() ?? GetDefaultWeaponPurchaseData();
 
         // go through and send message out for each ForgeListing to update its data
@@ -161,7 +147,6 @@ public class ForgeManager : MonoBehaviour
         // also emit a weapon is equipped if necessary
         string equippedWeapon = GameManager.instance.GetEquippedWeapon() ?? "";
         if (equippedWeapon.Length != 0) OnListingEquipped?.Invoke(equippedWeapon);
-        _isInitializing = false; // ✅ re-enable sounds after data load
     }
     // this is not the best option here to just have a hardset default weapon data for a few reasons...
     // the worst of which is that the weapon ids for melee1 and ranged1 are hardcoded. if we ever change those
@@ -179,5 +164,13 @@ public class ForgeManager : MonoBehaviour
             l.Add(new WeaponPurchaseData { weaponId = key, isPurchased = false, isUnlocked = false });
         }
         return l;
+    }
+
+    private IEnumerator WaitForAllListingsSubscribed(float timeout = 1f)
+    {
+        float start = Time.time;
+        yield return new WaitUntil(() => OnListingPurchaseStateChange?.GetInvocationList().Length == availableWeapons.Count || Time.time > start + timeout);
+
+        if (GameManager.instance != null) ReloadWeaponPurchaseData();
     }
 }

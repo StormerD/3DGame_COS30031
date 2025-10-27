@@ -4,6 +4,8 @@ using UnityEngine;
 public class PauseManager : MonoBehaviour
 {
     public static PauseManager instance;
+    [SerializeField] private BasicEventObject FreezeRequestStartStream;
+    [SerializeField] private BasicEventObject FreezeRequestEndStream;
     public event Action OnPause;
     public event Action OnUnpause;
     private bool _paused = false;
@@ -14,14 +16,16 @@ public class PauseManager : MonoBehaviour
         else Destroy(gameObject);
     }
 
-    void Start()
+    void OnEnable()
     {
-        if (FreezeEntitiesManager.instance != null)
-        {
-            OnPause += FreezeEntitiesManager.instance.StartFreeze;
-            OnUnpause += FreezeEntitiesManager.instance.EndFreeze;
-        }
-        else Debug.Log("Cannot add dialogue to freeze, as freezeentitiesmanager is null!");
+        if (FreezeRequestEndStream == null || FreezeRequestEndStream == null) Debug.LogWarning("Forge manager missing references to freeze streams!");
+        OnPause += FreezeRequestStartStream.RaiseEvent;
+        OnUnpause += FreezeRequestEndStream.RaiseEvent;
+    }
+    void OnDisable()
+    {
+        OnPause += FreezeRequestStartStream.RaiseEvent;
+        OnUnpause += FreezeRequestEndStream.RaiseEvent;
     }
 
     // By checking if already paused, we can make it so that pressing the pause button twice will open then close the pause menu

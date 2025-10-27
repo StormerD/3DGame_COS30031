@@ -42,7 +42,7 @@ public class AudioManager : MonoBehaviour
         if (footstepClips != null && footstepClips.Length > 0)
         {
             int index = Random.Range(0, footstepClips.Length);
-            Debug.Log($"Playing footstep clip {index}");
+            // Debug.Log($"Playing footstep clip {index}");
             audioSource.PlayOneShot(footstepClips[index]);
         }
         else

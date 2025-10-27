@@ -78,7 +78,7 @@ BoxCollider2D:
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 2752dfbb613634e978aad9f66573e12c, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -126,12 +126,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d7ee252c082945a2ab02bb9b3349202, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _freezeStream: {fileID: 11400000, guid: 3a2fae2a12dc44bfb95c26b9fb4395c9, type: 2}
   playerSpeed: 5
   dashSpeed: 15
   dashLength: 0.2
   dashCooldownSeconds: 0.5
   canMove: 1
-  dashParticlesPrefab: {fileID: 0}
+  footstepInterval: 0.4
+  dustPuffPrefab: {fileID: 359076714251711221, guid: 6f4cb0ab08810a345a2a7e05d65622d7, type: 3}
+  dashParticlesPrefab: {fileID: 2709738328075119769, guid: d486ed36a4e604949a45a153731aaff6, type: 3}
 --- !u!114 &8951823929952925354
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -213,7 +216,7 @@ MonoBehaviour:
     m_SingletonActionBindings: []
     m_Flags: 0
   jump:
-    m_Name: 
+    m_Name: Jump
     m_Type: 0
     m_ExpectedControlType: 
     m_Id: 84dd7aec-5085-43ef-9eeb-221fac180e1b
@@ -221,6 +224,8 @@ MonoBehaviour:
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
+  _playerDeathStream: {fileID: 11400000, guid: 7613c1fff96694aaa9d7e53fa978d0e7, type: 2}
+  _freezeStream: {fileID: 11400000, guid: 3a2fae2a12dc44bfb95c26b9fb4395c9, type: 2}
 --- !u!114 &310496380535155249
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -233,6 +238,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a52321be7ceaf4d43baf346db09e75e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _shareCurrencyStream: {fileID: 11400000, guid: 18efbb7d3783740a0a6da3e1b70c3260, type: 2}
+  _requestShareCurrencyStream: {fileID: 11400000, guid: 392a24c7e2c104cb68cf6549bda15cd4, type: 2}
+  _costsStream: {fileID: 11400000, guid: 46945eaafffa843fa9e4f04aebc762c3, type: 2}
 --- !u!114 &-1446695033853213756
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -245,7 +253,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7e1ab114a694044086bbf97d353e30d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _currentHealthStream: {fileID: 11400000, guid: 3ec533152e07d4a61b8e955f4c6e3761, type: 2}
+  _maxHealthStream: {fileID: 11400000, guid: c7fe9ad0653f142e9abff5ad0e8ad567, type: 2}
   _maxHealth: 30
+  _playerDeathStream: {fileID: 11400000, guid: 7613c1fff96694aaa9d7e53fa978d0e7, type: 2}
 --- !u!114 &3160180892218156363
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -271,6 +282,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96e6d976ddf8c41dfb503642e78239b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerDataTracker
+  registrationPriority: 0
 --- !u!1 &6816457103706165846
 GameObject:
   m_ObjectHideFlags: 0

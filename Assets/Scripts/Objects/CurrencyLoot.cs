@@ -66,14 +66,14 @@ public class CurrencyLoot : MonoBehaviour, IPickupable
 
         while (elapsed < flashDuration)
         {
-        visible = !visible;
+            visible = !visible;
+            foreach (var sr in spriteRenderers)
+                sr.enabled = visible;
+            yield return new WaitForSeconds(flashInterval);
+            elapsed += flashInterval;
+        }
         foreach (var sr in spriteRenderers)
-            sr.enabled = visible;
-        yield return new WaitForSeconds(flashInterval);
-        elapsed += flashInterval;
-    }
-    foreach (var sr in spriteRenderers)
-        sr.enabled = true;
+            sr.enabled = true;
     }
 
     public void Interact(IInteractor interactor)

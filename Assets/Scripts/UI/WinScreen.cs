@@ -25,6 +25,6 @@ public class WinScreen : MonoBehaviour
     public void QuitToMainMenu()
     {
         if (GameManager.instance == null) Debug.LogWarning("Unable to save!");
-        else { GameManager.instance.SafeSave(); SceneManager.LoadScene(0); }
+        else { GameManager.instance.Save(); SceneManager.LoadScene(0); }
     }
 }

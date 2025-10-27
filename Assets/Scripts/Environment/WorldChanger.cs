@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class WorldChanger : MonoBehaviour
 {
-    [SerializeField] private EventObject triggersTransition;
+    [SerializeField] private BasicEventObject triggersTransition;
     [SerializeField] private GameObject destroyedWorldTilemap;
     [SerializeField] private GameObject destroyedWorldProps;
     [SerializeField] private GameObject healedWorldTilemap;
@@ -33,5 +33,13 @@ public class WorldChanger : MonoBehaviour
         if (destroyedWorldProps != null) destroyedWorldProps.SetActive(false);
         if (healedWorldTilemap != null) healedWorldTilemap.SetActive(true);
         if (healedWorldProps != null) healedWorldProps.SetActive(true);
+
+        // destroy enemies
+        var spawner = FindFirstObjectByType<SpawnManager>();
+        if (spawner != null)
+        {
+            spawner.StopAndClear(destroy: true);
+        }
+
     }
 }
