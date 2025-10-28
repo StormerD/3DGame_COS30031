@@ -1,23 +1,24 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.AI;
 
-public class EnemyAttack : MonoBehaviour
+public class EnemyAttack3D : MonoBehaviour
 {
     public EnemyData unitData;
 
     // logic to keep track of attack instances
-    private bool _attackReady = true;
     private bool _attackRequested = false;
     private float _nextAttackTime = 0f; // time next attack is allowed
 
     [Header("Lunge")]
-    [SerializeField] private float lungeDistance = 2f;
     [SerializeField] private float lungeDuration = 0.1f;
     [SerializeField] private AnimationCurve lungeCurve = null;
     [SerializeField] private LayerMask playerMask = 0;
-    private Collider2D _hurtBox = null;
+    private Collider _hurtBox = null;
 
-    private Rigidbody2D _rb;
+    private Rigidbody _rb;
+    private NavMeshAgent _agent;
+    private Transform _player;
     private bool _isLunging = false;
     private bool _damageWindow = false;
     private bool _hitThisLunge = false;
@@ -29,23 +30,30 @@ public class EnemyAttack : MonoBehaviour
 
     public void InitializeEnemyAttack()
     {
-        if (_rb == null) _rb = GetComponent<Rigidbody2D>();
-        if (_hurtBox == null) _hurtBox = GetComponent<Collider2D>();
+        if (_rb == null) _rb = GetComponent<Rigidbody>();
+        if (_agent == null) _agent = GetComponent<NavMeshAgent>();
+        if (_hurtBox == null) _hurtBox = GetComponent<Collider>();
         if (lungeCurve == null) lungeCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
         if (playerMask == 0) playerMask = LayerMask.GetMask("Player");
-        _rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+        if (_player == null)
+        {
+            var p = GameObject.FindGameObjectWithTag("Player");
+            if (p) _player = p.transform;
+        }
+        if (_agent != null)
+        {
+            _agent.isStopped = false;
+            _agent.updatePosition = true;
+        }
+        _hurtBox.isTrigger = true;
+        _rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
+        _rb.interpolation = RigidbodyInterpolation.Interpolate;
 
-        _attackReady = true;
         _attackRequested = false;
         _nextAttackTime = 0f;
         _isLunging = false;
         _damageWindow = false;
         _hitThisLunge = false;
-    }
-
-    void Update()
-    {
-        if (Time.time > _nextAttackTime && !_attackReady) _attackReady = true;
     }
 
     void FixedUpdate()
@@ -57,8 +65,8 @@ public class EnemyAttack : MonoBehaviour
     {
         // Debug.Log(gameObject.name + " is trying to attack");
         // check if attack is on cooldown
-        if (_isLunging || !_attackReady) return; // don't attack if on cooldown
-        _attackReady = false;
+        if (_isLunging || Time.time < _nextAttackTime) return; // don't attack if on cooldown
+        _nextAttackTime = Time.time + unitData.timeBetweenAttacks;
         _attackRequested = true;
 
     }
@@ -76,9 +84,16 @@ public class EnemyAttack : MonoBehaviour
         _hitThisLunge = false;
         _damageWindow = true;
 
-        Vector2 start = _rb.position;
-        Vector2 dir = (Vector2)transform.up;
-        Vector2 end = start + dir * lungeDistance;
+        if (_agent != null)
+        {
+            _agent.isStopped = true;
+            _agent.updatePosition = false;
+        }
+
+        Vector3 start = _rb.position;
+        Vector3 dir = _player ? (_player.position - transform.position).normalized : transform.forward;
+        if (dir.sqrMagnitude > 0.0001f) transform.rotation = Quaternion.LookRotation(dir, Vector3.up);
+        Vector3 end = start + dir * unitData.attackRange;
 
         float t = 0f;
         while (t < lungeDuration)
@@ -86,17 +101,25 @@ public class EnemyAttack : MonoBehaviour
             t += Time.fixedDeltaTime;
             float p = Mathf.Clamp01(t / lungeDuration);
             float eased = lungeCurve.Evaluate(p);
-            _rb.MovePosition(Vector2.Lerp(start, end, eased));
+            _rb.MovePosition(Vector3.Lerp(start, end, eased));
             yield return new WaitForFixedUpdate();
         }
 
         _damageWindow = false;
         _nextAttackTime = Time.time + unitData.timeBetweenAttacks; // set time of next allowed attack
         _isLunging = false;
+
+        if (_agent != null)
+        {
+            _agent.isStopped = false;
+            _agent.updatePosition = true;
+            _agent.SetDestination(_player.position);
+        }
+
         Debug.Log("Enemy Finished Lunge");
     }
 
-    private void OnTriggerEnter2D(Collider2D collider)
+    private void OnTriggerEnter(Collider collider)
     {
         if (!_damageWindow || _hitThisLunge) return;
         if ((playerMask.value & (1 << collider.gameObject.layer)) == 0) return;

@@ -24,6 +24,9 @@ public class Enemy3D : MonoBehaviour, IHealth
     {
         _isDead = false;
         _currentHealth = unitData.maxHealth;
+        var attack = GetComponent<EnemyAttack3D>();
+        if (attack != null) attack.InitializeEnemyAttack();
+
     }    void OnDisable() => _isDead = true;
 
     void Awake()
@@ -46,11 +49,11 @@ public class Enemy3D : MonoBehaviour, IHealth
 
     public void TakeDamage(int amount)
     {
-        if (_hitThisFrame) return; // only take damage once per frame
-        Debug.Log("Ouch! " + gameObject.name + " hit for " + amount);
+        if (_hitThisFrame || _isDead) return; // only take damage once per frame
+        Debug.Log("Ouch! " + gameObject.name + " hit for " + amount + ", current: " + _currentHealth);
         //_animator.SetTrigger("Hit");
-        _currentHealth -= amount;
         _hitThisFrame = true;
+        _currentHealth -= amount;
         if (_currentHealth <= 0 && !_isDead)
         {
             Debug.Log(gameObject.name + " is dead!");
