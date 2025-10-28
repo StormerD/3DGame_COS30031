@@ -7,6 +7,7 @@ using UnityEngine.Pool;
 
 public class SpawnManager : MonoBehaviour
 {
+    [SerializeField] private IntEventObject _freezeStream;
     [SerializeField] private Transform[] _spawnPoints; // array of spawn point locations
     private Transform _nextSpawnPoint; // chosen spawn for next enemy
     private float _spawnRadius = 15f;
@@ -22,6 +23,9 @@ public class SpawnManager : MonoBehaviour
 
     private void Awake()
     {
+        if (_spawnPoints == null || _spawnPoints.Length == 0)
+            PopulateSpawnPoints();
+
         _enemyPool = new ObjectPool<Enemy>(CreateEnemy, OnGet, OnRelease);
         _timeSinceLastSpawn = Time.time + _timeBetweenSpawns;
         _disabled = false;
@@ -30,6 +34,40 @@ public class SpawnManager : MonoBehaviour
             var p = GameObject.FindGameObjectWithTag("Player");
             if (p) _player = p.transform;
         }
+    }
+
+    private void PopulateSpawnPoints()
+    {
+        int n = transform.childCount;
+        _spawnPoints = n == 0 ? System.Array.Empty<Transform>() : new Transform[n];
+        for (int i = 0; i < n; i++)
+            _spawnPoints[i] = transform.GetChild(i);
+    }
+
+    void OnEnable()
+    {
+        _freezeStream.RegisterListener(FreezeEvent);
+    }
+
+    void OnDisable()
+    {
+        _freezeStream.UnregisterListener(FreezeEvent);
+    }
+
+    private void FreezeEvent(int state)
+    {
+        if (state == 0) UnfreezeActions();
+        else FreezeActions();
+    }
+
+    public void FreezeActions()
+    {
+        _disabled = true;
+    }
+
+    public void UnfreezeActions()
+    {
+        _disabled = false;
     }
 
     private void OnGet(Enemy enemy)

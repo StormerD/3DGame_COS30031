@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour
 {
+    [SerializeField] private IntEventObject _freezeStream;
     public event Action OnAttack;
 
     public EnemyData unitData;
@@ -11,6 +12,7 @@ public class EnemyMovement : MonoBehaviour
     private Vector2 _targetDirection;
     private float _targetDistance;
     private Transform _player;
+    private bool canMove = true;
 
 
     void Awake()
@@ -20,8 +22,38 @@ public class EnemyMovement : MonoBehaviour
         OnAttack += () => GetComponent<EnemyAttack>().TryAttackPlayer();
     }
 
+    void OnEnable()
+    {
+        _freezeStream.RegisterListener(FreezeEvent);
+    }
+
+    void OnDisable()
+    {
+        _freezeStream.UnregisterListener(FreezeEvent);
+    }
+
+    private void FreezeEvent(int state)
+    {
+        if (state == 0) UnfreezeActions();
+        else FreezeActions();
+    }
+
+    public void FreezeActions()
+    {
+        canMove = false;
+        _rb.linearVelocity = Vector2.zero;
+    }
+
+    public void UnfreezeActions()
+    {
+        canMove = true;
+    }
+
+
+
     void FixedUpdate()
     {
+        if (!canMove) return;
         UpdateTargetDirection();
         RotateToTarget();
         TryAttack();

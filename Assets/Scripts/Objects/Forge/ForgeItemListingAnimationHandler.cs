@@ -37,9 +37,9 @@ public class ForgeItemListingAnimationHandler : MonoBehaviour
         }
     }
 
-    void EquipAnimation() => _animator.SetTrigger("Equipped");
-    void UnequipAnimation() => _animator.SetTrigger("Unequipped");
-    void PurchaseAnimation() => _animator.SetTrigger("Purchased");
-    void UnpurchaseAnimation() => _animator.SetTrigger("Unpurchased");
-    void Hovered(bool isHovered) => _animator.SetBool("Hovered", isHovered);
+    void EquipAnimation() { if (_animator != null) _animator.SetTrigger("Equipped"); }
+    void UnequipAnimation() { if (_animator != null) _animator.SetTrigger("Unequipped"); }
+    void PurchaseAnimation() { if (_animator != null) _animator.SetTrigger("Purchased"); }
+    void UnpurchaseAnimation() { if (_animator != null) _animator.SetTrigger("Unpurchased"); }
+    void Hovered(bool isHovered) { if (_animator != null) _animator.SetBool("Hovered", isHovered); } 
 }

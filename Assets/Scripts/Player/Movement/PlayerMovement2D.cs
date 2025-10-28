@@ -24,10 +24,15 @@ public class PlayerMovement2D : MonoBehaviour, IMover2D
     private Vector2 _dashDirection = Vector2.zero;
     private PlayerInput _inp;
 
+    [SerializeField] private Animator _anim;
+    [SerializeField] private SpriteRenderer _sr;
+
     void Awake()
     {
         _inp = GetComponent<PlayerInput>();
         _rb = GetComponent<Rigidbody2D>();
+        _anim = GetComponentInChildren<Animator>();
+        _sr = GetComponentInChildren<SpriteRenderer>();
     }
 
     void OnEnable()
@@ -64,6 +69,19 @@ public class PlayerMovement2D : MonoBehaviour, IMover2D
         // keep track of current direction for other scripts (like weapons) that depend on player direction
         // but only update when actually moving. this way if the player stops moving the last direction is saved
         _currentDirection = _rb.linearVelocity == Vector2.zero ? _currentDirection : _rb.linearVelocity.normalized;
+
+        // set up animator values
+        if (_anim != null)
+        {
+            float speed = _rb.linearVelocity.magnitude;
+            Vector2 dir = speed > 0.01f ? _rb.linearVelocity.normalized : _currentDirection;
+
+            _anim.SetFloat("Speed", speed);
+            _anim.SetFloat("MoveX", dir.x);
+            _anim.SetFloat("MoveY", dir.y);
+            _anim.SetBool("IsDashing", Time.time <= _dashStartedAt + dashLength);
+        }
+
         bool isMoving = inp.magnitude > 0.1f;
 
         if (isMoving && Time.time > _dashStartedAt + dashLength)

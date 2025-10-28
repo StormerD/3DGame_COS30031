@@ -276840,21 +276840,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0c8b7e8ad617ee42943aaf386c9b756, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _spawnPoints:
-  - {fileID: 671951061}
-  - {fileID: 1682953695}
-  - {fileID: 171214456}
-  - {fileID: 16255767}
-  - {fileID: 1618317165}
-  - {fileID: 715691961}
-  - {fileID: 1364943798}
-  - {fileID: 1870790018}
-  - {fileID: 1350783628}
-  - {fileID: 742061649}
-  - {fileID: 1369308964}
-  - {fileID: 2012813459}
-  - {fileID: 1566848041}
-  - {fileID: 1775407386}
+  _freezeStream: {fileID: 11400000, guid: 3a2fae2a12dc44bfb95c26b9fb4395c9, type: 2}
+  _spawnPoints: []
   _timeBetweenSpawns: 5
   _disabled: 0
   _enemyPrefab: {fileID: 4431303542737422339, guid: 2233787022ff247c9985e3a1e6bf2a30, type: 3}
