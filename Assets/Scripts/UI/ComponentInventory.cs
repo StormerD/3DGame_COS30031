@@ -16,6 +16,7 @@ public class ComponentInventory : MonoBehaviour
     [SerializeField] private GameObject _rowPrefab;
     [SerializeField] private int _numComponentsPerRow;
     [SerializeField] private GameObject bagFullTextWrapper;
+    [SerializeField] private int minimumDisplayHeight = 64;
 
     private Animator _animator;
     private int _countChildren;
@@ -45,7 +46,6 @@ public class ComponentInventory : MonoBehaviour
     void OnPickupFailure() => _animator.SetTrigger("BagFull");
     void OnNewItem(IItem item)
     {
-        Debug.Log("new item received");
         var temp = Instantiate(_displayComponentPrefab, _currentRow.transform);
         temp.name = item.GetId().ToString();
         RawImage i = temp.GetOrAddComponent<RawImage>();
@@ -54,10 +54,17 @@ public class ComponentInventory : MonoBehaviour
         // assign texture
         i.texture = item.GetObject2DRepresentation();
         // set it to the native size of the object
+        i.SetNativeSize();
         // tell the layout group we want to maintain this size (don't stretch)
         LayoutElement e = temp.GetComponent<LayoutElement>();
-        e.preferredHeight = texture.height;
-        e.preferredWidth = texture.width;
+        float scaleFactor = 1;
+        if (texture.height < minimumDisplayHeight) // gonna re-size the image to make it a little more visible
+        {
+            scaleFactor = minimumDisplayHeight / texture.height;
+            Debug.Log("Using scale factor! " + scaleFactor);
+        }
+        e.preferredHeight = texture.height * scaleFactor;
+        e.preferredWidth = texture.width * scaleFactor;
 
         StartCoroutine(FadeImage(i));
 
