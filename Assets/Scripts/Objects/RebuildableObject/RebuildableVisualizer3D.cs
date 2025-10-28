@@ -1,16 +1,26 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Animator))]
 public class RebuildableVisualizer3D : MonoBehaviour
 {
-    [Tooltip("Object prefabs, from least built to most built. Include the base state as well.")]
-    public List<GameObject> rebuildPrefabs;
-    public ParticleSystem completeBuildEffects;
+    [Tooltip("The number of components that this visualizer will play its rebuild animation at.")]
+    [SerializeField] int playRebuildAtCollectedAmount;
     [Tooltip("If the RebuildableObject script is attached to the same game object, no need to set this value. This is only used so that multiple objects can change their sprite!")]
-    public RebuildableObject3D rebuildable;
-
+    [SerializeField] RebuildableObject3D rebuildable;
+    [SerializeField] List<KeyedObject<ParticleSystem>> keyedParticleSystems;
     private int collectedComponents = 0;
     private int maxNumComponents;
+    private Animator _animator;
+    private AudioSource _audioSource;
+    private bool _hasPlayedAnimation;
+
+    void Awake()
+    {
+        _animator = GetComponent<Animator>();
+        TryGetComponent(out _audioSource);
+    }
 
     void Start()
     {
@@ -20,8 +30,6 @@ public class RebuildableVisualizer3D : MonoBehaviour
             rebuildable.OnComponentsCollected += ComponentCollected;
             maxNumComponents = rebuildable.numComponents;
         }
-
-        NewRebuildLevel();
     }
 
     private void ComponentCollected(int howMany)
@@ -29,16 +37,31 @@ public class RebuildableVisualizer3D : MonoBehaviour
         collectedComponents += howMany;
         collectedComponents = Mathf.Clamp(collectedComponents, 0, maxNumComponents);
 
-        int prefabIndex = Mathf.RoundToInt((float)collectedComponents / maxNumComponents * (rebuildPrefabs.Count - 1));
-
-        if (collectedComponents == maxNumComponents && completeBuildEffects != null)
+        if (collectedComponents >= playRebuildAtCollectedAmount && !_hasPlayedAnimation)
         {
-            Destroy(Instantiate(completeBuildEffects, transform.position, Quaternion.identity), 3f);
+
         }
     }
 
-    private void NewRebuildLevel()
+    public void PlaySound(AudioClip clip)
     {
-        
+        if (clip != null && _audioSource != null) _audioSource.PlayOneShot(clip);
     }
+    public void PlayParticle(string key)
+    {
+        foreach(var keyedSystem in keyedParticleSystems)
+        {
+            if (key != keyedSystem.key) continue;
+            
+            keyedSystem.obj.Play();
+            break;
+        }
+    }
+}
+
+[Serializable]
+public class KeyedObject<T>
+{
+    public string key;
+    public T obj;
 }
