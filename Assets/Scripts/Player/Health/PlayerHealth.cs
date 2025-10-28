@@ -42,7 +42,6 @@ public class PlayerHealth : MonoBehaviour, IHealth
         }
 
         EmitHealthStreams();
-        Debug.Log("Player took : " + damageAmount + " damage! Current health: " + _currentHealth);
 
         if (_currentHealth <= 0)
         {

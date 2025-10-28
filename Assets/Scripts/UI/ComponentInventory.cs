@@ -1,3 +1,5 @@
+using System.Collections;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,10 +15,13 @@ public class ComponentInventory : MonoBehaviour
     [Tooltip("LayoutElement with a HorizontalLayoutGroup")]
     [SerializeField] private GameObject _rowPrefab;
     [SerializeField] private int _numComponentsPerRow;
+    [SerializeField] private GameObject bagFullTextWrapper;
 
     private Animator _animator;
     private int _countChildren;
     private GameObject _currentRow;
+
+    void Awake() => _animator = GetComponent<Animator>();
 
     void OnEnable()
     {
@@ -37,32 +42,70 @@ public class ComponentInventory : MonoBehaviour
         _currentRow = Instantiate(_rowPrefab, transform);
     }
 
-    void OnPickupFailure() => _animator.SetTrigger("PlayBagFull");
+    void OnPickupFailure() => _animator.SetTrigger("BagFull");
     void OnNewItem(IItem item)
     {
         Debug.Log("new item received");
         var temp = Instantiate(_displayComponentPrefab, _currentRow.transform);
         temp.name = item.GetId().ToString();
         RawImage i = temp.GetOrAddComponent<RawImage>();
+        Texture2D texture = item.GetObject2DRepresentation();
+
+        // assign texture
         i.texture = item.GetObject2DRepresentation();
+        // set it to the native size of the object
+        // tell the layout group we want to maintain this size (don't stretch)
+        LayoutElement e = temp.GetComponent<LayoutElement>();
+        e.preferredHeight = texture.height;
+        e.preferredWidth = texture.width;
+
+        StartCoroutine(FadeImage(i));
+
+        // now that the child is added we need to see if we should make a new row (for large bags)
+        // and we also need to update the position of BagFullTextWrapper
+
         _countChildren++;
+        _animator.SetBool("ObjectsHeld", true);
     }
 
     void OnUsedItem(IItem item)
     {
+        string itemId = item.GetId().ToString();
+        // iterate through child objects and find the one matching ID; delete it.
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            Transform curChild = transform.GetChild(i);
+            bool found = false;
+            for (int j = 0; j < curChild.childCount; j++)
+            {
+                if (curChild.GetChild(j).name == itemId)
+                {
+                    StartCoroutine(FadeImage(curChild.GetChild(j).GetComponent<RawImage>(), 1, 0, true));
+                    break;
+                }
+            }
+            if (found) break;
+        }
         _countChildren--;
+        if (_countChildren == 0) _animator.SetBool("ObjectsHeld", false);
     }
 
-    #region Debuggin
-    public void AddFake()
+    private IEnumerator FadeImage(RawImage image, float from = 0, float to = 1, bool destroyAtCompletion = false, float overTime = 0.25f, float stepSize = 0.01f)
     {
-        _countChildren++;
-    }
-    
-    public void RemoveOne()
-    {
-        int choice = Random.Range(0, _countChildren);
-    }
+        Color imgColor = new(image.color.r, image.color.g, image.color.b);
+        image.color = new(imgColor.r, imgColor.g, imgColor.b, from);
+        float stepAmount = stepSize / overTime * (to - from);
+        float curAlpha = from;
+        WaitForSeconds wait = new(stepSize);
+        int stepCount = (int)((to - from) / stepAmount);
+        for (int i = 0; i < stepCount; i++)
+        {
+            yield return wait;
+            curAlpha += stepAmount;
+            image.color = new(imgColor.r, imgColor.g, imgColor.b, curAlpha);
+        }
+        image.color = new(imgColor.r, imgColor.g, imgColor.b, to);
 
-    #endregion
+        if (destroyAtCompletion) Destroy(image.gameObject);
+    }
 }
