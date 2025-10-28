@@ -1088,21 +1088,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0c8b7e8ad617ee42943aaf386c9b756, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _spawnPoints:
-  - {fileID: 588783584}
-  - {fileID: 955116651}
-  - {fileID: 503297328}
-  - {fileID: 1119598047}
-  - {fileID: 1665075763}
-  - {fileID: 1537197320}
-  - {fileID: 1312963382}
-  - {fileID: 777125534}
-  - {fileID: 2096663579}
-  - {fileID: 221096898}
-  - {fileID: 768599695}
-  - {fileID: 1626550298}
-  - {fileID: 88187596}
-  - {fileID: 730950269}
+  _freezeStream: {fileID: 11400000, guid: 3a2fae2a12dc44bfb95c26b9fb4395c9, type: 2}
+  _spawnPoints: []
   _timeBetweenSpawns: 5
   _disabled: 0
   _enemyPrefab: {fileID: 4431303542737422339, guid: 2233787022ff247c9985e3a1e6bf2a30, type: 3}
