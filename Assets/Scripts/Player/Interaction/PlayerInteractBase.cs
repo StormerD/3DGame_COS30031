@@ -5,22 +5,22 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerLooter), typeof(PlayerInput))]
 public abstract class PlayerInteractBase : MonoBehaviour, IInteractor
 {
-    #region Public
-    public float interactSearchRadius = 1.0f;
-    public int maxLoadCarry = 2;
-
-    #endregion
+    [SerializeField] protected float _interactSearchRadius = 1.0f;
+    [SerializeField] protected int _maxLoadCarry = 3;
+    [SerializeField] protected BasicEventObject _bagFullStream;
+    [SerializeField] protected ItemEventObject _gainedItemStream;
+    [SerializeField] protected ItemEventObject _lostItemStream;
 
     protected List<IItem> _carriedItems;
-    private PlayerInput _inp;
-    private PlayerLooter _playerLooter;
+    protected PlayerInput _inp;
+    protected PlayerLooter _playerLooter;
 
     void Awake()
     {
         if (!TryGetComponent(out _inp)) Debug.LogError("PlayerInteract requires a PlayerInput component.");
         if (!TryGetComponent(out _playerLooter)) Debug.LogError("PlayerInteract requires a PlayerLooter component.");
         // Todo: this should become an actual inventory class if we decide to do items
-        _carriedItems = new List<IItem>(maxLoadCarry);
+        _carriedItems = new List<IItem>(_maxLoadCarry);
     }
 
     protected virtual void Start()
@@ -29,11 +29,6 @@ public abstract class PlayerInteractBase : MonoBehaviour, IInteractor
     }
 
     #region Usable Items
-
-    public bool DropItem()
-    {
-        return true;
-    }
 
     public bool IsHoldingAnyItemsMatchingIds(in HashSet<int> ids)
     {
@@ -51,6 +46,7 @@ public abstract class PlayerInteractBase : MonoBehaviour, IInteractor
         {
             if (ids.Contains(_carriedItems[i].GetId()))
             {
+                _lostItemStream.RaiseEvent(_carriedItems[i]);
                 _carriedItems[i].Use(this);
                 _carriedItems.RemoveAt(i);
                 amt += 1;
@@ -66,15 +62,19 @@ public abstract class PlayerInteractBase : MonoBehaviour, IInteractor
 
     protected bool TryCarry(IItem item)
     {
-        if (!CanCarryMoreItems()) return false; // cannot hold objects when full bag
+        if (!CanCarryMoreItems()) { _bagFullStream.RaiseEvent(); return false; } // cannot hold objects when full bag
 
         item.Pickup(this);
         AddNewCarry(item);
         return true;
     }
 
-    protected bool CanCarryMoreItems() => _carriedItems.Count < maxLoadCarry;
-    protected void AddNewCarry(IItem item) => _carriedItems.Add(item);
+    protected bool CanCarryMoreItems() => _carriedItems.Count < _maxLoadCarry;
+    protected void AddNewCarry(IItem item)
+    {
+        _carriedItems.Add(item);
+        _gainedItemStream.RaiseEvent(item);
+    }
 
     #endregion
 
