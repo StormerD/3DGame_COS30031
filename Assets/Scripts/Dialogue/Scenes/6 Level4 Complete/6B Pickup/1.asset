@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93f59b2ae768f461e81f69dd151d86b1, type: 3}
   m_Name: 1
   m_EditorClassIdentifier: Assembly-CSharp::DialogueBoxScript
-  text: There we go! I repaired windmills, solar panels, water pumps, and mechanical
-    trees.
+  text: Multiple trees. Looks like they're all inactive.
   speakerImage: {fileID: 0}
   speakerName: You
   speakerShowsOnLeft: 0

@@ -10,10 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 93f59b2ae768f461e81f69dd151d86b1, type: 3}
-  m_Name: 1
+  m_Name: 8
   m_EditorClassIdentifier: Assembly-CSharp::DialogueBoxScript
-  text: There we go! I repaired windmills, solar panels, water pumps, and mechanical
-    trees.
+  text: However, mechanical trees show real promise in offsetting fossil fuel impacts.
   speakerImage: {fileID: 0}
   speakerName: You
   speakerShowsOnLeft: 0
