@@ -4,17 +4,23 @@ using static UnityEngine.InputSystem.InputAction;
 [RequireComponent(typeof(Rigidbody), typeof(PlayerInput), typeof(Collider))]
 public class PlayerMovement3D : MonoBehaviour, IMover3D
 {
+    [Header("Running configuration")]
     public float maxSpeed = 100f;
     public float playerSpeed = 10f;
     public float acceleration = 8f;
     public float deceleration = 5f;
+    [Header("Jumping")]
     public float jumpForce = 10f;
+    [Header("Dashing")]
     public float dashForce = 15f;
     public float dashCooldownSeconds = 1.5f;
+    [Header("Footsteps")]
     public float footstepInterval = 0.4f; // Time between footsteps
     private float footstepTimer = 0f;
-
     public GameObject dustPuffPrefab;
+    [Header("Player direction")]
+    [SerializeField] private float directionLerpSpeed = 2;
+    private Quaternion lastRotation; 
 
     private Rigidbody _rb;
     private PlayerInput _inp;
@@ -23,6 +29,7 @@ public class PlayerMovement3D : MonoBehaviour, IMover3D
     private bool _canMove = true;
     private float _dashTimeStamp;
     private float _distanceToGround;
+    private Transform cam;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -32,6 +39,7 @@ public class PlayerMovement3D : MonoBehaviour, IMover3D
         _inp.dash.performed += Dash;
         _inp.jump.performed += Jump;
         _distanceToGround = GetComponent<Collider>().bounds.extents.y;
+        cam = Camera.main.transform;
     }
 
     void Update()
@@ -74,7 +82,6 @@ public class PlayerMovement3D : MonoBehaviour, IMover3D
 
         if (inp != Vector2.zero)
         {
-            Transform cam = Camera.main.transform;
             //The next two lines ensure that checking the direction of the camera is not affected by looking up or down
             Vector3 camForward = Vector3.ProjectOnPlane(cam.forward, Vector3.up).normalized;
             Vector3 camRight = Vector3.ProjectOnPlane(cam.right, Vector3.up).normalized;
@@ -82,7 +89,9 @@ public class PlayerMovement3D : MonoBehaviour, IMover3D
             Vector3 movementDirection = camForward * inp.y + camRight * inp.x;
             movementDirection.Normalize();
 
+            lastRotation = transform.rotation;
             targetVelocity = movementDirection * playerSpeed;
+            transform.rotation = Quaternion.Lerp(lastRotation, Quaternion.LookRotation(movementDirection), Time.deltaTime*directionLerpSpeed);
         } else {
             Vector3 decelerationForce = -_currentVelocity.normalized * deceleration;
             Vector3 decelerationForceSwizzle = new(decelerationForce.x, 0, decelerationForce.z);
