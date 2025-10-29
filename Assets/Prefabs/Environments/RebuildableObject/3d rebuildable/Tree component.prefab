@@ -142,4 +142,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe3ae2bdb54d548eebe74ccac7f297dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ComponentObject3D
-  _2dRepresentation: {fileID: 0}
+  _2dRepresentation: {fileID: 2800000, guid: 8992c5b46800d4fb5bed087090b12d81, type: 3}
