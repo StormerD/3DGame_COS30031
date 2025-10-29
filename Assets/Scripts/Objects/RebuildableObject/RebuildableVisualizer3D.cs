@@ -39,7 +39,7 @@ public class RebuildableVisualizer3D : MonoBehaviour
 
         if (collectedComponents >= playRebuildAtCollectedAmount && !_hasPlayedAnimation)
         {
-
+            _animator.SetTrigger("RebuildComplete");
         }
     }
 

@@ -50,6 +50,7 @@ public class ComponentInventory : MonoBehaviour
         temp.name = item.GetId().ToString();
         RawImage i = temp.GetOrAddComponent<RawImage>();
         Texture2D texture = item.GetObject2DRepresentation();
+        RectTransform rect = temp.GetComponent<RectTransform>();
 
         // assign texture
         i.texture = item.GetObject2DRepresentation();
@@ -63,6 +64,7 @@ public class ComponentInventory : MonoBehaviour
             scaleFactor = minimumDisplayHeight / texture.height;
             Debug.Log("Using scale factor! " + scaleFactor);
         }
+        rect.sizeDelta = new(texture.width * scaleFactor, texture.height * scaleFactor);
         e.preferredHeight = texture.height * scaleFactor;
         e.preferredWidth = texture.width * scaleFactor;
 
