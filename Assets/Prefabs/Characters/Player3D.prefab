@@ -12,11 +12,11 @@ GameObject:
   - component: {fileID: 8141877181332619501}
   - component: {fileID: 7962205167876181282}
   - component: {fileID: 4213230742180048707}
-  - component: {fileID: 393086517765204107}
+  - component: {fileID: 3410889037095315655}
   - component: {fileID: 601962280442667134}
+  - component: {fileID: 393086517765204107}
   - component: {fileID: 1485401236497015077}
   - component: {fileID: 2782865576258799106}
-  - component: {fileID: 3410889037095315655}
   - component: {fileID: 2544853693613605133}
   - component: {fileID: 9022951718193723577}
   - component: {fileID: 2162574982283546329}
@@ -122,27 +122,27 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &393086517765204107
-MonoBehaviour:
+--- !u!135 &3410889037095315655
+SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3480353612095256453}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: -1
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7bf7e17252b934063a8fac8a81e8fbf6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
-  maxSpeed: 30
-  playerSpeed: 10
-  acceleration: 5
-  deceleration: 10
-  jumpForce: 7
-  dashForce: 20
-  dashCooldownSeconds: 1.5
-  footstepInterval: 0.4
-  dustPuffPrefab: {fileID: 0}
+  serializedVersion: 3
+  m_Radius: 4
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &601962280442667134
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -170,6 +170,27 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 112
   m_CollisionDetection: 1
+--- !u!114 &393086517765204107
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3480353612095256453}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bf7e17252b934063a8fac8a81e8fbf6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  maxSpeed: 30
+  playerSpeed: 10
+  acceleration: 5
+  deceleration: 10
+  jumpForce: 7
+  dashForce: 20
+  dashCooldownSeconds: 1.5
+  footstepInterval: 0.4
+  dustPuffPrefab: {fileID: 0}
 --- !u!114 &1485401236497015077
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -245,8 +266,8 @@ MonoBehaviour:
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
-  _playerDeathStream: {fileID: 0}
-  _freezeStream: {fileID: 0}
+  _playerDeathStream: {fileID: 11400000, guid: 7613c1fff96694aaa9d7e53fa978d0e7, type: 2}
+  _freezeStream: {fileID: 11400000, guid: 3a2fae2a12dc44bfb95c26b9fb4395c9, type: 2}
 --- !u!114 &2782865576258799106
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -259,30 +280,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a52321be7ceaf4d43baf346db09e75e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerLooter
-  _shareCurrencyStream: {fileID: 0}
-  _requestShareCurrencyStream: {fileID: 0}
-  _costsStream: {fileID: 0}
---- !u!135 &3410889037095315655
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3480353612095256453}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: -1
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 4
-  m_Center: {x: 0, y: 0, z: 0}
+  _shareCurrencyStream: {fileID: 11400000, guid: 18efbb7d3783740a0a6da3e1b70c3260, type: 2}
+  _requestShareCurrencyStream: {fileID: 11400000, guid: 392a24c7e2c104cb68cf6549bda15cd4, type: 2}
+  _costsStream: {fileID: 11400000, guid: 46945eaafffa843fa9e4f04aebc762c3, type: 2}
 --- !u!114 &2544853693613605133
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -295,8 +295,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7be6bf1f1a8774f7ea746f3a717d703c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInteract3D
-  interactSearchRadius: 1
-  maxLoadCarry: 2
+  _interactSearchRadius: 1
+  _maxLoadCarry: 3
+  _bagFullStream: {fileID: 11400000, guid: 5a2e35d0e44f641ebb9ac93a13708d9f, type: 2}
+  _gainedItemStream: {fileID: 11400000, guid: 75e41d01cfb9547f2a2e86ccb3c003fa, type: 2}
+  _lostItemStream: {fileID: 11400000, guid: faf575d05a13f4425b76dd0f589c3997, type: 2}
   interactFocusOutlineColor: {r: 0.12967247, g: 0.67097867, b: 0.8867924, a: 1}
 --- !u!114 &9022951718193723577
 MonoBehaviour:

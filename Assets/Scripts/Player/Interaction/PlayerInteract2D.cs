@@ -7,7 +7,7 @@ public class PlayerInteract2D : PlayerInteractBase
     protected override void TryInteract(CallbackContext ctx)
     {
         LayerMask interactableLayer = 1 << LayerMask.NameToLayer("Interactable");
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, interactSearchRadius, interactableLayer);
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, _interactSearchRadius, interactableLayer);
 
         foreach (Collider2D collider in colliders)
         {
