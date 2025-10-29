@@ -43,7 +43,7 @@ public class BasicRanged3D : Weapon3D
         _doBasicAttack = false;
         _playedBasicNotReady = false;
 
-        AudioManager.Instance.PlayAudioClip(basicAttack);
+        if (AudioManager.Instance != null) AudioManager.Instance.PlayAudioClip(basicAttack);
 
         projectileSpawnPoint.localPosition = _attackingDirection;
         RangedProjectile3D proj = Instantiate(projectilePrefab, projectileSpawnPoint.position, Quaternion.LookRotation(_attackingDirection, Vector3.up)).GetComponent<RangedProjectile3D>();

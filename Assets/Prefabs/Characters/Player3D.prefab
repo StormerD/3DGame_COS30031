@@ -245,8 +245,17 @@ MonoBehaviour:
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
-  _playerDeathStream: {fileID: 0}
-  _freezeStream: {fileID: 0}
+  mouseScroll:
+    m_Name: Mouse Scroll
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 18eeeb1c-810c-45e3-8811-2314f796b1ce
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  _playerDeathStream: {fileID: 11400000, guid: 7613c1fff96694aaa9d7e53fa978d0e7, type: 2}
+  _freezeStream: {fileID: 11400000, guid: 3a2fae2a12dc44bfb95c26b9fb4395c9, type: 2}
 --- !u!114 &2782865576258799106
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -259,9 +268,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a52321be7ceaf4d43baf346db09e75e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerLooter
-  _shareCurrencyStream: {fileID: 0}
-  _requestShareCurrencyStream: {fileID: 0}
-  _costsStream: {fileID: 0}
+  _shareCurrencyStream: {fileID: 11400000, guid: 18efbb7d3783740a0a6da3e1b70c3260, type: 2}
+  _requestShareCurrencyStream: {fileID: 11400000, guid: 392a24c7e2c104cb68cf6549bda15cd4, type: 2}
+  _costsStream: {fileID: 11400000, guid: 46945eaafffa843fa9e4f04aebc762c3, type: 2}
 --- !u!135 &3410889037095315655
 SphereCollider:
   m_ObjectHideFlags: 0

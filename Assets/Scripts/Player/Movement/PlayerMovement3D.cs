@@ -44,12 +44,11 @@ public class PlayerMovement3D : MonoBehaviour, IMover3D
         bool isGrounded = IsGrounded();
 
         if (isGrounded && isMoving)
+        {
+            footstepTimer += Time.deltaTime;
+            if (footstepTimer >= footstepInterval)
             {
-                footstepTimer += Time.deltaTime;
-                if (footstepTimer >= footstepInterval)
-            {
-                // Debug.Log("Footsteps triggered");
-                AudioManager.Instance.PlayFootstep();
+                if (AudioManager.Instance != null) AudioManager.Instance.PlayFootstep();
                 if (dustPuffPrefab != null)
                 {
                     Vector3 spawnPos = transform.position + new Vector3(0, -0.5f, 0); // adjust Y for foot level
