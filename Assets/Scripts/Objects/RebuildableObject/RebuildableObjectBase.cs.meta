@@ -1,2 +1,14 @@
 fileFormatVersion: 2
 guid: 605127c39bc2f497ba2f2ee506fc7dab
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - componentPrefab: {instanceID: 0}
+  - componentPlaced: {fileID: 8300000, guid: 97a4239fb5d3b48c2b07d86304c81135, type: 3}
+  - completionSound: {fileID: 8300000, guid: bf163f2e58e1d47218416a6d73d3ad23, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
