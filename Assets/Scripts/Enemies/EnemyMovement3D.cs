@@ -5,6 +5,7 @@ using UnityEngine.AI;
 [RequireComponent(typeof(NavMeshAgent))]
 public class EnemyMovement3D : MonoBehaviour
 {
+    [SerializeField] private IntEventObject _freezeStream;
     public EnemyData unitData;
     public event Action OnAttack;
     public Transform player;
@@ -13,6 +14,7 @@ public class EnemyMovement3D : MonoBehaviour
     private EnemyAttack3D _attack;
     private float _repathTimer;
     [SerializeField] private float repathInterval = 0.1f;
+    private bool canMove = true;
 
     void Awake()
     {
@@ -36,12 +38,39 @@ public class EnemyMovement3D : MonoBehaviour
         var p = GameObject.FindGameObjectWithTag("Player");
         if (p) player = p.transform;
         else Debug.LogWarning("EnemyMovement3D: Player not assigned");
+    }
 
+    void OnEnable()
+    {
+        _freezeStream.RegisterListener(FreezeEvent);
+    }
+
+    void OnDisable()
+    {
+        _freezeStream.UnregisterListener(FreezeEvent);
+    }
+
+    private void FreezeEvent(int state)
+    {
+        if (state == 0) UnfreezeActions();
+        else FreezeActions();
+    }
+
+    public void FreezeActions()
+    {
+        canMove = false;
+        _agent.isStopped = true;
+    }
+
+    public void UnfreezeActions()
+    {
+        canMove = true;
+        _agent.isStopped = false;
     }
 
     void FixedUpdate()
     {
-        if (_agent == null || player == null) return;
+        if (_agent == null || player == null || !canMove) return;
 
         // refresh enemy destination in small intervals
         _repathTimer -= Time.deltaTime;

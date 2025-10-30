@@ -4,6 +4,9 @@ using UnityEngine.Pool;
 
 public class SpawnManager3D : MonoBehaviour
 {
+    [SerializeField] private IntEventObject _freezeStream;
+    [SerializeField] private BasicEventObject triggersTransition;
+
     [SerializeField] private Transform[] _spawnPoints; // array of spawn point locations
     private Transform _nextSpawnPoint; // chosen spawn for next enemy
     private float _spawnRadius = 15f;
@@ -21,7 +24,7 @@ public class SpawnManager3D : MonoBehaviour
     {
         if (_spawnPoints == null || _spawnPoints.Length == 0)
             PopulateSpawnPoints();
-        
+
         if (_enemyPrefab == null)
         {
             Debug.LogError($"SpawnManager3D on '{name}': Enemy prefab not assigned.");
@@ -36,6 +39,22 @@ public class SpawnManager3D : MonoBehaviour
         _timeSinceLastSpawn = Time.time + _timeBetweenSpawns;
         _disabled = false;
 
+    }
+
+    void OnEnable()
+    {
+        _freezeStream.RegisterListener(FreezeEvent);
+        triggersTransition.RegisterListener(StopWrapper);
+    }
+    private void StopWrapper()
+    {
+        StopAndClear(true);
+    }
+
+    void OnDisable()
+    {
+        _freezeStream.UnregisterListener(FreezeEvent);
+        triggersTransition.UnregisterListener(StopWrapper);
     }
 
     private void PopulateSpawnPoints()
@@ -85,9 +104,19 @@ public class SpawnManager3D : MonoBehaviour
         return candidates[Random.Range(0, candidates.Count)];
     }
 
-    public void DisableSpawner()
+    private void FreezeEvent(int state)
+    {
+        if (state == 0) EnableSpawner();
+        else DisableSpawner();
+    }
+
+    private void DisableSpawner()
     {
         _disabled = true;
+    }
+    private void EnableSpawner()
+    {
+        _disabled = false;
     }
 
     public void StopAndClear(bool destroy = false)

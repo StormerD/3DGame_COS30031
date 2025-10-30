@@ -6,6 +6,7 @@ using static UnityEngine.InputSystem.InputAction;
 [RequireComponent(typeof(CinemachineCamera), typeof(CinemachineOrbitalFollow))]
 public class CameraController3D : MonoBehaviour
 {
+    [SerializeField] private IntEventObject _freezeEvent;
     [SerializeField] private float _zoomSpeed = 1.5f;
     [SerializeField] private float _zoomLerpSpeed = 10;
     [SerializeField] private float _minDist = 2f;
@@ -18,11 +19,38 @@ public class CameraController3D : MonoBehaviour
 
     private float _targetZoom;
     private float _curZoom;
+    private bool _canMoveCam = true;
 
     void Awake()
     {
         _cam = GetComponent<CinemachineCamera>();
-        _orbital = GetComponent<CinemachineOrbitalFollow>(); 
+        _orbital = GetComponent<CinemachineOrbitalFollow>();
+    }
+    void OnEnable()
+    {
+        _freezeEvent.RegisterListener(FreezeEvent);
+    }
+    void OnDisable()
+    {
+        _freezeEvent.UnregisterListener(FreezeEvent);
+    }
+    private void FreezeEvent(int state)
+    {
+        if (state != 0) FreezeCameraMovementAndEnableCursor();
+        else UnfreezeCameraAndDisableCursor();
+    }
+
+    private void FreezeCameraMovementAndEnableCursor()
+    {
+        _canMoveCam = false;
+        Cursor.lockState = CursorLockMode.None;
+        _orbital.enabled = false;
+    }
+    private void UnfreezeCameraAndDisableCursor()
+    {
+        _canMoveCam = true;
+        Cursor.lockState = CursorLockMode.Locked;
+        _orbital.enabled = true;
     }
 
     void Start()
@@ -42,6 +70,7 @@ public class CameraController3D : MonoBehaviour
 
     void Update()
     {
+        if (!_canMoveCam) return;
         if (_scrollDelta.y != 0)
         {
             _targetZoom = Mathf.Clamp(_orbital.Radius - _scrollDelta.y * _zoomSpeed, _minDist, _maxDist);

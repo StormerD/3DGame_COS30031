@@ -49,8 +49,6 @@ public class EnemyMovement : MonoBehaviour
         canMove = true;
     }
 
-
-
     void FixedUpdate()
     {
         if (!canMove) return;

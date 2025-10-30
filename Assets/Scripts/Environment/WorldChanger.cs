@@ -40,6 +40,5 @@ public class WorldChanger : MonoBehaviour
         {
             spawner.StopAndClear(destroy: true);
         }
-
     }
 }
