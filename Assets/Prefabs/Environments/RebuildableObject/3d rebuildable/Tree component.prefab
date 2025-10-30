@@ -14,9 +14,9 @@ GameObject:
   - component: {fileID: 8072551527494614744}
   - component: {fileID: 5418130651471767221}
   - component: {fileID: 3520546827843103442}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Tree component
-  m_TagString: Untagged
+  m_TagString: Interactable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -143,3 +143,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ComponentObject3D
   _2dRepresentation: {fileID: 2800000, guid: 8992c5b46800d4fb5bed087090b12d81, type: 3}
+  itemPickupStream: {fileID: 0}
