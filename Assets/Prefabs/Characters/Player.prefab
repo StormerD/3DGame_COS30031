@@ -149,8 +149,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 884cebf4c72fb4a7b8b8d4dcc7a6589f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactSearchRadius: 1.5
-  maxLoadCarry: 1
+  _interactSearchRadius: 1
+  _maxLoadCarry: 3
+  _bagFullStream: {fileID: 11400000, guid: 5a2e35d0e44f641ebb9ac93a13708d9f, type: 2}
+  _gainedItemStream: {fileID: 11400000, guid: 75e41d01cfb9547f2a2e86ccb3c003fa, type: 2}
+  _lostItemStream: {fileID: 11400000, guid: faf575d05a13f4425b76dd0f589c3997, type: 2}
 --- !u!114 &919598585750351815
 MonoBehaviour:
   m_ObjectHideFlags: 0

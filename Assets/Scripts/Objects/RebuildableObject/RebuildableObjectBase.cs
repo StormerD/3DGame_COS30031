@@ -67,12 +67,10 @@ public class RebuildableObjectBase : MonoBehaviour, IInteractable
         if (interactor.IsHoldingAnyItemsMatchingIds(_componentIds))
         {
             int componentsGathered = interactor.UseItemsByIds(_componentIds);
-            Debug.Log("Collected components: " + componentsGathered);
             _numCollected += componentsGathered;
             OnComponentsCollected?.Invoke(componentsGathered);
             if (_numCollected == numComponents)
             {
-                Debug.Log("Completed rebuild!");
                 if (AudioManager.Instance != null) AudioManager.Instance.PlayAudioClip(completionSound);
                 OnCompletedRebuild?.Invoke();
             } else if (AudioManager.Instance != null) AudioManager.Instance.PlayAudioClip(componentPlaced);

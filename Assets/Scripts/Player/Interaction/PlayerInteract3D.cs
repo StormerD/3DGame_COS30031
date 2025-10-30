@@ -76,29 +76,32 @@ public class PlayerInteract3D : PlayerInteractBase
     private void RemoveInteractable(GameObject which)
     {
         if (!interactablesInRange.ContainsKey(which)) Debug.LogWarning("Object left zone, but it was not registered as an interactable " + which.name);
-        if (!interactableOutlinesInRange.ContainsKey(which)) Debug.Log("Object left zone, but it was not registered as an outline entry: " + which.name);
+        if (interactableOutlinesInRange.ContainsKey(which))
+        {
+            interactableOutlinesInRange[which].ExitInteractZone();
+            interactableOutlinesInRange.Remove(which);
+            Debug.Log("Object left zone, but it was not registered as an outline entry: " + which.name);
+        }
 
-        interactablesInRange.Remove(which);
-        interactableOutlinesInRange[which].ExitInteractZone();
-        interactableOutlinesInRange.Remove(which);
+        interactablesInRange.Remove(which);   
     }
 
     private void AddInteractable(GameObject which)
     {
+        Debug.Log("new interactable");
         if (!which.TryGetComponent(out IInteractable interactable))
         {
             Debug.LogWarning("Passed gameobject " + which.name + " which does not have IInteractable. Does the player's sphere collider have include LayerMask set to Interactables, and exclude set to everything but Interactables?");
             return;
         }
-        if (!which.TryGetComponent(out InteractableOutline3D outline))
+        if (which.TryGetComponent(out InteractableOutline3D outline))
         {
+            interactableOutlinesInRange.Add(which, outline);
+            outline.EnterInteractZone();
             Debug.LogWarning("Passed gameobject " + which.name + " which does not have an Outline component attached to it.");
-            return;
         }
 
         interactablesInRange.Add(which, interactable);
-        interactableOutlinesInRange.Add(which, outline);
-        outline.EnterInteractZone();
     }
 
     #endregion
