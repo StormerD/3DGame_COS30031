@@ -220,14 +220,6 @@ public class AudioManager : MonoBehaviour
         // play an example based on the group inputted
         switch(group)
         {
-            case "MasterVolume":
-                Debug.Log("playing master");
-                masterAudio.PlayOneShot(componentPlaced);
-                break;
-            case "MusicVolume":
-                Debug.Log("playing mus");
-                musicAudio.PlayOneShot(componentPlaced);
-                break;
             case "AmbientVolume":
                 Debug.Log("playing amb");
                 ambientAudio.PlayOneShot(componentPlaced);
