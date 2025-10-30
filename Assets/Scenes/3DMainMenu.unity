@@ -2157,7 +2157,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: mechanical_tree
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1815600283899502494, guid: 4184a4747beed464aa8065184044a948, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
