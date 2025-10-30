@@ -13,7 +13,7 @@ public class InteractableOutline3D : MonoBehaviour
             // directly comparing for a name
             if (m.name.ToLower().Contains("outline")) _thisOutlineMaterial = m;
         }
-        if (_thisOutlineMaterial == null) { Destroy(this); Debug.Log("Failed to locate outline material on object: " + gameObject.name); }
+        if (_thisOutlineMaterial == null) { Destroy(this); }
     }
 
     public void EnterInteractZone() => _thisOutlineMaterial.SetFloat("_Enabled", 1);

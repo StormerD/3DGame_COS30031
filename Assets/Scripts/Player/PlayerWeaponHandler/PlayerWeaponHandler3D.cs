@@ -23,8 +23,9 @@ public class PlayerWeaponHandler3D : PlayerWeaponHandlerBase
         base.Start();
     }
     
-    private GameObject Get3DWeapon(string id)
+    public GameObject Get3DWeapon(string id)
     {
+        Debug.Log("getting 3d vers of " + id);
         if (_3dWeaponsById.ContainsKey(id)) return _3dWeaponsById[id];
 
         Debug.LogWarning("No 3D weapon found for ID: " + id); 
@@ -41,6 +42,7 @@ public class PlayerWeaponHandler3D : PlayerWeaponHandlerBase
             GameObject weapon3D = Get3DWeapon(equippedWeapon);
             if (weapon3D != null)
             {
+                Debug.Log("weapon 3d is not null! " + weapon3D.name);
                 if (!weapon3D.TryGetComponent(out _weaponScript)) Debug.LogWarning("Weapon " + weapon3D.name + " does not have an IWeapon script.");
                 EquipWeapon(weapon3D);
             } else Debug.LogWarning("Failed equipping 3D weapon.");
