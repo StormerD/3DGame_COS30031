@@ -57,6 +57,7 @@ MonoBehaviour:
   purchaseSuccessSound: {fileID: 8300000, guid: 958af47b9309cd549bbf792d6731a30a, type: 3}
   EquipItemSound: {fileID: 8300000, guid: 23a60ad052670a547a89723642941f18, type: 3}
   componentPlaced: {fileID: 8300000, guid: 97a4239fb5d3b48c2b07d86304c81135, type: 3}
+  itemPickedUp: {fileID: 8300000, guid: 3dbc03d73f0db4b19b9f5e53076f837e, type: 3}
 --- !u!82 &8778687913111942607
 AudioSource:
   m_ObjectHideFlags: 0

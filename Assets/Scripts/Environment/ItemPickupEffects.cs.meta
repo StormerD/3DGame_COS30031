@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: cdeacca8431674463a2fe9f2e7f4abb7
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - ObjectPickedUpStream: {fileID: 11400000, guid: 1dbc43bb7e61d49f5974a7790bbbbf1a, type: 2}
+  - particlePickupPoolPrefab: {fileID: 8661450211177489894, guid: ad16059b5403a470fa52557d816af959, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

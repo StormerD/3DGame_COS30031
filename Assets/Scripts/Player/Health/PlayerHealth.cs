@@ -7,16 +7,21 @@ public class PlayerHealth : MonoBehaviour, IHealth
     [SerializeField] private IntEventObject _currentHealthStream;
     [Tooltip("The stream that this object will emit max health data on.")]
     [SerializeField] private IntEventObject _maxHealthStream;
-    [SerializeField] private int _maxHealth;
+
+    [SerializeField] private HealthStat healthStats;
     [Tooltip("The stream used to signify a player's death.")]
     [SerializeField] private BasicEventObject _playerDeathStream;
 
     private int _currentHealth;
     private bool _hitThisFrame = false;
 
+    void Awake()
+    {
+        _currentHealth = healthStats.startingHealth;
+    }
+
     void Start()
     {
-        _currentHealth = _maxHealth;
         EmitHealthStreams();
     }
 
@@ -28,7 +33,7 @@ public class PlayerHealth : MonoBehaviour, IHealth
     private void EmitHealthStreams()
     {
         _currentHealthStream.RaiseEvent(_currentHealth);
-        _maxHealthStream.RaiseEvent(_maxHealth);
+        _maxHealthStream.RaiseEvent(healthStats.maxHealth);
     }
 
     public void TakeDamage(int damageAmount)
@@ -42,7 +47,6 @@ public class PlayerHealth : MonoBehaviour, IHealth
         }
 
         EmitHealthStreams();
-        Debug.Log("Player took : " + damageAmount + " damage! Current health: " + _currentHealth);
 
         if (_currentHealth <= 0)
         {
@@ -56,9 +60,9 @@ public class PlayerHealth : MonoBehaviour, IHealth
     {
         _currentHealth += healAmount; // add health
 
-        if (_currentHealth > _maxHealth) // don't want player gaining more health than the maximum
+        if (_currentHealth > healthStats.maxHealth) // don't want player gaining more health than the maximum
         {
-            _currentHealth = _maxHealth;
+            _currentHealth = healthStats.maxHealth;
         }
         EmitHealthStreams();
     }
@@ -70,6 +74,6 @@ public class PlayerHealth : MonoBehaviour, IHealth
 
     public int GetMaxHealth()
     {
-        return _maxHealth;
+        return healthStats.maxHealth;
     }
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D), typeof(Collider2D))]
 public class EnemyAttack : MonoBehaviour
 {
     public EnemyData unitData;
@@ -11,8 +12,6 @@ public class EnemyAttack : MonoBehaviour
     private float _nextAttackTime = 0f; // time next attack is allowed
 
     [Header("Lunge")]
-    [SerializeField] private float lungeDistance = 2f;
-    [SerializeField] private float lungeDuration = 0.1f;
     [SerializeField] private AnimationCurve lungeCurve = null;
     [SerializeField] private LayerMask playerMask = 0;
     private Collider2D _hurtBox = null;
@@ -78,13 +77,13 @@ public class EnemyAttack : MonoBehaviour
 
         Vector2 start = _rb.position;
         Vector2 dir = (Vector2)transform.up;
-        Vector2 end = start + dir * lungeDistance;
+        Vector2 end = start + dir * unitData.lungeDistance;
 
         float t = 0f;
-        while (t < lungeDuration)
+        while (t < unitData.lungeDuration)
         {
             t += Time.fixedDeltaTime;
-            float p = Mathf.Clamp01(t / lungeDuration);
+            float p = Mathf.Clamp01(t / unitData.lungeDuration);
             float eased = lungeCurve.Evaluate(p);
             _rb.MovePosition(Vector2.Lerp(start, end, eased));
             yield return new WaitForFixedUpdate();

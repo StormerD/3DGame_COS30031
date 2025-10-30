@@ -15,3 +15,6 @@ MonoBehaviour:
   dialogueKey: win
   scripts:
   - {fileID: 11400000, guid: c4a84848443334fd58168878de0e013e, type: 2}
+  - {fileID: 11400000, guid: dc6c065da25c1491a93f0e00a1c2f983, type: 2}
+  - {fileID: 11400000, guid: a1eb93e2d0e39473890050a27876fc14, type: 2}
+  - {fileID: 11400000, guid: ed48fbba00c19484698b80549cdc3156, type: 2}

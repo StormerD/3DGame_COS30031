@@ -4,23 +4,15 @@ using static UnityEngine.InputSystem.InputAction;
 [RequireComponent(typeof(Rigidbody), typeof(PlayerInput), typeof(Collider))]
 public class PlayerMovement3D : MonoBehaviour, IMover3D
 {
-    [Header("Running configuration")]
-    public float maxSpeed = 100f;
-    public float playerSpeed = 10f;
-    public float acceleration = 8f;
-    public float deceleration = 5f;
-    [Header("Jumping")]
-    public float jumpForce = 10f;
-    [Header("Dashing")]
-    public float dashForce = 15f;
-    public float dashCooldownSeconds = 1.5f;
-    [Header("Footsteps")]
+    [SerializeField] private MovementStats3D movementStats;
     public float footstepInterval = 0.4f; // Time between footsteps
     private float footstepTimer = 0f;
-    public GameObject dustPuffPrefab;
-    [Header("Player direction")]
-    [SerializeField] private float directionLerpSpeed = 2;
-    private Quaternion lastRotation; 
+
+
+    [SerializeField] private GameObject dustPoolPrefab;
+    private ParticleSystemPool _dustPool;
+    [SerializeField] private GameObject dashPoolPrefab;
+    private ParticleSystemPool _dashPool;
 
     private Rigidbody _rb;
     private PlayerInput _inp;
@@ -40,6 +32,9 @@ public class PlayerMovement3D : MonoBehaviour, IMover3D
         _inp.jump.performed += Jump;
         _distanceToGround = GetComponent<Collider>().bounds.extents.y;
         cam = Camera.main.transform;
+
+        _dustPool = Instantiate(dustPoolPrefab).GetComponent<ParticleSystemPool>();
+        _dashPool = Instantiate(dashPoolPrefab).GetComponent<ParticleSystemPool>();
     }
 
     void Update()
@@ -56,12 +51,13 @@ public class PlayerMovement3D : MonoBehaviour, IMover3D
             footstepTimer += Time.deltaTime;
             if (footstepTimer >= footstepInterval)
             {
-                if (AudioManager.Instance != null) AudioManager.Instance.PlayFootstep();
-                if (dustPuffPrefab != null)
-                {
-                    Vector3 spawnPos = transform.position + new Vector3(0, -0.5f, 0); // adjust Y for foot level
-                    DustPool.Instance.PlayDust(spawnPos);
-                }
+                footstepTimer += Time.deltaTime;
+                if (footstepTimer >= footstepInterval)
+            {
+                // Debug.Log("Footsteps triggered");
+                AudioManager.Instance.PlayFootstep();
+                Vector3 spawnPos = transform.position + new Vector3(0, -0.5f, 0); // adjust Y for foot level
+                _dustPool.PlayParticle(spawnPos);
 
                 footstepTimer = 0f;
             }
@@ -93,21 +89,21 @@ public class PlayerMovement3D : MonoBehaviour, IMover3D
             targetVelocity = movementDirection * playerSpeed;
             transform.rotation = Quaternion.Lerp(lastRotation, Quaternion.LookRotation(movementDirection), Time.deltaTime*directionLerpSpeed);
         } else {
-            Vector3 decelerationForce = -_currentVelocity.normalized * deceleration;
+            Vector3 decelerationForce = -_currentVelocity.normalized * movementStats.deceleration;
             Vector3 decelerationForceSwizzle = new(decelerationForce.x, 0, decelerationForce.z);
             _rb.AddForce(decelerationForceSwizzle, ForceMode.Acceleration);
         }
 
         Vector3 velocityChange = targetVelocity - _currentVelocity; // _currentVelocity is originally set to zero and is updating every loop
-        Vector3 velocityForce = velocityChange * acceleration;
+        Vector3 velocityForce = velocityChange * movementStats.acceleration;
         velocityForce.y = 0;
 
         _rb.AddForce(velocityForce, ForceMode.Acceleration);
 
         Vector3 horizontalVelocity = new(_rb.linearVelocity.x, 0, _rb.linearVelocity.z);
-        if (horizontalVelocity.magnitude > maxSpeed)
+        if (horizontalVelocity.magnitude > movementStats.maxSpeed)
         {
-            horizontalVelocity = horizontalVelocity.normalized * maxSpeed;
+            horizontalVelocity = horizontalVelocity.normalized * movementStats.maxSpeed;
             _rb.linearVelocity = new Vector3(horizontalVelocity.x, _rb.linearVelocity.y, horizontalVelocity.z);
         }
 
@@ -125,7 +121,7 @@ public class PlayerMovement3D : MonoBehaviour, IMover3D
     {
         if (IsGrounded())
         {
-            _rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            _rb.AddForce(Vector3.up * movementStats.jumpForce, ForceMode.Impulse);
         }
     }
 
@@ -135,10 +131,11 @@ public class PlayerMovement3D : MonoBehaviour, IMover3D
     {
         if (_canDash)
         {
-            _rb.AddForce(GetCurrentDirection() * dashForce, ForceMode.Impulse);
+            _rb.AddForce(GetCurrentDirection() * movementStats.dashForce, ForceMode.Impulse);
 
             _dashTimeStamp = Time.time;
             _canDash = false;
+            _dashPool.PlayParticle(transform.position);
         } else if ((Time.time - _dashTimeStamp) > dashCooldownSeconds) 
         {
             _canDash = true;
