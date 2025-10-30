@@ -56,8 +56,6 @@ public class AudioManager : MonoBehaviour
     void Start()
     {
         if (GameManager.instance != null) GameManager.instance.OnLoadComplete += SyncAudioOverrides;
-
-        Debug.Log(sfxAudio.outputAudioMixerGroup.name);
     }
 
     private void SyncAudioOverrides()

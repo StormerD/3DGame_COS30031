@@ -4,6 +4,8 @@ using UnityEngine.SceneManagement;
 [RequireComponent(typeof(Animator))]
 public class PauseMenu : MonoBehaviour
 {
+    [SerializeField] private GameObject mainPauseMenu;
+    [SerializeField] private GameObject optionsMenu;
     private Animator _animator;
     void Start()
     {
@@ -12,8 +14,13 @@ public class PauseMenu : MonoBehaviour
         PauseManager.instance.OnUnpause += CloseAnimation;
     }
 
+    void Update()
+    {
+        Debug.Log(optionsMenu.activeSelf);
+    }
+
     public void CloseMenu() => PauseManager.instance.Unpause();
-    private void CloseAnimation() => _animator.SetTrigger("CloseMenu");
+    private void CloseAnimation() { _animator.SetTrigger("CloseMenu"); _animator.SetBool("OptionsOpen", false); } 
     private void OpenAnimation() => _animator.SetTrigger("OpenMenu");
 
     public void Save()
@@ -33,5 +40,15 @@ public class PauseMenu : MonoBehaviour
             GameManager.instance.SaveAndClearGame();
             SceneManager.LoadScene(0);
         }
+    }
+
+    public void ToOptionsMenu()
+    {
+        _animator.SetBool("OptionsOpen", true);
+    }
+    
+    public void ToMainPauseMenu()
+    {
+         _animator.SetBool("OptionsOpen", false);
     }
 }
