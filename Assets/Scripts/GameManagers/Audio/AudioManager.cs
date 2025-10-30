@@ -14,6 +14,11 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioSource musicAudio;
     [SerializeField] private AudioSource ambientAudio;
 
+    [Header("Music Clips")]
+    public AudioClip mainMenuMusic;
+    public AudioClip NatureAmbience;
+
+
     [Header("Mixing")]
     [SerializeField] private AudioMixer mixer;
     [SerializeField] private KeyedValueEventObject audioValueChanged;
@@ -119,6 +124,47 @@ public class AudioManager : MonoBehaviour
         else
         {
             Debug.LogWarning("Footstep clips not assigned!");
+        }
+    }
+
+    public void PlayNatureAmbience()
+    {
+        if (NatureAmbience != null)
+        {
+            // Stop any existing ambient audio first
+            if (ambientAudio.isPlaying)
+            ambientAudio.Stop();
+
+            // Assign the nature clip and play it
+            ambientAudio.clip = NatureAmbience;
+            ambientAudio.loop = true;
+            ambientAudio.Play();
+        }
+        else
+        {
+            Debug.LogWarning("NatureAmbience clip not assigned in AudioManager!");
+        }
+    }
+
+
+    public void StopMusic()
+    {
+        if (musicAudio.isPlaying)
+            musicAudio.Stop();
+    }
+
+
+    public void PlayMainMenuMusic()
+    {
+        if (mainMenuMusic != null)
+        {
+            musicAudio.clip = mainMenuMusic;
+            musicAudio.loop = true; // keeps it playing
+            musicAudio.Play();
+        }
+        else
+        {
+        Debug.LogWarning("Main menu music clip not assigned!");
         }
     }
 

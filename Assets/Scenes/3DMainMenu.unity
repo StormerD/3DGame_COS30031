@@ -1027,6 +1027,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8867810941286056943, guid: 4aed527469897784184aa5f634897652, type: 3}
+      propertyPath: mainMenuMusic
+      value: 
+      objectReference: {fileID: 8300000, guid: dd637ea1013d2f5479309af2e388e1e0, type: 3}
+    - target: {fileID: 8867810941286056943, guid: 4aed527469897784184aa5f634897652, type: 3}
       propertyPath: exampleAudioCooldown
       value: 0.5
       objectReference: {fileID: 0}
