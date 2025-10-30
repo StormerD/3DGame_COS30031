@@ -194,7 +194,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a53f85ab914b40d493e3729f815d711, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitData: {fileID: 11400000, guid: 9c6891085094e47c5a9bd932a6e1347e, type: 2}
+  unitData: {fileID: 11400000, guid: a21019a4aa7464b58b053e5f54b9bb8d, type: 2}
 --- !u!114 &5976015581481347934
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -224,7 +224,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _freezeStream: {fileID: 11400000, guid: 3a2fae2a12dc44bfb95c26b9fb4395c9, type: 2}
-  unitData: {fileID: 11400000, guid: 9c6891085094e47c5a9bd932a6e1347e, type: 2}
+  unitData: {fileID: 11400000, guid: a21019a4aa7464b58b053e5f54b9bb8d, type: 2}
 --- !u!114 &-7563556065408623012
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -237,9 +237,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0acc82bd250e644592318479ba180ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitData: {fileID: 11400000, guid: 9c6891085094e47c5a9bd932a6e1347e, type: 2}
-  lungeDistance: 2
-  lungeDuration: 1
+  unitData: {fileID: 11400000, guid: a21019a4aa7464b58b053e5f54b9bb8d, type: 2}
   lungeCurve:
     serializedVersion: 2
     m_Curve:

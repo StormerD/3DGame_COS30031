@@ -5,10 +5,7 @@ using static UnityEngine.InputSystem.InputAction;
 public class PlayerMovement2D : MonoBehaviour, IMover2D
 {
     [SerializeField] private IntEventObject _freezeStream;
-    public float playerSpeed = 5f;
-    public float dashSpeed = 15f;
-    public float dashLength = 0.3f;
-    public float dashCooldownSeconds = 1.5f;
+    [SerializeField] private MovementStats2D moveStats;
     public bool canMove = true;
     public float footstepInterval = 0.4f;
     private float footstepTimer = 0f;
@@ -62,12 +59,12 @@ public class PlayerMovement2D : MonoBehaviour, IMover2D
         if (!canMove) return;
 
         Vector2 inp = _inp.move.ReadValue<Vector2>();
-        _rb.linearVelocity = playerSpeed * inp.normalized;
+        _rb.linearVelocity = moveStats.speed * inp.normalized;
 
         // true while dash should be ongoing
-        if (Time.time <= _dashStartedAt + dashLength)
+        if (Time.time <= _dashStartedAt + moveStats.dashLength)
         {
-            _rb.linearVelocity = _dashDirection * dashSpeed;
+            _rb.linearVelocity = _dashDirection * moveStats.dashSpeed;
         }
 
         // keep track of current direction for other scripts (like weapons) that depend on player direction
@@ -83,12 +80,12 @@ public class PlayerMovement2D : MonoBehaviour, IMover2D
             _anim.SetFloat("Speed", speed);
             _anim.SetFloat("MoveX", dir.x);
             _anim.SetFloat("MoveY", dir.y);
-            _anim.SetBool("IsDashing", Time.time <= _dashStartedAt + dashLength);
+            _anim.SetBool("IsDashing", Time.time <= _dashStartedAt + moveStats.dashLength);
         }
 
         bool isMoving = inp.magnitude > 0.1f;
 
-        if (isMoving && Time.time > _dashStartedAt + dashLength)
+        if (isMoving && Time.time > _dashStartedAt + moveStats.dashLength)
         {
             footstepTimer += Time.deltaTime;
             if (footstepTimer >= footstepInterval)
@@ -124,7 +121,7 @@ public class PlayerMovement2D : MonoBehaviour, IMover2D
         float t = Time.time;
         if (t > _canDashNext || ignoreCooldown)
         {
-            _canDashNext = t + dashCooldownSeconds;
+            _canDashNext = t + moveStats.dashCooldownSeconds;
             _dashStartedAt = t;
             _dashDirection = _rb.linearVelocity.normalized;
 
