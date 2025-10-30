@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(PlayerInput))]
 public class PlayerHealth : MonoBehaviour, IHealth
@@ -23,6 +24,7 @@ public class PlayerHealth : MonoBehaviour, IHealth
     void Start()
     {
         EmitHealthStreams();
+        SceneManager.activeSceneChanged += SceneChanged;
     }
 
     void FixedUpdate()
@@ -53,6 +55,13 @@ public class PlayerHealth : MonoBehaviour, IHealth
             _playerDeathStream.RaiseEvent();
             Debug.Log("## Player has died ##");
         }
+    }
+
+    private void SceneChanged(Scene _, Scene __) => FullHeal();
+
+    public void FullHeal()
+    {
+        _currentHealth = healthStats.maxHealth;
     }
 
     // in case we add health potions to enemy drops or around the map
