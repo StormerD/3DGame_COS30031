@@ -12,6 +12,7 @@ public class CameraFollow : MonoBehaviour
     void Start()
     {
         if (!player) Debug.LogError("Camera is missing player reference!");
+        Cursor.lockState = CursorLockMode.None;
     }
 
     // Update is called once per frame

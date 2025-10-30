@@ -217,6 +217,10 @@ PrefabInstance:
       propertyPath: dustPoolPrefab
       value: 
       objectReference: {fileID: 3223324250413090084, guid: 8b0b3363df57040ebbba50a5a814a260, type: 3}
+    - target: {fileID: 2162574982283546329, guid: 0162b9599c7470642bf79cc5b3101f0f, type: 3}
+      propertyPath: persistAcrossScenes
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2592473386957017909, guid: 0162b9599c7470642bf79cc5b3101f0f, type: 3}
       propertyPath: _projectileSpawnDistance
       value: 0.1
@@ -4592,6 +4596,10 @@ PrefabInstance:
     - target: {fileID: 110236272684836587, guid: f9031692095e54f4b8265ccf200257a3, type: 3}
       propertyPath: m_Name
       value: PlayerInfoCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 310505884361588388, guid: f9031692095e54f4b8265ccf200257a3, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5957901404333098380, guid: f9031692095e54f4b8265ccf200257a3, type: 3}
       propertyPath: m_AnchorMax.x

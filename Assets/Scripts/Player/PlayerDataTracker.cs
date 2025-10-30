@@ -6,14 +6,18 @@ public class PlayerDataTracker : MonoBehaviour
     // Players "register" with the game manager when they Start(). If another player already exists, the one with
     // the higher registrationPriority will get kept while the other one will get disabled.
     public int registrationPriority = 0;
+    [SerializeField] private bool persistAcrossScenes = true;
     private static bool exists = false;
     private PlayerLooter looter;
     private PlayerWeaponHandlerBase weaponHandler;
     
     void Awake()
     {
-        if (!exists) DontDestroyOnLoad(gameObject); // the first player created will persist across scenes
-        else exists = true;
+        if (!exists && persistAcrossScenes)
+        {
+            DontDestroyOnLoad(gameObject); // the first player that has persistAcrossScenes true will persist across scenes
+            exists = true;
+        }
 
         looter = GetComponent<PlayerLooter>();
         weaponHandler = GetComponent<PlayerWeaponHandlerBase>();

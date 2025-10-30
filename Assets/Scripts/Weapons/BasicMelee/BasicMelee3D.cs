@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Animator))]
 public class BasicMelee3D : Weapon3D
 {
     [Header("basic attack configuration")]
@@ -15,6 +16,8 @@ public class BasicMelee3D : Weapon3D
     private int _basicMask;
     private int _secondaryMask;
 
+    [SerializeField] private GameObject visuals;
+    private Animator _animator;
 
     void Awake()
     {
@@ -23,25 +26,27 @@ public class BasicMelee3D : Weapon3D
         _basicMask = 1 << LayerMask.NameToLayer("Enemy");
         // secondary can destroy both enemies and enemy attacks
         _secondaryMask = 1 << LayerMask.NameToLayer("Enemy") | 1 << LayerMask.NameToLayer("EnemyAttack");
+        _animator = GetComponent<Animator>();
     }
 
     protected override void AttackPhysics()
     {
         if (!_doBasicAttack) return;
         _doBasicAttack = false;
+        BasicVisuals();
 
         Debug.Log("basci atack");
 
         float angleStep = 0;
         if (basicAttackRaycastAmount > 1) angleStep = attackWidthDegrees * 2 / (basicAttackRaycastAmount - 1);
         float startAngle = -attackWidthDegrees;
-        
+
         for (int i = 0; i < basicAttackRaycastAmount; i++)
         {
             float angle = startAngle + i * angleStep;
             Vector3 rayDir = Quaternion.Euler(0, angle, 0) * _attackingDirection;
             Debug.DrawRay(transform.root.position, rayDir * basicAttackRange, Color.red, 2f);
-            
+
             // using the root transform here as that will (should?) be the player
             if (Physics.SphereCast(transform.root.position, sphereCastRadius, rayDir, out RaycastHit hit, basicAttackRange, _basicMask))
             {
@@ -49,10 +54,17 @@ public class BasicMelee3D : Weapon3D
             }
         }
     }
+    
+    private void BasicVisuals()
+    {
+        _animator.SetTrigger("Attack");
+        visuals.transform.rotation = Quaternion.LookRotation(Vector3.down, _attackingDirection);
+    }
 
     protected override void SecondaryPhysics()
     {
         _doSecondaryAttack = false;
+        SecondaryVisuals();
         int enemiesInRange = Physics.OverlapSphereNonAlloc(transform.position, secondaryAttackRadius, _hitResult, _secondaryMask);
         for (int i = 0; i < enemiesInRange; i++)
         {
@@ -63,5 +75,9 @@ public class BasicMelee3D : Weapon3D
             }
             else Debug.LogWarning("Hit does not have IHealth");
         }
+    }
+    private void SecondaryVisuals()
+    {
+        _animator.SetTrigger("Secondary");
     }
 }
