@@ -1,5 +1,5 @@
 using UnityEngine;
 
-[RequireComponent(typeof(InteractableOutline3D), typeof(Collider))]
+[RequireComponent(typeof(Collider))]
 public class ComponentObject3D : ComponentObjectBase
 {  }

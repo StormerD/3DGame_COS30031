@@ -4,6 +4,7 @@ using UnityEngine;
 public abstract class ComponentObjectBase : MonoBehaviour, IItem
 {
     public event Action InteractedWith;
+    [SerializeField] private Texture2D _2dRepresentation;
     private int _id;
     public int GetId()
     {
@@ -25,9 +26,11 @@ public abstract class ComponentObjectBase : MonoBehaviour, IItem
     {
         gameObject.SetActive(false);
     }
-    
+
     public virtual void Use(IInteractor interactor)
     {
-        Destroy(gameObject);
+        Destroy(gameObject, 1f);
     }
+
+    public Texture2D GetObject2DRepresentation() => _2dRepresentation;
 }
