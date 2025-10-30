@@ -51,6 +51,7 @@ public class SaveData
     public List<WeaponPurchaseData> weaponsPurchased; // if a weapon key is omitted here, it is not unlocked or purchased
     public List<string> dialoguesPlayed; // dialogue keys that have been played
     public int activeScene;
+    public List<AudioGroupData> audioVolumes;
 }
 
 [Serializable]
@@ -59,4 +60,11 @@ public class SlotTimesData
     public long slotOneLastSaveTime;
     public long slotTwoLastSaveTime;
     public long slotThreeLastSaveTime;
+}
+
+[Serializable]
+public class AudioGroupData
+{
+    public string group;
+    public float value;
 }

@@ -145,7 +145,8 @@ public class GameManager : MonoBehaviour
 			equippedWeapon = _activePlayerData.GetEquippedWeapon(),
 			weaponsPurchased = ForgeManager.instance != null ? ForgeManager.instance.GetWeaponPurchaseData() : _currentSaveData.weaponsPurchased,
 			dialoguesPlayed = _dialoguesPlayedSinceLastSave.ToList(),
-			activeScene = SceneManager.GetActiveScene().buildIndex
+			activeScene = SceneManager.GetActiveScene().buildIndex,
+			audioVolumes = DictToListOfAudioGroupData(AudioManager.Instance != null ? AudioManager.Instance.GetAudioOverrides() : new())
 		};
 		SaveSystem.Save(saveData);
 		_currentSaveData = saveData;
@@ -158,6 +159,11 @@ public class GameManager : MonoBehaviour
 
 		StartCoroutine(DelayedParamlessActionInvoke(OnSaveComplete, 0.1f));
 	}
+
+	private List<AudioGroupData> DictToListOfAudioGroupData(Dictionary<string, float> data)
+    {
+		return data.Select(kv => new AudioGroupData { group = kv.Key, value = kv.Value }).ToList();
+    }
 
 	void SaveSlotTimes(int which)
 	{
@@ -205,7 +211,8 @@ public class GameManager : MonoBehaviour
 				equippedWeapon = "",
 				weaponsPurchased = null,
 				activeScene = -1,
-				dialoguesPlayed = new()
+				dialoguesPlayed = new(),
+				audioVolumes = new()
 			};
 			Debug.Log("Current save data: " + _currentSaveData);
 		}
@@ -252,11 +259,8 @@ public class GameManager : MonoBehaviour
 	public string GetEquippedWeapon()
 	{
 		if (!ConfirmDataLoaded()) return "";
-		Debug.Log("data loaded.");
 		if (_currentSaveData.equippedWeapon != null && _currentSaveData.equippedWeapon != "") return _currentSaveData.equippedWeapon;
-		Debug.Log("equipped weapon was null.");
 		if (_activePlayerData != null) return _activePlayerData.GetEquippedWeapon();
-		Debug.Log("active player was null");
 		return "";
 	}
 	public CurrencyValues GetCurrency() => ConfirmDataLoaded() ? _currentSaveData.playerCurrency : new CurrencyValues();
@@ -295,6 +299,11 @@ public class GameManager : MonoBehaviour
 		}
 	}
 	public bool GetHasActiveLevelBeenCompleted() => _currentSaveData?.furthestUnlockedLevel > _currentLevel;
+
+	public Dictionary<string, float> GetAudioOverrides()
+    {
+		return _currentSaveData?.audioVolumes.ToDictionary(audioGroup => audioGroup.group, audioGroup => audioGroup.value) ?? new();
+    }
 
 	#endregion
 

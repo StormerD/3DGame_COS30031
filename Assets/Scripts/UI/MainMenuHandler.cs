@@ -3,9 +3,10 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class MainMenuHandler : MonoBehaviour
 {
-    public GameObject startMenu;
-    public GameObject explanationMenu;
-    public GameObject savesMenu;
+    [SerializeField] private GameObject startMenu;
+    [SerializeField] private GameObject explanationMenu;
+    [SerializeField] private GameObject savesMenu;
+    [SerializeField] private GameObject optionsMenu;
     private Animator _animator;
 
     void Start()
@@ -30,6 +31,12 @@ public class MainMenuHandler : MonoBehaviour
     {
         startMenu.SetActive(false);
         savesMenu.SetActive(true);
+    }
+
+    public void GoToOptionsMenu()
+    {
+        startMenu.SetActive(false);
+        optionsMenu.SetActive(true);
     }
 
     public void StartGame(int slot)
