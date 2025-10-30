@@ -24,6 +24,7 @@ public class MainMenuHandler : MonoBehaviour
     {
         explanationMenu.SetActive(false);
         savesMenu.SetActive(false);
+        optionsMenu.SetActive(false);
         startMenu.SetActive(true);
     }
 
