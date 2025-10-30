@@ -9,12 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b3ab163d4677b41178b4ab9a6b17e72b, type: 3}
-  m_Name: BasicEnemy
-  m_EditorClassIdentifier: 
-  maxHealth: 2
-  moveSpeed: 2
-  damage: 1
-  attackRange: 2
-  timeBetweenAttacks: 1
-  rotationSpeed: 100
+  m_Script: {fileID: 11500000, guid: 0659cfded02744af4b37b6e20e5dd2ce, type: 3}
+  m_Name: EnterLevel4
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueScene
+  dialogueKey: enterLevel4
+  scripts:
+  - {fileID: 11400000, guid: 35dfa5ea447814d3f99a485e141f955c, type: 2}

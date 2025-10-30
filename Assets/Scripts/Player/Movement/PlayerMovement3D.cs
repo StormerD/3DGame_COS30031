@@ -1,20 +1,19 @@
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 using static UnityEngine.InputSystem.InputAction;
 
 [RequireComponent(typeof(Rigidbody), typeof(PlayerInput), typeof(Collider))]
 public class PlayerMovement3D : MonoBehaviour, IMover3D
 {
-    public float maxSpeed = 100f;
-    public float playerSpeed = 10f;
-    public float acceleration = 8f;
-    public float deceleration = 5f;
-    public float jumpForce = 10f;
-    public float dashForce = 15f;
-    public float dashCooldownSeconds = 1.5f;
+    [SerializeField] private MovementStats3D movementStats;
     public float footstepInterval = 0.4f; // Time between footsteps
     private float footstepTimer = 0f;
 
-    public GameObject dustPuffPrefab;
+
+    [SerializeField] private GameObject dustPoolPrefab;
+    private ParticleSystemPool _dustPool;
+    [SerializeField] private GameObject dashPoolPrefab;
+    private ParticleSystemPool _dashPool;
 
     private Rigidbody _rb;
     private PlayerInput _inp;
@@ -23,6 +22,8 @@ public class PlayerMovement3D : MonoBehaviour, IMover3D
     private bool _canMove = true;
     private float _dashTimeStamp;
     private float _distanceToGround;
+    private Quaternion lastRotation;
+    private Transform cam;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -32,6 +33,10 @@ public class PlayerMovement3D : MonoBehaviour, IMover3D
         _inp.dash.performed += Dash;
         _inp.jump.performed += Jump;
         _distanceToGround = GetComponent<Collider>().bounds.extents.y;
+        cam = Camera.main.transform;
+
+        _dustPool = Instantiate(dustPoolPrefab).GetComponent<ParticleSystemPool>();
+        _dashPool = Instantiate(dashPoolPrefab).GetComponent<ParticleSystemPool>();
     }
 
     void Update()
@@ -44,24 +49,16 @@ public class PlayerMovement3D : MonoBehaviour, IMover3D
         bool isGrounded = IsGrounded();
 
         if (isGrounded && isMoving)
+        {
+            footstepTimer += Time.deltaTime;
+            if (footstepTimer >= footstepInterval)
             {
-                footstepTimer += Time.deltaTime;
-                if (footstepTimer >= footstepInterval)
-            {
-                // Debug.Log("Footsteps triggered");
                 AudioManager.Instance.PlayFootstep();
-                if (dustPuffPrefab != null)
-                {
-                    Vector3 spawnPos = transform.position + new Vector3(0, -0.5f, 0); // adjust Y for foot level
-                    DustPool.Instance.PlayDust(spawnPos);
-                }
+                Vector3 spawnPos = transform.position + new Vector3(0, -0.5f, 0); // adjust Y for foot level
+                _dustPool.PlayParticle(spawnPos);
 
                 footstepTimer = 0f;
             }
-        }
-        else
-        {
-            footstepTimer = 0f;
         }
     }
 
@@ -75,7 +72,6 @@ public class PlayerMovement3D : MonoBehaviour, IMover3D
 
         if (inp != Vector2.zero)
         {
-            Transform cam = Camera.main.transform;
             //The next two lines ensure that checking the direction of the camera is not affected by looking up or down
             Vector3 camForward = Vector3.ProjectOnPlane(cam.forward, Vector3.up).normalized;
             Vector3 camRight = Vector3.ProjectOnPlane(cam.right, Vector3.up).normalized;
@@ -83,23 +79,25 @@ public class PlayerMovement3D : MonoBehaviour, IMover3D
             Vector3 movementDirection = camForward * inp.y + camRight * inp.x;
             movementDirection.Normalize();
 
-            targetVelocity = movementDirection * playerSpeed;
+            lastRotation = transform.rotation;
+            targetVelocity = movementDirection * movementStats.speed;
+            transform.rotation = Quaternion.Lerp(lastRotation, Quaternion.LookRotation(movementDirection), Time.deltaTime*movementStats.directionLerpSpeed);
         } else {
-            Vector3 decelerationForce = -_currentVelocity.normalized * deceleration;
+            Vector3 decelerationForce = -_currentVelocity.normalized * movementStats.deceleration;
             Vector3 decelerationForceSwizzle = new(decelerationForce.x, 0, decelerationForce.z);
             _rb.AddForce(decelerationForceSwizzle, ForceMode.Acceleration);
         }
 
         Vector3 velocityChange = targetVelocity - _currentVelocity; // _currentVelocity is originally set to zero and is updating every loop
-        Vector3 velocityForce = velocityChange * acceleration;
+        Vector3 velocityForce = velocityChange * movementStats.acceleration;
         velocityForce.y = 0;
 
         _rb.AddForce(velocityForce, ForceMode.Acceleration);
 
         Vector3 horizontalVelocity = new(_rb.linearVelocity.x, 0, _rb.linearVelocity.z);
-        if (horizontalVelocity.magnitude > maxSpeed)
+        if (horizontalVelocity.magnitude > movementStats.maxSpeed)
         {
-            horizontalVelocity = horizontalVelocity.normalized * maxSpeed;
+            horizontalVelocity = horizontalVelocity.normalized * movementStats.maxSpeed;
             _rb.linearVelocity = new Vector3(horizontalVelocity.x, _rb.linearVelocity.y, horizontalVelocity.z);
         }
 
@@ -117,7 +115,7 @@ public class PlayerMovement3D : MonoBehaviour, IMover3D
     {
         if (IsGrounded())
         {
-            _rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            _rb.AddForce(Vector3.up * movementStats.jumpForce, ForceMode.Impulse);
         }
     }
 
@@ -127,11 +125,12 @@ public class PlayerMovement3D : MonoBehaviour, IMover3D
     {
         if (_canDash)
         {
-            _rb.AddForce(GetCurrentDirection() * dashForce, ForceMode.Impulse);
+            _rb.AddForce(GetCurrentDirection() * movementStats.dashForce, ForceMode.Impulse);
 
             _dashTimeStamp = Time.time;
             _canDash = false;
-        } else if ((Time.time - _dashTimeStamp) > dashCooldownSeconds) 
+            _dashPool.PlayParticle(transform.position);
+        } else if ((Time.time - _dashTimeStamp) > movementStats.dashCooldownSeconds) 
         {
             _canDash = true;
         }

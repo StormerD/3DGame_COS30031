@@ -44,5 +44,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9d8058f1989a7e41a077e3dd4a2f8cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DustPool
-  dustPrefab: {fileID: 359076714251711221, guid: 6f4cb0ab08810a345a2a7e05d65622d7, type: 3}
-  poolSize: 10
+  prefabWithParticleSystem: {fileID: 359076714251711221, guid: 6f4cb0ab08810a345a2a7e05d65622d7, type: 3}
+  poolSize: 5

@@ -5,6 +5,7 @@ using static UnityEngine.InputSystem.InputAction;
 public class PlayerInput : MonoBehaviour
 {
     public InputAction dash, interact, move, attack, secondary, pause, jump;
+    public InputAction mouseScroll;
     [SerializeField] private BasicEventObject _playerDeathStream;
     [SerializeField] private IntEventObject _freezeStream;
     private FrameInput _inputActions;
@@ -12,6 +13,7 @@ public class PlayerInput : MonoBehaviour
     void Awake()
     {
         _inputActions = new FrameInput();
+        // player movement
         dash = _inputActions.Player.Dash;
         interact = _inputActions.Player.Interact;
         move = _inputActions.Player.Move;
@@ -19,6 +21,9 @@ public class PlayerInput : MonoBehaviour
         secondary = _inputActions.Player.Ability2;
         pause = _inputActions.Player.Pause;
         jump = _inputActions.Player.Jump;
+
+        // cam movement
+        mouseScroll = _inputActions.Camera.Mousezoom;
     }
 
     void OnEnable()
@@ -77,6 +82,16 @@ public class PlayerInput : MonoBehaviour
     {
         attack.Enable();
         secondary.Enable();
+    }
+
+    void EnableMouse()
+    {
+        mouseScroll.Enable();
+    }
+
+    void DisableMouse()
+    {
+        mouseScroll.Disable();
     }
 
     void PauseWrapper(CallbackContext callbackContext)

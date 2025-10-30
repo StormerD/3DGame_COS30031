@@ -127,14 +127,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _freezeStream: {fileID: 11400000, guid: 3a2fae2a12dc44bfb95c26b9fb4395c9, type: 2}
-  playerSpeed: 5
-  dashSpeed: 15
-  dashLength: 0.2
-  dashCooldownSeconds: 0.5
+  moveStats: {fileID: 11400000, guid: fee7b4f6f27f0443b91478458e3a984f, type: 2}
   canMove: 1
   footstepInterval: 0.4
-  dustPuffPrefab: {fileID: 359076714251711221, guid: 6f4cb0ab08810a345a2a7e05d65622d7, type: 3}
-  dashParticlesPrefab: {fileID: 2709738328075119769, guid: d486ed36a4e604949a45a153731aaff6, type: 3}
+  dustPoolPrefab: {fileID: 3223324250413090084, guid: 8b0b3363df57040ebbba50a5a814a260, type: 3}
+  dashPoolPrefab: {fileID: 1467930958378045704, guid: 00b291171b22841b08dd8d324b6d40f6, type: 3}
   _anim: {fileID: 0}
   _sr: {fileID: 0}
 --- !u!114 &8951823929952925354
@@ -260,7 +257,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _currentHealthStream: {fileID: 11400000, guid: 3ec533152e07d4a61b8e955f4c6e3761, type: 2}
   _maxHealthStream: {fileID: 11400000, guid: c7fe9ad0653f142e9abff5ad0e8ad567, type: 2}
-  _maxHealth: 30
+  healthStats: {fileID: 11400000, guid: 6f248de3bd5ff4836bd2369c128197cc, type: 2}
   _playerDeathStream: {fileID: 11400000, guid: 7613c1fff96694aaa9d7e53fa978d0e7, type: 2}
 --- !u!114 &3160180892218156363
 MonoBehaviour:

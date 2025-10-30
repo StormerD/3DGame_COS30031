@@ -182,15 +182,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bf7e17252b934063a8fac8a81e8fbf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  maxSpeed: 30
-  playerSpeed: 10
-  acceleration: 5
-  deceleration: 10
-  jumpForce: 7
-  dashForce: 20
-  dashCooldownSeconds: 1.5
+  movementStats: {fileID: 0}
   footstepInterval: 0.4
-  dustPuffPrefab: {fileID: 0}
+  dustPoolPrefab: {fileID: 0}
+  dashPoolPrefab: {fileID: 0}
 --- !u!114 &1485401236497015077
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -262,6 +257,15 @@ MonoBehaviour:
     m_Type: 0
     m_ExpectedControlType: 
     m_Id: 6572a675-e3ba-4165-a0e3-b3a515c60a17
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  mouseScroll:
+    m_Name: Mouse Scroll
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: c6a6f63a-876a-491b-9674-9e5cfe4e8448
     m_Processors: 
     m_Interactions: 
     m_SingletonActionBindings: []

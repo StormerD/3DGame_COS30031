@@ -4,6 +4,7 @@ public class BasicRanged3D : Weapon3D
 {
     [Header("weapon visuals")]
     public MeshRenderer visuals;
+    [SerializeField] private float _projectileSpawnDistance = 0.3f; // from where the weapon prefab actually exists
 
     [Header("Attack configuration")]
     public GameObject projectilePrefab;
@@ -43,9 +44,9 @@ public class BasicRanged3D : Weapon3D
         _doBasicAttack = false;
         _playedBasicNotReady = false;
 
-        AudioManager.Instance.PlayAudioClip(basicAttack);
+        if (AudioManager.Instance != null) AudioManager.Instance.PlayAudioClip(basicAttack);
 
-        projectileSpawnPoint.localPosition = _attackingDirection;
+        projectileSpawnPoint.localPosition = _attackingDirection * _projectileSpawnDistance;
         RangedProjectile3D proj = Instantiate(projectilePrefab, projectileSpawnPoint.position, Quaternion.LookRotation(_attackingDirection, Vector3.up)).GetComponent<RangedProjectile3D>();
         proj.SetDamage(weaponData.basicAttackDamage);
         proj.SetSpeed(basicAttackProjectileSpeed);
