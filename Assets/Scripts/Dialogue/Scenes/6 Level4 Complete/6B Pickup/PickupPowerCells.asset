@@ -10,11 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0659cfded02744af4b37b6e20e5dd2ce, type: 3}
-  m_Name: Win Dialogue
+  m_Name: PickupPowerCells
   m_EditorClassIdentifier: Assembly-CSharp::DialogueScene
-  dialogueKey: win
+  dialogueKey: learnPickupPowercells
   scripts:
-  - {fileID: 11400000, guid: c4a84848443334fd58168878de0e013e, type: 2}
-  - {fileID: 11400000, guid: dc6c065da25c1491a93f0e00a1c2f983, type: 2}
-  - {fileID: 11400000, guid: a1eb93e2d0e39473890050a27876fc14, type: 2}
-  - {fileID: 11400000, guid: ed48fbba00c19484698b80549cdc3156, type: 2}
+  - {fileID: 11400000, guid: 948573490acdf4a308b54a4c194787d0, type: 2}
+  - {fileID: 11400000, guid: 035ab61b78a5a48f3bc3b72095cfad4e, type: 2}
