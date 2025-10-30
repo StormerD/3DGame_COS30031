@@ -19,6 +19,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip purchaseSuccessSound;
     public AudioClip EquipItemSound;
     public AudioClip componentPlaced;
+    [SerializeField] private AudioClip itemPickedUp;
 
     private void Awake()
     {
@@ -84,6 +85,12 @@ public class AudioManager : MonoBehaviour
     {
         if (componentPlaced != null)
             audioSource.PlayOneShot(componentPlaced);
+    }
+
+    public void PlayItemPickedUp()
+    {
+        if (itemPickedUp != null)
+            audioSource.PlayOneShot(itemPickedUp);
     }
 
     public void PlayAudioClip(AudioClip clip)
