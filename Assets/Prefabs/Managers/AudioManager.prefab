@@ -54,7 +54,10 @@ MonoBehaviour:
   ambientAudio: {fileID: 573269463879192707}
   mixer: {fileID: 24100000, guid: dfc239b71a11642ee9bba6534e2d6410, type: 2}
   audioValueChanged: {fileID: 11400000, guid: aeba4e4663bb94f2cb61c17c439f5a17, type: 2}
+  audioGroupsInitializationStream: {fileID: 11400000, guid: 2fdf03a940f5449cfbce9abaa34905f8, type: 2}
+  requestEmitAudioValues: {fileID: 11400000, guid: 866b93e0530bc487085577cbc595c454, type: 2}
   volumeThreshold: 0.0001
+  exampleAudioCooldown: 0.5
   footstepClips:
   - {fileID: 8300000, guid: 19bb5baf65c5e114bacf71bc4a2cdaec, type: 3}
   - {fileID: 8300000, guid: 996f80840724da14db3a69940038c876, type: 3}

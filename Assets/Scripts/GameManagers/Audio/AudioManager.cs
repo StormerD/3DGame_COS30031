@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Audio;
 
@@ -16,8 +17,11 @@ public class AudioManager : MonoBehaviour
     [Header("Mixing")]
     [SerializeField] private AudioMixer mixer;
     [SerializeField] private KeyedValueEventObject audioValueChanged;
+    [SerializeField] private KeyedValueEventObject audioGroupsInitializationStream;
+    [SerializeField] private BasicEventObject requestEmitAudioValues;
     [SerializeField] private float volumeThreshold = 0.0001f;
     [SerializeField] private float exampleAudioCooldown = 0.5f;
+    [SerializeField] private float adjustmentDiff = 0.001f;
     private Dictionary<string, float> setVols = new();
 
     [Header("Footstep Clips")]
@@ -33,7 +37,8 @@ public class AudioManager : MonoBehaviour
     public AudioClip componentPlaced;
     [SerializeField] private AudioClip itemPickedUp;
 
-    bool recentlyPlayedExample = false;
+    private bool recentlyPlayedExample = false;
+    private bool overridingAllSounds = false;
 
     private void Awake()
     {
@@ -50,8 +55,16 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    void OnEnable() => audioValueChanged.RegisterListener(SetMixerGroupVolume);
-    void OnDisable() => audioValueChanged.UnregisterListener(SetMixerGroupVolume);
+    void OnEnable()
+    {
+        requestEmitAudioValues.RegisterListener(EmitRequestRecieved);
+        audioValueChanged.RegisterListener(SetMixerGroupVolume);
+    }
+    void OnDisable()
+    {
+        requestEmitAudioValues.UnregisterListener(EmitRequestRecieved);
+        audioValueChanged.UnregisterListener(SetMixerGroupVolume);
+    }
 
     void Start()
     {
@@ -60,22 +73,36 @@ public class AudioManager : MonoBehaviour
 
     private void SyncAudioOverrides()
     {
+        Debug.Log("Syncing overrides!");
         Dictionary<string, float> test = GameManager.instance.GetAudioOverrides();
-        foreach(var k in test.Keys)
+        Debug.Log("My new audio values: " + test.ToCommaSeparatedString());
+        overridingAllSounds = true;
+        foreach (var k in test.Keys)
         {
-            if (!setVols.ContainsKey(k)) // only set the values that haven't been overriden just now by the player
-            {
-                SetMixerGroupVolume(k, test[k]);
-            }
+            SetMixerGroupVolume(k, test[k]);
         }
+        overridingAllSounds = false;
     }
 
     public void SetMixerGroupVolume(string group, float volume)
     {
         volume = Mathf.Clamp(volume, volumeThreshold, 1);
+        if (setVols.ContainsKey(group) && Mathf.Abs(setVols[group] - volume) < adjustmentDiff)
+        {
+            Debug.Log("change minimal; ignoring");
+            return;
+        }
         setVols[group] = volume;
         mixer.SetFloat(group, Mathf.Log10(volume) * 20);
-        PlayExample(group);
+        if (!overridingAllSounds) PlayExample(group);
+    }
+
+    private void EmitRequestRecieved()
+    {
+        foreach (var kv in setVols)
+        {
+            audioGroupsInitializationStream.RaiseEvent(kv.Key, kv.Value);
+        }
     }
 
     public Dictionary<string, float> GetAudioOverrides() => setVols;

@@ -2284,6 +2284,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::VolumeSlider
   mixerVolumeChannelParameter: SFXVolume
   volumeChangeStream: {fileID: 11400000, guid: aeba4e4663bb94f2cb61c17c439f5a17, type: 2}
+  setInitialVolumeValuesStream: {fileID: 11400000, guid: 2fdf03a940f5449cfbce9abaa34905f8, type: 2}
+  requestInitialVolumeValuesStream: {fileID: 11400000, guid: 866b93e0530bc487085577cbc595c454, type: 2}
 --- !u!1 &3533889909329289846
 GameObject:
   m_ObjectHideFlags: 0
@@ -3312,6 +3314,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::VolumeSlider
   mixerVolumeChannelParameter: AmbientVolume
   volumeChangeStream: {fileID: 11400000, guid: aeba4e4663bb94f2cb61c17c439f5a17, type: 2}
+  setInitialVolumeValuesStream: {fileID: 11400000, guid: 2fdf03a940f5449cfbce9abaa34905f8, type: 2}
+  requestInitialVolumeValuesStream: {fileID: 11400000, guid: 866b93e0530bc487085577cbc595c454, type: 2}
 --- !u!1 &4922287929013373292
 GameObject:
   m_ObjectHideFlags: 0
@@ -3813,6 +3817,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::VolumeSlider
   mixerVolumeChannelParameter: MusicVolume
   volumeChangeStream: {fileID: 11400000, guid: aeba4e4663bb94f2cb61c17c439f5a17, type: 2}
+  setInitialVolumeValuesStream: {fileID: 11400000, guid: 2fdf03a940f5449cfbce9abaa34905f8, type: 2}
+  requestInitialVolumeValuesStream: {fileID: 11400000, guid: 866b93e0530bc487085577cbc595c454, type: 2}
 --- !u!1 &5508742595380424471
 GameObject:
   m_ObjectHideFlags: 0
@@ -4713,6 +4719,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::VolumeSlider
   mixerVolumeChannelParameter: MasterVolume
   volumeChangeStream: {fileID: 11400000, guid: aeba4e4663bb94f2cb61c17c439f5a17, type: 2}
+  setInitialVolumeValuesStream: {fileID: 11400000, guid: 2fdf03a940f5449cfbce9abaa34905f8, type: 2}
+  requestInitialVolumeValuesStream: {fileID: 11400000, guid: 866b93e0530bc487085577cbc595c454, type: 2}
 --- !u!1 &8567344651659924268
 GameObject:
   m_ObjectHideFlags: 0

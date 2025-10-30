@@ -14,11 +14,6 @@ public class PauseMenu : MonoBehaviour
         PauseManager.instance.OnUnpause += CloseAnimation;
     }
 
-    void Update()
-    {
-        Debug.Log(optionsMenu.activeSelf);
-    }
-
     public void CloseMenu() => PauseManager.instance.Unpause();
     private void CloseAnimation() { _animator.SetTrigger("CloseMenu"); _animator.SetBool("OptionsOpen", false); } 
     private void OpenAnimation() => _animator.SetTrigger("OpenMenu");
