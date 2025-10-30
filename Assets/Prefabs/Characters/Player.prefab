@@ -226,7 +226,17 @@ MonoBehaviour:
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
+  mouseScroll:
+    m_Name: Mouse Scroll
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 1bcce63d-5900-409c-8ffe-5d1a0f7737a5
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
   _playerDeathStream: {fileID: 11400000, guid: 7613c1fff96694aaa9d7e53fa978d0e7, type: 2}
+  _playerUndeathStream: {fileID: 11400000, guid: b7d5f3d1e0aff4f9985ee316498bea87, type: 2}
   _freezeStream: {fileID: 11400000, guid: 3a2fae2a12dc44bfb95c26b9fb4395c9, type: 2}
 --- !u!114 &310496380535155249
 MonoBehaviour:
@@ -259,6 +269,7 @@ MonoBehaviour:
   _maxHealthStream: {fileID: 11400000, guid: c7fe9ad0653f142e9abff5ad0e8ad567, type: 2}
   healthStats: {fileID: 11400000, guid: 6f248de3bd5ff4836bd2369c128197cc, type: 2}
   _playerDeathStream: {fileID: 11400000, guid: 7613c1fff96694aaa9d7e53fa978d0e7, type: 2}
+  _playerUndeathStream: {fileID: 11400000, guid: b7d5f3d1e0aff4f9985ee316498bea87, type: 2}
 --- !u!114 &3160180892218156363
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -285,6 +296,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerDataTracker
   registrationPriority: 0
+  persistAcrossScenes: 1
 --- !u!1 &6816457103706165846
 GameObject:
   m_ObjectHideFlags: 0

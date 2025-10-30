@@ -119036,6 +119036,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 919598585750351815, guid: 2885aa5f9827f814abba74e48e9996dc, type: 3}
+      propertyPath: mouseScroll.m_Name
+      value: Mouse Scroll
+      objectReference: {fileID: 0}
+    - target: {fileID: 1668686616039734458, guid: 2885aa5f9827f814abba74e48e9996dc, type: 3}
+      propertyPath: moveStats
+      value: 
+      objectReference: {fileID: 11400000, guid: c64189b8ff9bb446ba1babe93bba5364, type: 2}
     - target: {fileID: 1668686616039734458, guid: 2885aa5f9827f814abba74e48e9996dc, type: 3}
       propertyPath: dashParticlesPrefab
       value: 
@@ -156955,6 +156963,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2752259295125003592, guid: 150bdedc656714bc694b1e5d105ef263, type: 3}
+      propertyPath: spawnLocations.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2752259295125003592, guid: 150bdedc656714bc694b1e5d105ef263, type: 3}
+      propertyPath: spawnLocations.Array.data[1].fromLevel
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2752259295125003592, guid: 150bdedc656714bc694b1e5d105ef263, type: 3}
+      propertyPath: spawnLocations.Array.data[1].location.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2752259295125003592, guid: 150bdedc656714bc694b1e5d105ef263, type: 3}
+      propertyPath: spawnLocations.Array.data[1].location.y
+      value: 1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 4475099492078964124, guid: 150bdedc656714bc694b1e5d105ef263, type: 3}
       propertyPath: m_Name
       value: LevelInformation

@@ -12,6 +12,7 @@ public class PlayerHealth : MonoBehaviour, IHealth
     [SerializeField] private HealthStat healthStats;
     [Tooltip("The stream used to signify a player's death.")]
     [SerializeField] private BasicEventObject _playerDeathStream;
+    [SerializeField] private BasicEventObject _playerUndeathStream;
 
     private int _currentHealth;
     private bool _hitThisFrame = false;
@@ -19,6 +20,16 @@ public class PlayerHealth : MonoBehaviour, IHealth
     void Awake()
     {
         _currentHealth = healthStats.startingHealth;
+    }
+
+    void OnEnable()
+    {
+        _playerUndeathStream.RegisterListener(FullHeal);
+    }
+    
+    void OnDisable()
+    {
+        _playerUndeathStream.UnregisterListener(FullHeal);
     }
 
     void Start()
