@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Open Menu
+  m_Name: MainPause
   serializedVersion: 7
   m_Legacy: 0
   m_Compressed: 0
@@ -17,105 +17,6 @@ AnimationClip:
   m_PositionCurves: []
   m_ScaleCurves: []
   m_FloatCurves:
-  - serializedVersion: 2
-    curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 10000
-        inSlope: 0
-        outSlope: -96000
-        tangentMode: 69
-        weightedMode: 2
-        inWeight: 0
-        outWeight: 0.04749733
-      - serializedVersion: 3
-        time: 0.083333336
-        value: 2000
-        inSlope: -19425.686
-        outSlope: -19425.686
-        tangentMode: 0
-        weightedMode: 1
-        inWeight: 0.8406178
-        outWeight: 0.18247642
-      - serializedVersion: 3
-        time: 0.25
-        value: 0
-        inSlope: -12000.001
-        outSlope: 0
-        tangentMode: 69
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_Softness.x
-    path: 
-    classID: 114
-    script: {fileID: 11500000, guid: 3312d7739989d2b4e91e6319e9a96d76, type: 3}
-    flags: 0
-  - serializedVersion: 2
-    curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 10000
-        inSlope: 0
-        outSlope: -96000
-        tangentMode: 69
-        weightedMode: 2
-        inWeight: 0
-        outWeight: 0.09588886
-      - serializedVersion: 3
-        time: 0.083333336
-        value: 2000
-        inSlope: -25570.541
-        outSlope: -25570.541
-        tangentMode: 0
-        weightedMode: 1
-        inWeight: 0.8849759
-        outWeight: 0.17480811
-      - serializedVersion: 3
-        time: 0.25
-        value: 0
-        inSlope: -12000.001
-        outSlope: 0
-        tangentMode: 69
-        weightedMode: 0
-        inWeight: 0.2523245
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_Softness.y
-    path: 
-    classID: 114
-    script: {fileID: 11500000, guid: 3312d7739989d2b4e91e6319e9a96d76, type: 3}
-    flags: 0
-  - serializedVersion: 2
-    curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 1
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 103
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_IsActive
-    path: Pause text
-    classID: 1
-    script: {fileID: 0}
-    flags: 0
   - serializedVersion: 2
     curve:
       serializedVersion: 2
@@ -155,6 +56,27 @@ AnimationClip:
       m_RotationOrder: 4
     attribute: m_IsActive
     path: HomePauseMenu
+    classID: 1
+    script: {fileID: 0}
+    flags: 0
+  - serializedVersion: 2
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: Infinity
+        outSlope: Infinity
+        tangentMode: 103
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_IsActive
+    path: Pause text
     classID: 1
     script: {fileID: 0}
     flags: 0
@@ -188,33 +110,6 @@ AnimationClip:
   m_ClipBindingConstant:
     genericBindings:
     - serializedVersion: 2
-      path: 0
-      attribute: 3774616351
-      script: {fileID: 11500000, guid: 3312d7739989d2b4e91e6319e9a96d76, type: 3}
-      typeID: 114
-      customType: 0
-      isPPtrCurve: 0
-      isIntCurve: 0
-      isSerializeReferenceCurve: 0
-    - serializedVersion: 2
-      path: 0
-      attribute: 2549818249
-      script: {fileID: 11500000, guid: 3312d7739989d2b4e91e6319e9a96d76, type: 3}
-      typeID: 114
-      customType: 0
-      isPPtrCurve: 0
-      isIntCurve: 0
-      isSerializeReferenceCurve: 0
-    - serializedVersion: 2
-      path: 2877417389
-      attribute: 2086281974
-      script: {fileID: 0}
-      typeID: 1
-      customType: 0
-      isPPtrCurve: 0
-      isIntCurve: 0
-      isSerializeReferenceCurve: 0
-    - serializedVersion: 2
       path: 1668086795
       attribute: 2086281974
       script: {fileID: 0}
@@ -225,6 +120,15 @@ AnimationClip:
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
       path: 4008062986
+      attribute: 2086281974
+      script: {fileID: 0}
+      typeID: 1
+      customType: 0
+      isPPtrCurve: 0
+      isIntCurve: 0
+      isSerializeReferenceCurve: 0
+    - serializedVersion: 2
+      path: 2877417389
       attribute: 2086281974
       script: {fileID: 0}
       typeID: 1
@@ -247,7 +151,7 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.25
+    m_StopTime: 0
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -263,105 +167,6 @@ AnimationClip:
     m_HeightFromFeet: 0
     m_Mirror: 0
   m_EditorCurves:
-  - serializedVersion: 2
-    curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 10000
-        inSlope: 0
-        outSlope: -96000
-        tangentMode: 69
-        weightedMode: 2
-        inWeight: 0
-        outWeight: 0.04749733
-      - serializedVersion: 3
-        time: 0.083333336
-        value: 2000
-        inSlope: -19425.686
-        outSlope: -19425.686
-        tangentMode: 0
-        weightedMode: 1
-        inWeight: 0.8406178
-        outWeight: 0.18247642
-      - serializedVersion: 3
-        time: 0.25
-        value: 0
-        inSlope: -12000.001
-        outSlope: 0
-        tangentMode: 69
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_Softness.x
-    path: 
-    classID: 114
-    script: {fileID: 11500000, guid: 3312d7739989d2b4e91e6319e9a96d76, type: 3}
-    flags: 0
-  - serializedVersion: 2
-    curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 10000
-        inSlope: 0
-        outSlope: -96000
-        tangentMode: 69
-        weightedMode: 2
-        inWeight: 0
-        outWeight: 0.09588886
-      - serializedVersion: 3
-        time: 0.083333336
-        value: 2000
-        inSlope: -25570.541
-        outSlope: -25570.541
-        tangentMode: 0
-        weightedMode: 1
-        inWeight: 0.8849759
-        outWeight: 0.17480811
-      - serializedVersion: 3
-        time: 0.25
-        value: 0
-        inSlope: -12000.001
-        outSlope: 0
-        tangentMode: 69
-        weightedMode: 0
-        inWeight: 0.2523245
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_Softness.y
-    path: 
-    classID: 114
-    script: {fileID: 11500000, guid: 3312d7739989d2b4e91e6319e9a96d76, type: 3}
-    flags: 0
-  - serializedVersion: 2
-    curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 1
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 103
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_IsActive
-    path: Pause text
-    classID: 1
-    script: {fileID: 0}
-    flags: 0
   - serializedVersion: 2
     curve:
       serializedVersion: 2
@@ -401,6 +206,27 @@ AnimationClip:
       m_RotationOrder: 4
     attribute: m_IsActive
     path: HomePauseMenu
+    classID: 1
+    script: {fileID: 0}
+    flags: 0
+  - serializedVersion: 2
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: Infinity
+        outSlope: Infinity
+        tangentMode: 103
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_IsActive
+    path: Pause text
     classID: 1
     script: {fileID: 0}
     flags: 0

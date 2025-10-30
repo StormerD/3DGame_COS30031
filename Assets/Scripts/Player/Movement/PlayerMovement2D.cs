@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using static UnityEngine.InputSystem.InputAction;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(PlayerInput))]
@@ -49,6 +50,12 @@ public class PlayerMovement2D : MonoBehaviour, IMover2D
         _rb.interpolation = RigidbodyInterpolation2D.Interpolate;
         _inp.dash.performed += Dash;
 
+        _dustPool = Instantiate(dustPoolPrefab).GetComponent<ParticleSystemPool>();
+        _dashPool = Instantiate(dashPoolPrefab).GetComponent<ParticleSystemPool>();
+        SceneManager.activeSceneChanged += NewParticlePools;
+    }
+    void NewParticlePools(Scene _, Scene __)
+    {
         _dustPool = Instantiate(dustPoolPrefab).GetComponent<ParticleSystemPool>();
         _dashPool = Instantiate(dashPoolPrefab).GetComponent<ParticleSystemPool>();
     }
