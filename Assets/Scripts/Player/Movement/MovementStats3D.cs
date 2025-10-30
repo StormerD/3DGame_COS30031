@@ -10,4 +10,5 @@ public class MovementStats3D : ScriptableObject
     public float jumpForce = 10f;
     public float dashForce = 15f;
     public float dashCooldownSeconds = 1.5f;
+    public float directionLerpSpeed = 2f;
 }

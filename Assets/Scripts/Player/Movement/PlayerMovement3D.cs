@@ -1,3 +1,4 @@
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 using static UnityEngine.InputSystem.InputAction;
 
@@ -21,6 +22,8 @@ public class PlayerMovement3D : MonoBehaviour, IMover3D
     private bool _canMove = true;
     private float _dashTimeStamp;
     private float _distanceToGround;
+    private Quaternion lastRotation;
+    private Transform cam;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -30,6 +33,7 @@ public class PlayerMovement3D : MonoBehaviour, IMover3D
         _inp.dash.performed += Dash;
         _inp.jump.performed += Jump;
         _distanceToGround = GetComponent<Collider>().bounds.extents.y;
+        cam = Camera.main.transform;
 
         _dustPool = Instantiate(dustPoolPrefab).GetComponent<ParticleSystemPool>();
         _dashPool = Instantiate(dashPoolPrefab).GetComponent<ParticleSystemPool>();
@@ -45,21 +49,16 @@ public class PlayerMovement3D : MonoBehaviour, IMover3D
         bool isGrounded = IsGrounded();
 
         if (isGrounded && isMoving)
+        {
+            footstepTimer += Time.deltaTime;
+            if (footstepTimer >= footstepInterval)
             {
-                footstepTimer += Time.deltaTime;
-                if (footstepTimer >= footstepInterval)
-            {
-                // Debug.Log("Footsteps triggered");
                 AudioManager.Instance.PlayFootstep();
                 Vector3 spawnPos = transform.position + new Vector3(0, -0.5f, 0); // adjust Y for foot level
                 _dustPool.PlayParticle(spawnPos);
 
                 footstepTimer = 0f;
             }
-        }
-        else
-        {
-            footstepTimer = 0f;
         }
     }
 
@@ -73,7 +72,6 @@ public class PlayerMovement3D : MonoBehaviour, IMover3D
 
         if (inp != Vector2.zero)
         {
-            Transform cam = Camera.main.transform;
             //The next two lines ensure that checking the direction of the camera is not affected by looking up or down
             Vector3 camForward = Vector3.ProjectOnPlane(cam.forward, Vector3.up).normalized;
             Vector3 camRight = Vector3.ProjectOnPlane(cam.right, Vector3.up).normalized;
@@ -81,7 +79,9 @@ public class PlayerMovement3D : MonoBehaviour, IMover3D
             Vector3 movementDirection = camForward * inp.y + camRight * inp.x;
             movementDirection.Normalize();
 
+            lastRotation = transform.rotation;
             targetVelocity = movementDirection * movementStats.speed;
+            transform.rotation = Quaternion.Lerp(lastRotation, Quaternion.LookRotation(movementDirection), Time.deltaTime*movementStats.directionLerpSpeed);
         } else {
             Vector3 decelerationForce = -_currentVelocity.normalized * movementStats.deceleration;
             Vector3 decelerationForceSwizzle = new(decelerationForce.x, 0, decelerationForce.z);
@@ -130,7 +130,7 @@ public class PlayerMovement3D : MonoBehaviour, IMover3D
             _dashTimeStamp = Time.time;
             _canDash = false;
             _dashPool.PlayParticle(transform.position);
-        } else if ((Time.time - _dashTimeStamp) > dashCooldownSeconds) 
+        } else if ((Time.time - _dashTimeStamp) > movementStats.dashCooldownSeconds) 
         {
             _canDash = true;
         }
