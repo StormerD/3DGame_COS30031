@@ -133,8 +133,8 @@ MonoBehaviour:
   dashCooldownSeconds: 0.5
   canMove: 1
   footstepInterval: 0.4
-  dustPuffPrefab: {fileID: 359076714251711221, guid: 6f4cb0ab08810a345a2a7e05d65622d7, type: 3}
-  dashParticlesPrefab: {fileID: 2709738328075119769, guid: d486ed36a4e604949a45a153731aaff6, type: 3}
+  dustPoolPrefab: {fileID: 3223324250413090084, guid: 8b0b3363df57040ebbba50a5a814a260, type: 3}
+  dashPoolPrefab: {fileID: 1467930958378045704, guid: 00b291171b22841b08dd8d324b6d40f6, type: 3}
   _anim: {fileID: 0}
   _sr: {fileID: 0}
 --- !u!114 &8951823929952925354
