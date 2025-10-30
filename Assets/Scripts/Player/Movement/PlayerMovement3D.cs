@@ -8,7 +8,11 @@ public class PlayerMovement3D : MonoBehaviour, IMover3D
     public float footstepInterval = 0.4f; // Time between footsteps
     private float footstepTimer = 0f;
 
-    public GameObject dustPuffPrefab;
+
+    [SerializeField] private GameObject dustPoolPrefab;
+    private ParticleSystemPool _dustPool;
+    [SerializeField] private GameObject dashPoolPrefab;
+    private ParticleSystemPool _dashPool;
 
     private Rigidbody _rb;
     private PlayerInput _inp;
@@ -26,6 +30,9 @@ public class PlayerMovement3D : MonoBehaviour, IMover3D
         _inp.dash.performed += Dash;
         _inp.jump.performed += Jump;
         _distanceToGround = GetComponent<Collider>().bounds.extents.y;
+
+        _dustPool = Instantiate(dustPoolPrefab).GetComponent<ParticleSystemPool>();
+        _dashPool = Instantiate(dashPoolPrefab).GetComponent<ParticleSystemPool>();
     }
 
     void Update()
@@ -44,11 +51,8 @@ public class PlayerMovement3D : MonoBehaviour, IMover3D
             {
                 // Debug.Log("Footsteps triggered");
                 AudioManager.Instance.PlayFootstep();
-                if (dustPuffPrefab != null)
-                {
-                    Vector3 spawnPos = transform.position + new Vector3(0, -0.5f, 0); // adjust Y for foot level
-                    DustPool.Instance.PlayDust(spawnPos);
-                }
+                Vector3 spawnPos = transform.position + new Vector3(0, -0.5f, 0); // adjust Y for foot level
+                _dustPool.PlayParticle(spawnPos);
 
                 footstepTimer = 0f;
             }
@@ -125,7 +129,8 @@ public class PlayerMovement3D : MonoBehaviour, IMover3D
 
             _dashTimeStamp = Time.time;
             _canDash = false;
-        } else if ((Time.time - _dashTimeStamp) > movementStats.dashCooldownSeconds) 
+            _dashPool.PlayParticle(transform.position);
+        } else if ((Time.time - _dashTimeStamp) > dashCooldownSeconds) 
         {
             _canDash = true;
         }

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7784151854064337324}
   - component: {fileID: 8029355547032946047}
   - component: {fileID: 2805340995070385376}
+  - component: {fileID: 2328617752487134126}
   m_Layer: 0
   m_Name: LevelGameManager
   m_TagString: Untagged
@@ -84,3 +85,17 @@ MonoBehaviour:
   FreezeStream: {fileID: 11400000, guid: 3a2fae2a12dc44bfb95c26b9fb4395c9, type: 2}
   FreezeStartRequestStream: {fileID: 11400000, guid: fc232e35579e44d139bd11bf9d194225, type: 2}
   FreezeEndRequestStream: {fileID: 11400000, guid: 838eba47edf3440cda37ba92a7bd8589, type: 2}
+--- !u!114 &2328617752487134126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5888958742883519145}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdeacca8431674463a2fe9f2e7f4abb7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ItemPickupEffects
+  ObjectPickedUpStream: {fileID: 11400000, guid: 1dbc43bb7e61d49f5974a7790bbbbf1a, type: 2}
+  particlePickupPoolPrefab: {fileID: 8661450211177489894, guid: ad16059b5403a470fa52557d816af959, type: 3}

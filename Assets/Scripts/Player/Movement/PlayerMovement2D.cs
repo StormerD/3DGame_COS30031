@@ -10,9 +10,10 @@ public class PlayerMovement2D : MonoBehaviour, IMover2D
     public float footstepInterval = 0.4f;
     private float footstepTimer = 0f;
 
-    public GameObject dustPuffPrefab;
-
-    public GameObject dashParticlesPrefab;
+    [SerializeField] private GameObject dustPoolPrefab;
+    private ParticleSystemPool _dustPool;
+    [SerializeField] private GameObject dashPoolPrefab;
+    private ParticleSystemPool _dashPool;
 
     private Rigidbody2D _rb;
     private Vector2 _currentDirection = Vector2.zero;
@@ -47,6 +48,9 @@ public class PlayerMovement2D : MonoBehaviour, IMover2D
     {
         _rb.interpolation = RigidbodyInterpolation2D.Interpolate;
         _inp.dash.performed += Dash;
+
+        _dustPool = Instantiate(dustPoolPrefab).GetComponent<ParticleSystemPool>();
+        _dashPool = Instantiate(dashPoolPrefab).GetComponent<ParticleSystemPool>();
     }
 
     // Update is called once per frame
@@ -87,12 +91,8 @@ public class PlayerMovement2D : MonoBehaviour, IMover2D
             if (footstepTimer >= footstepInterval)
             {
                 AudioManager.Instance.PlayFootstep();
-                if (dustPuffPrefab != null)
-                {
-                    Vector3 spawnPos = transform.position + new Vector3(0, -0.5f, 0); // adjust Y for foot level
-                    DustPool.Instance.PlayDust(spawnPos);
-
-                }
+                Vector3 footstepSpawnPos = transform.position + new Vector3(0, -0.5f, 0); // adjust Y for foot level
+                _dustPool.PlayParticle(footstepSpawnPos);
                 footstepTimer = 0f;
             }
         }
@@ -113,16 +113,7 @@ public class PlayerMovement2D : MonoBehaviour, IMover2D
 
      void SpawnDashParticles()
     {
-        if (dashParticlesPrefab != null)
-        {
-            // Instantiate at character's position, no rotation
-            GameObject particles = Instantiate(dashParticlesPrefab, transform.position, Quaternion.identity);
-            
-            //rotate particles to face dash direction
-            particles.transform.right = _dashDirection;
-            
-            Destroy(particles, 0.5f); // auto-destroy after effect duration
-        }
+        _dashPool.PlayParticle(transform.position);
     }
 
     public void Dash(bool ignoreCooldown)
