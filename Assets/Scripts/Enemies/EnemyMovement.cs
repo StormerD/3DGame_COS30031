@@ -87,7 +87,7 @@ public class EnemyMovement : MonoBehaviour
 
     private void TryAttack()
     {
-        if (_targetDistance < 2f)
+        if (_targetDistance < unitData.attackRange)
         {
             OnAttack?.Invoke();
         }

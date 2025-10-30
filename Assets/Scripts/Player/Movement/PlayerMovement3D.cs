@@ -4,13 +4,7 @@ using static UnityEngine.InputSystem.InputAction;
 [RequireComponent(typeof(Rigidbody), typeof(PlayerInput), typeof(Collider))]
 public class PlayerMovement3D : MonoBehaviour, IMover3D
 {
-    public float maxSpeed = 100f;
-    public float playerSpeed = 10f;
-    public float acceleration = 8f;
-    public float deceleration = 5f;
-    public float jumpForce = 10f;
-    public float dashForce = 15f;
-    public float dashCooldownSeconds = 1.5f;
+    [SerializeField] private MovementStats3D movementStats;
     public float footstepInterval = 0.4f; // Time between footsteps
     private float footstepTimer = 0f;
 
@@ -83,23 +77,23 @@ public class PlayerMovement3D : MonoBehaviour, IMover3D
             Vector3 movementDirection = camForward * inp.y + camRight * inp.x;
             movementDirection.Normalize();
 
-            targetVelocity = movementDirection * playerSpeed;
+            targetVelocity = movementDirection * movementStats.speed;
         } else {
-            Vector3 decelerationForce = -_currentVelocity.normalized * deceleration;
+            Vector3 decelerationForce = -_currentVelocity.normalized * movementStats.deceleration;
             Vector3 decelerationForceSwizzle = new(decelerationForce.x, 0, decelerationForce.z);
             _rb.AddForce(decelerationForceSwizzle, ForceMode.Acceleration);
         }
 
         Vector3 velocityChange = targetVelocity - _currentVelocity; // _currentVelocity is originally set to zero and is updating every loop
-        Vector3 velocityForce = velocityChange * acceleration;
+        Vector3 velocityForce = velocityChange * movementStats.acceleration;
         velocityForce.y = 0;
 
         _rb.AddForce(velocityForce, ForceMode.Acceleration);
 
         Vector3 horizontalVelocity = new(_rb.linearVelocity.x, 0, _rb.linearVelocity.z);
-        if (horizontalVelocity.magnitude > maxSpeed)
+        if (horizontalVelocity.magnitude > movementStats.maxSpeed)
         {
-            horizontalVelocity = horizontalVelocity.normalized * maxSpeed;
+            horizontalVelocity = horizontalVelocity.normalized * movementStats.maxSpeed;
             _rb.linearVelocity = new Vector3(horizontalVelocity.x, _rb.linearVelocity.y, horizontalVelocity.z);
         }
 
@@ -117,7 +111,7 @@ public class PlayerMovement3D : MonoBehaviour, IMover3D
     {
         if (IsGrounded())
         {
-            _rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            _rb.AddForce(Vector3.up * movementStats.jumpForce, ForceMode.Impulse);
         }
     }
 
@@ -127,11 +121,11 @@ public class PlayerMovement3D : MonoBehaviour, IMover3D
     {
         if (_canDash)
         {
-            _rb.AddForce(GetCurrentDirection() * dashForce, ForceMode.Impulse);
+            _rb.AddForce(GetCurrentDirection() * movementStats.dashForce, ForceMode.Impulse);
 
             _dashTimeStamp = Time.time;
             _canDash = false;
-        } else if ((Time.time - _dashTimeStamp) > dashCooldownSeconds) 
+        } else if ((Time.time - _dashTimeStamp) > movementStats.dashCooldownSeconds) 
         {
             _canDash = true;
         }
