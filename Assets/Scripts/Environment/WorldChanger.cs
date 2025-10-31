@@ -28,11 +28,20 @@ public class WorldChanger : MonoBehaviour
     
     private void HealWorld()
     {
+
         Debug.Log("Healing world!");
         if (destroyedWorldTilemap != null) destroyedWorldTilemap.SetActive(false);
         if (destroyedWorldProps != null) destroyedWorldProps.SetActive(false);
         if (healedWorldTilemap != null) healedWorldTilemap.SetActive(true);
         if (healedWorldProps != null) healedWorldProps.SetActive(true);
+
+        // Play nature sounds
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlayNatureAmbience();
+        }
+
+
 
         // destroy enemies
         var spawner = FindFirstObjectByType<SpawnManager>();
@@ -40,6 +49,5 @@ public class WorldChanger : MonoBehaviour
         {
             spawner.StopAndClear(destroy: true);
         }
-
     }
 }

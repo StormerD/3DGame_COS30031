@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(PlayerInput))]
 public class PlayerHealth : MonoBehaviour, IHealth
@@ -11,6 +12,7 @@ public class PlayerHealth : MonoBehaviour, IHealth
     [SerializeField] private HealthStat healthStats;
     [Tooltip("The stream used to signify a player's death.")]
     [SerializeField] private BasicEventObject _playerDeathStream;
+    [SerializeField] private BasicEventObject _playerUndeathStream;
 
     private int _currentHealth;
     private bool _hitThisFrame = false;
@@ -20,9 +22,20 @@ public class PlayerHealth : MonoBehaviour, IHealth
         _currentHealth = healthStats.startingHealth;
     }
 
+    void OnEnable()
+    {
+        _playerUndeathStream.RegisterListener(FullHeal);
+    }
+    
+    void OnDisable()
+    {
+        _playerUndeathStream.UnregisterListener(FullHeal);
+    }
+
     void Start()
     {
         EmitHealthStreams();
+        SceneManager.activeSceneChanged += SceneChanged;
     }
 
     void FixedUpdate()
@@ -53,6 +66,13 @@ public class PlayerHealth : MonoBehaviour, IHealth
             _playerDeathStream.RaiseEvent();
             Debug.Log("## Player has died ##");
         }
+    }
+
+    private void SceneChanged(Scene _, Scene __) => FullHeal();
+
+    public void FullHeal()
+    {
+        _currentHealth = healthStats.maxHealth;
     }
 
     // in case we add health potions to enemy drops or around the map

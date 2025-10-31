@@ -130,6 +130,7 @@ public class PlayerMovement3D : MonoBehaviour, IMover3D
             _dashTimeStamp = Time.time;
             _canDash = false;
             _dashPool.PlayParticle(transform.position);
+            AudioManager.Instance.PlayDashSound();
         } else if ((Time.time - _dashTimeStamp) > movementStats.dashCooldownSeconds) 
         {
             _canDash = true;

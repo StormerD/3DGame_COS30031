@@ -49,11 +49,9 @@ public class EnemyMovement : MonoBehaviour
         canMove = true;
     }
 
-
-
     void FixedUpdate()
     {
-        if (!canMove) return;
+        if (!canMove || _player == null) return;
         UpdateTargetDirection();
         RotateToTarget();
         TryAttack();

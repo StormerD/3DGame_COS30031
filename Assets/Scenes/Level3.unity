@@ -276396,6 +276396,10 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2752259295125003592, guid: 150bdedc656714bc694b1e5d105ef263, type: 3}
+      propertyPath: spawnLocations.Array.data[0].fromLevel
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2752259295125003592, guid: 150bdedc656714bc694b1e5d105ef263, type: 3}
       propertyPath: spawnLocations.Array.data[0].location.x
       value: 78
       objectReference: {fileID: 0}

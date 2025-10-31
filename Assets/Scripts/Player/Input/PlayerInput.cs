@@ -7,6 +7,7 @@ public class PlayerInput : MonoBehaviour
     public InputAction dash, interact, move, attack, secondary, pause, jump;
     public InputAction mouseScroll;
     [SerializeField] private BasicEventObject _playerDeathStream;
+    [SerializeField] private BasicEventObject _playerUndeathStream;
     [SerializeField] private IntEventObject _freezeStream;
     private FrameInput _inputActions;
 
@@ -30,12 +31,14 @@ public class PlayerInput : MonoBehaviour
     {
         _inputActions.Enable();
         _playerDeathStream.RegisterListener(DisableSelectInput);
+        _playerUndeathStream.RegisterListener(EnableSelectInput);
         _freezeStream.RegisterListener(FreezeEvent);
     }
     void OnDisable() 
     {
         _inputActions.Disable();
         _playerDeathStream.UnregisterListener(DisableSelectInput);
+        _playerUndeathStream.UnregisterListener(EnableSelectInput);
         _freezeStream.UnregisterListener(FreezeEvent);
     }
 

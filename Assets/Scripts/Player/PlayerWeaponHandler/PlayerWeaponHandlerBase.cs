@@ -34,14 +34,17 @@ public abstract class PlayerWeaponHandlerBase : MonoBehaviour, IFighter
     }
     public virtual void EquipWeapon(GameObject to)
     {
-        if (_equippedWeapon != null) Destroy(_equippedWeapon);
+        if (_equippedWeapon != null) { Debug.Log("destroying equipped."); Destroy(_equippedWeapon); }
         if (to == null)
         {
+            Debug.Log("weapon is null.");
             _equippedWeapon = null;
             _weaponScript = null;
             return;
         }
+        if (this is PlayerWeaponHandler3D) to = (this as PlayerWeaponHandler3D).Get3DWeapon(to.GetComponent<WeaponBase>().weaponData.weaponId);
         _equippedWeapon = Instantiate(to, weaponInstantiationTransform);
+        Debug.Log("equipped weapon: " + _equippedWeapon.name);
         _weaponScript = _equippedWeapon.GetComponent<WeaponBase>();
     }
     public string GetEquippedWeapon() => _weaponScript?.GetWeaponData().weaponId;
