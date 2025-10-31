@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 8188831228013200812}
   - component: {fileID: 9213391235502921134}
   - component: {fileID: -5846152948354568177}
+  - component: {fileID: 2528951365563175850}
   m_Layer: 11
   m_Name: Enemy3D
   m_TagString: Enemy
@@ -237,3 +238,19 @@ MonoBehaviour:
   playerMask:
     serializedVersion: 2
     m_Bits: 256
+--- !u!114 &2528951365563175850
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6125480920691683340}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b8eaeba25db65844a4a09fe865558b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LootContainer3D
+  lootTable: {fileID: 11400000, guid: 22c7b02dc67673e4ebea5680c93d6c32, type: 2}
+  _burstForce: 5
+  _dampening: 2
+  _lootBasePrefab: {fileID: 2880610202803305988, guid: fa350c99dbced8c4ba352750165abae2, type: 3}

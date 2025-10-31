@@ -2,22 +2,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
 
-public class LootContainer : LootableBase
+public class LootContainer3D : LootableBase
 {
     [Header("Physics")]
     public float _burstForce = 5f;
     public float _dampening = 2f;
 
-    [Header("Base Loot Object")]
-    [SerializeField] private LootItem _lootBasePrefab;
+    [Header("Base Loot 3D object")]
+    [SerializeField] private LootItem3D _lootBasePrefab;
 
-    private List<LootItem> _spawnedLoot;
-    private IObjectPool<LootItem> _lootPool;
+    private List<LootItem3D> _spawnedLoot;
+    private IObjectPool<LootItem3D> _lootPool;
 
     void Awake()
     {
-        _spawnedLoot = new List<LootItem>();
-        _lootPool = new ObjectPool<LootItem>(CreateLoot, OnGet, OnRelease);
+        _spawnedLoot = new List<LootItem3D>();
+        _lootPool = new ObjectPool<LootItem3D>(CreateLoot, OnGet, OnRelease);
     }
 
     public override void DropLoot()
@@ -27,7 +27,7 @@ public class LootContainer : LootableBase
         BurstLootObjects();
     }
 
-    private LootItem CreateLoot()
+    private LootItem3D CreateLoot()
     {
         var item = Instantiate(_lootBasePrefab, transform.position, Quaternion.identity, null);
         item.gameObject.SetActive(false);
@@ -35,12 +35,12 @@ public class LootContainer : LootableBase
         return item;
     }
 
-    void OnGet(LootItem item)
+    void OnGet(LootItem3D item)
     {
         item.gameObject.SetActive(true);
     }
 
-    void OnRelease(LootItem item)
+    void OnRelease(LootItem3D item)
     {
         item.gameObject.SetActive(false);
         item.transform.SetParent(null);
@@ -64,19 +64,17 @@ public class LootContainer : LootableBase
     {
         foreach (var obj in _spawnedLoot)
         {
-            if (obj.TryGetComponent<Rigidbody2D>(out var rb))
+            if (obj.TryGetComponent<Rigidbody>(out var rb))
             {
                 rb.linearDamping = _dampening;
-                float randDegree = Random.Range(0f, 360f);
-                float rad = randDegree * Mathf.Deg2Rad;
-                float randomForce = Random.Range(_burstForce * 0.5f, _burstForce * 1.5f);
-                float x = randomForce * Mathf.Cos(rad);
-                float y = randomForce * Mathf.Sin(rad);
-                rb.AddForce(new(x, y), ForceMode2D.Impulse);
+                Vector3 dir = Random.onUnitSphere;
+                dir.y = Mathf.Abs(dir.y); // bias upward
+                float force = Random.Range(_burstForce * 0.5f, _burstForce * 1.5f);
+                rb.AddForce(dir * force, ForceMode.Impulse);
             }
             else
             {
-                Debug.LogError("Container LootObjects need an attached Rigidbody2D (with Linear Damping!)");
+                Debug.LogError("Container LootObjects need an attached Rigidbody component!");
             }
         }
         _spawnedLoot.Clear();

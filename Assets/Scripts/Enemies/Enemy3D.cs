@@ -39,7 +39,7 @@ public class Enemy3D : MonoBehaviour, IHealth
         _currentHealth = unitData.maxHealth;
         //_animator = GetComponent<Animator>();
 
-        // OnDeath += GetComponent<LootContainer>().DropLoot;
+        OnDeath += GetComponent<LootContainer3D>().DropLoot;
     }
 
     void FixedUpdate()

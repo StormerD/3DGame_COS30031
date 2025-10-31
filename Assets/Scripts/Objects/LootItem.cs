@@ -9,6 +9,7 @@ using UnityEngine.Pool;
 public class LootItem : MonoBehaviour, IPickupable
 {
     public event Action InteractedWith;
+
     [Header("Currency Sprites")]
     public Sprite[] commonLootSprites;
     public Sprite[] rareLootSprites;
@@ -61,13 +62,14 @@ public class LootItem : MonoBehaviour, IPickupable
         yield return new WaitForSeconds(destroyTime - flashTime);
         StartCoroutine(FlashLoot());
         yield return new WaitForSeconds(flashTime);
-        Destroy(gameObject);
+        if (_lootPool != null) _lootPool.Release(this);
+        else Destroy(gameObject);
     }
 
     private IEnumerator FlashLoot()
     {
-        var spriteRenderers = GetComponentsInChildren<SpriteRenderer>();
-        if (spriteRenderers.Length == 0) yield break;
+        var srenderers = GetComponentsInChildren<SpriteRenderer>();
+        if (srenderers.Length == 0) yield break;
 
         float flashDuration = 2f;
         float flashInterval = 0.2f;
@@ -77,13 +79,13 @@ public class LootItem : MonoBehaviour, IPickupable
         while (elapsed < flashDuration)
         {
             visible = !visible;
-            foreach (var sr in spriteRenderers)
-                sr.enabled = visible;
+            foreach (var r in srenderers)
+                r.enabled = visible;
             yield return new WaitForSeconds(flashInterval);
             elapsed += flashInterval;
         }
-        foreach (var sr in spriteRenderers)
-            sr.enabled = true;
+        foreach (var r in srenderers)
+            r.enabled = true;
     }
 
     public void Interact(IInteractor interactor)
