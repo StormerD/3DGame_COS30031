@@ -221,7 +221,6 @@ GameObject:
   - component: {fileID: 5723647479577820850}
   - component: {fileID: 3892183850711046664}
   - component: {fileID: 4966440906789444041}
-  - component: {fileID: 1990268290128465249}
   m_Layer: 0
   m_Name: 3D Grabber
   m_TagString: Untagged
@@ -268,6 +267,7 @@ MonoBehaviour:
   sphereCastRadius: 0.2
   secondaryAttackRadius: 3
   maxSecondaryHits: 100
+  visuals: {fileID: 1310093159069016080}
 --- !u!95 &4966440906789444041
 Animator:
   serializedVersion: 7
@@ -290,19 +290,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &1990268290128465249
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1658126677594620924}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e16544bbae1624db499ca5a24613a8e1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::WeaponVisuals
-  visualWrapper: {fileID: 1310093159069016080}
 --- !u!1 &2148444530338638291
 GameObject:
   m_ObjectHideFlags: 0

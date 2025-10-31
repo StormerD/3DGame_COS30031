@@ -81,7 +81,7 @@ public class Ranged3DSecondary : MonoBehaviour, IProjectile
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.TryGetComponent<IHealth>(out var h))
+        if (!other.CompareTag("Player") && other.gameObject.TryGetComponent<IHealth>(out var h))
         {
             h.TakeDamage(_damage);
         }

@@ -321,6 +321,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerWeaponHandler3D
   weaponInstantiationTransform: {fileID: 2061543211281930604}
+  weaponEquippingStream: {fileID: 11400000, guid: 0eb7d19b272fb4671aa599e94b702d0f, type: 2}
   weapon3DTranslations:
   - {fileID: 1658126677594620924, guid: dd2c69bd171d644ec880bc87b3bdcc2c, type: 3}
   - {fileID: 4031752658481073270, guid: e7badf7ae2bbe418e8d7b05f0a35d78d, type: 3}
@@ -437,7 +438,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 2
+  m_Radius: 0.7
+  m_Height: 2.5
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}

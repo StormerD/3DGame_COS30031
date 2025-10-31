@@ -82,9 +82,7 @@ public class AudioManager : MonoBehaviour
 
     private void SyncAudioOverrides()
     {
-        Debug.Log("Syncing overrides!");
         Dictionary<string, float> test = GameManager.instance.GetAudioOverrides();
-        Debug.Log("My new audio values: " + test.ToCommaSeparatedString());
         overridingAllSounds = true;
         foreach (var k in test.Keys)
         {

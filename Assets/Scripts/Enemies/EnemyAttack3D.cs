@@ -14,7 +14,6 @@ public class EnemyAttack3D : MonoBehaviour
     [SerializeField] private float lungeDuration = 0.1f;
     [SerializeField] private AnimationCurve lungeCurve = null;
     [SerializeField] private LayerMask playerMask = 0;
-    private Collider _hurtBox = null;
 
     private Rigidbody _rb;
     private NavMeshAgent _agent;
@@ -32,7 +31,7 @@ public class EnemyAttack3D : MonoBehaviour
     {
         if (_rb == null) _rb = GetComponent<Rigidbody>();
         if (_agent == null) _agent = GetComponent<NavMeshAgent>();
-        if (_hurtBox == null) _hurtBox = GetComponent<Collider>();
+        // if (_hurtBox == null) _hurtBox = GetComponent<Collider>();
         if (lungeCurve == null) lungeCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
         if (playerMask == 0) playerMask = LayerMask.GetMask("Player");
         if (_player == null)
@@ -45,7 +44,7 @@ public class EnemyAttack3D : MonoBehaviour
             _agent.isStopped = false;
             _agent.updatePosition = true;
         }
-        _hurtBox.isTrigger = true;
+        // _hurtBox.isTrigger = true;
         _rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
         _rb.interpolation = RigidbodyInterpolation.Interpolate;
 
@@ -119,11 +118,11 @@ public class EnemyAttack3D : MonoBehaviour
         Debug.Log("Enemy Finished Lunge");
     }
 
-    private void OnTriggerEnter(Collider collider)
+    private void OnCollisionEnter(Collision col)
     {
         if (!_damageWindow || _hitThisLunge) return;
-        if ((playerMask.value & (1 << collider.gameObject.layer)) == 0) return;
-        if (collider.TryGetComponent<IHealth>(out var hp))
+        if ((playerMask.value & (1 << col.gameObject.layer)) == 0) return;
+        if (col.gameObject.TryGetComponent<IHealth>(out var hp))
         {
             Debug.Log("Enemy Hit Player!");
             hp.TakeDamage(unitData.damage);

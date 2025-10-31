@@ -10,6 +10,8 @@ public class PlayerDataTracker : MonoBehaviour
     private static bool exists = false;
     private PlayerLooter looter;
     private PlayerWeaponHandlerBase weaponHandler;
+    private bool hasBeenDisabledAlready = false;
+    private bool hasRegisteredAlready = false;
     
     void Awake()
     {
@@ -26,21 +28,27 @@ public class PlayerDataTracker : MonoBehaviour
     void OnEnable()
     {
         if (GameManager.instance == null) Debug.LogWarning("GameManager is null; unable to register player.");
-        else
+        else if (!hasRegisteredAlready)
         {
+            Debug.Log($"{gameObject.name} Registering");
+            hasRegisteredAlready = true;
             GameManager.instance.RegisterPlayer(this);
-        }
+        } else hasBeenDisabledAlready = false; // re-enabling after already registered, so we reset the disable flag
     }
-
-    void OnDestroy()
+    void OnDisable()
     {
         if (GameManager.instance == null) Debug.LogWarning("GameManager is null; unable to unregister player.");
-        else
+        else if (hasBeenDisabledAlready || !persistAcrossScenes)
         {
+            Debug.Log("Unregistering: " + gameObject.name);
             GameManager.instance.UnregisterPlayer(this);
         }
+        else { Debug.Log("Disabled: " + gameObject.name); hasBeenDisabledAlready = true; }
     }
 
     public CurrencyValues GetSaveableCurrency() => looter.GetSaveableCurrency();
-    public string GetEquippedWeapon() => weaponHandler.GetEquippedWeapon();
+    public string GetEquippedWeapon()
+    {
+        return weaponHandler.GetEquippedWeapon() ?? "";
+    }
 }

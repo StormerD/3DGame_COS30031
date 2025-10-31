@@ -61,7 +61,7 @@ public class GameManager : MonoBehaviour
 	private void OnActiveSceneChanged(Scene current, Scene next)
 	{
 		LevelInformation levelInformation = FindFirstObjectByType<LevelInformation>();
-		if (levelInformation == null) { Debug.LogWarning("Could not find level information for new scene."); return; }
+		if (levelInformation == null) { Debug.LogWarning("Could not find level information for new scene."); StartCoroutine(DelayedParamlessActionInvoke(OnDoneLoadingNewScene, transitionWaitDelay)); return; }
 
 		if (_currentLevel == -1) { _currentLevel = levelInformation.levelNumber; }
 		else
@@ -74,39 +74,57 @@ public class GameManager : MonoBehaviour
 
 	public void RegisterPlayer(PlayerDataTracker newPlayer)
 	{
-		if (VERBOSE) Debug.Log("New player registering");
 		if (_activePlayerData != null)
 		{
+			Debug.Log("New registration; active player is: " + _activePlayerData.gameObject.name);
 			// new player has higher registration; disable the active one and set it to previous
 			if (_activePlayerData.registrationPriority < newPlayer.registrationPriority)
 			{
-				Debug.Log("Registering player has higher prio then current; disabling current and setting new to active");
+				Debug.Log($"Registering player {newPlayer.gameObject.name} has higher prio then current; disabling current and setting new to active");
 				if (_previousPlayerData != null) Destroy(_previousPlayerData.gameObject);
 				_previousPlayerData = _activePlayerData; _previousPlayerData.gameObject.SetActive(false);
 				_activePlayerData = newPlayer;
 			}
 			else
 			{
-				Debug.Log("Registering player has lower priority than active; disabling registering and setting to previous");
+				Debug.Log($"Registering player {newPlayer.gameObject.name} has lower priority than active; disabling registering and setting to previous");
 				newPlayer.gameObject.SetActive(false);
-				if (_previousPlayerData != null) Destroy(_previousPlayerData.gameObject);
+				if (_previousPlayerData != null) { Debug.Log("Destroying old data: " + _previousPlayerData.gameObject.name); Destroy(_previousPlayerData.gameObject); }
 				_previousPlayerData = newPlayer;
 			}
 		}
 		else _activePlayerData = newPlayer;
 
-		if (Camera.main.gameObject.TryGetComponent<CameraFollow>(out var follow)) { follow.SetPlayer(_activePlayerData.transform); }
-	}
+		if (_activePlayerData != null)
+		{
+			StartCoroutine(CameraSync());
+		}	}
 
 	public void UnregisterPlayer(PlayerDataTracker player)
-    {
+	{
 		if (_activePlayerData == null) Debug.LogWarning("Unregistering player while activeplayer is null?");
 		else if (_activePlayerData.gameObject == player.gameObject) // re-activate previous if it exists
 		{
+			Debug.Log("Re-activating previous player: " + (_previousPlayerData != null ? _previousPlayerData.gameObject.name : "null"));
 			_activePlayerData = _previousPlayerData;
-			if (_activePlayerData != null) _activePlayerData.gameObject.SetActive(true);
+			_previousPlayerData = null;
+			if (_activePlayerData != null) { Debug.Log("Re-enabling " + _activePlayerData.gameObject.name); _activePlayerData.gameObject.SetActive(true); }
 		}
 		else if (_previousPlayerData.gameObject == player.gameObject) _previousPlayerData = null;
+
+		if (_activePlayerData != null)
+		{
+			StartCoroutine(CameraSync());
+		}
+	}
+	
+	private IEnumerator CameraSync()
+    {
+		yield return new WaitUntil(() => Camera.main != null && Camera.main.gameObject != null);
+		if (Camera.main.gameObject.TryGetComponent<CameraFollow>(out var follow))
+		{
+			follow.SetPlayer(_activePlayerData.transform);
+		}
     }
 
 	public void CurrentLevelComplete()
@@ -256,8 +274,13 @@ public class GameManager : MonoBehaviour
 	#region Getters
 	// separate distinct pieces into individual getters so that components can get as needed (no reason for scene manager to have anything but furthest unlocked level, for instance)
 	public int GetFurthestUnlockedLevel() => ConfirmDataLoaded() ? _currentSaveData.furthestUnlockedLevel : 1;
-	public string GetEquippedWeapon()
+	public string GetEquippedWeapon(bool overrideToActive = false)
 	{
+		if (overrideToActive)
+		{
+			if (_activePlayerData != null && _activePlayerData.GetEquippedWeapon() != "") { return _activePlayerData.GetEquippedWeapon(); }
+			else if (_previousPlayerData != null && _previousPlayerData.GetEquippedWeapon() != "") {  return _previousPlayerData.GetEquippedWeapon(); }
+        }
 		if (!ConfirmDataLoaded()) return "";
 		if (_currentSaveData.equippedWeapon != null && _currentSaveData.equippedWeapon != "") return _currentSaveData.equippedWeapon;
 		if (_activePlayerData != null) return _activePlayerData.GetEquippedWeapon();

@@ -56,6 +56,7 @@ MonoBehaviour:
   forgeMenuScrollbox: {fileID: 0}
   FreezeRequestStartStream: {fileID: 11400000, guid: fc232e35579e44d139bd11bf9d194225, type: 2}
   FreezeRequestEndStream: {fileID: 11400000, guid: 838eba47edf3440cda37ba92a7bd8589, type: 2}
+  equippingStream: {fileID: 11400000, guid: 0eb7d19b272fb4671aa599e94b702d0f, type: 2}
 --- !u!114 &8029355547032946047
 MonoBehaviour:
   m_ObjectHideFlags: 0

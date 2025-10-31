@@ -33,7 +33,7 @@ public class PauseMenu : MonoBehaviour
         else
         {
             GameManager.instance.SaveAndClearGame();
-            SceneManager.LoadScene(0);
+            StartCoroutine(AsyncSceneLoader.AsyncLoad(0));
         }
     }
 

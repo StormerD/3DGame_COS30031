@@ -28,8 +28,6 @@ public class WorldChanger : MonoBehaviour
     
     private void HealWorld()
     {
-
-        Debug.Log("Healing world!");
         if (destroyedWorldTilemap != null) destroyedWorldTilemap.SetActive(false);
         if (destroyedWorldProps != null) destroyedWorldProps.SetActive(false);
         if (healedWorldTilemap != null) healedWorldTilemap.SetActive(true);

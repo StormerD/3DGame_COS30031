@@ -49,9 +49,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponData: {fileID: 11400000, guid: 99989bed371fa45668025a71bc70c33b, type: 2}
-  basicAttack: {fileID: 0}
-  basicNotReady: {fileID: 0}
-  secondaryAttack: {fileID: 0}
+  basicAttack: {fileID: 8300000, guid: 72353cb8e0a14448fadd8b3f5d0f55a4, type: 3}
+  basicNotReady: {fileID: 8300000, guid: aef9e7664a194433c875e73471654283, type: 3}
+  secondaryAttack: {fileID: 8300000, guid: 696b7fc8673974952b2fe3ecdfe3aac3, type: 3}
   secondaryNotReady: {fileID: 0}
   projectilePrefab: {fileID: 959012440057939218, guid: 029439363bda946d486f19032d0d3f86, type: 3}
   projectileSpawnPoint: {fileID: 4161243924565852830}
@@ -59,6 +59,7 @@ MonoBehaviour:
   secondaryAttackDistance: 5
   secondaryAttackWidth: 1
   secondaryAttackKnockbackForce: 5
+  maxSecondaryHits: 20
 --- !u!95 &6803516620282463634
 Animator:
   serializedVersion: 7
