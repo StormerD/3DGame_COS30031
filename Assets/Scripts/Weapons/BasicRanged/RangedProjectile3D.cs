@@ -52,7 +52,6 @@ public class RangedProjectile3D : MonoBehaviour, IProjectile
 
     void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("collision: " + collision.gameObject.name);
         if (collision.collider.TryGetComponent<IHealth>(out var h))
         {
             Debug.Log(collision.gameObject.name + " has health");

@@ -23,6 +23,7 @@ public class LootItem3D : MonoBehaviour, IPickupable
     private IObjectPool<LootItem3D> _lootPool;
     private MeshRenderer mr;
     private bool _isRotating = true;
+    private bool _isPickedUp = false;
 
     public void SetPool(IObjectPool<LootItem3D> pool)
     {
@@ -32,6 +33,7 @@ public class LootItem3D : MonoBehaviour, IPickupable
     private void OnEnable()
     {
         _isRotating = true; // start rotating
+        _isPickedUp = false; // not picked up
     }
 
     public void ApplyRarity(CurrencyType rarity)
@@ -80,8 +82,11 @@ public class LootItem3D : MonoBehaviour, IPickupable
         yield return new WaitForSeconds(destroyTime - flashTime);
         StartCoroutine(FlashLoot());
         yield return new WaitForSeconds(flashTime);
-        if (_lootPool != null) _lootPool.Release(this);
-        else Destroy(gameObject);
+        if (!_isPickedUp) // only release if is not picked up already
+        {
+            if (_lootPool != null) _lootPool.Release(this);
+            else Destroy(gameObject);
+        }
     }
 
     private IEnumerator FlashLoot()
@@ -114,6 +119,9 @@ public class LootItem3D : MonoBehaviour, IPickupable
 
     public void Pickup(IInteractor interactor)
     {
+        if (_isPickedUp) return;
+        _isPickedUp = true;
+        
         interactor.CollectCurrency(currencyType);
         // pool item
         if (_lootPool != null) _lootPool.Release(this);
