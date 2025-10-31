@@ -150,7 +150,7 @@ public class AudioManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        // Stop music/ambient if we are NOT in Level1
+        // Stop all audio if not in Level1
         if (scene.name != "Level1")
         {
             StopMusic();
@@ -158,8 +158,7 @@ public class AudioManager : MonoBehaviour
                 ambientAudio.Stop();
         }
 
-
-        // Optional: auto-play MainMenu music when entering MainMenu
+        // Play MainMenu music
         if (scene.name == "MainMenu")
         {
             StopMusic();
@@ -167,7 +166,15 @@ public class AudioManager : MonoBehaviour
                 ambientAudio.Stop();
             PlayMainMenuMusic();
         }
+
+        // Play nature ambience when entering HomeScene
+        if (scene.name == "HomeArea")
+        {
+            StopMusic(); // optional
+            PlayNatureAmbience();
+        }
     }
+
 
 
     public void StopMusic()
