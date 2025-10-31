@@ -12,7 +12,6 @@ public class LevelDialogueEventWatcherBase : DialogueEventWatcherBase
     {
         base.Start();
         if (!_hasPlayedLevelEnter) StartCoroutine(DelayedRequestDialogue(playOnLevelEnter, levelEnterDialogueDelay));
-        else Debug.Log("NO NEED TO PlAY START");
     }
 
     protected override void SyncDialogue()
