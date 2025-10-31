@@ -4225,6 +4225,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: TransitionCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 17914881813401889, guid: 9ed52ad6ba4064a839c1ae64eb53aba6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1719854130571751798, guid: 9ed52ad6ba4064a839c1ae64eb53aba6, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -6230,6 +6234,7 @@ MonoBehaviour:
   _maxHealthStream: {fileID: 11400000, guid: c7fe9ad0653f142e9abff5ad0e8ad567, type: 2}
   healthStats: {fileID: 11400000, guid: 6f248de3bd5ff4836bd2369c128197cc, type: 2}
   _playerDeathStream: {fileID: 11400000, guid: 7613c1fff96694aaa9d7e53fa978d0e7, type: 2}
+  _playerUndeathStream: {fileID: 0}
 --- !u!1 &2062922068
 GameObject:
   m_ObjectHideFlags: 0

@@ -10,6 +10,7 @@ public class LootContainer3D : LootableBase
 
     [Header("Base Loot 3D object")]
     [SerializeField] private LootItem3D _lootBasePrefab;
+    [SerializeField] private float _spawnHeight = 0.5f;
 
     private List<LootItem3D> _spawnedLoot;
     private IObjectPool<LootItem3D> _lootPool;
@@ -53,7 +54,7 @@ public class LootContainer3D : LootableBase
             for (int i = 0; i < drop.amount; i++)
             {
                 var loot = _lootPool.Get();
-                loot.transform.position = transform.position;
+                loot.transform.position = transform.position + Vector3.up * _spawnHeight;
                 loot.ApplyRarity(drop.rarity);
                 _spawnedLoot.Add(loot);
             }
