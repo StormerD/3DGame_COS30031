@@ -101,7 +101,7 @@ public class PlayerInteract3D : PlayerInteractBase
             Debug.LogWarning("Passed gameobject " + which.name + " which does not have an Outline component attached to it.");
         }
 
-        interactablesInRange.Add(which, interactable);
+        interactablesInRange[which] = interactable;
     }
 
     #endregion
