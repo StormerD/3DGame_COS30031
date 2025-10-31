@@ -11,6 +11,7 @@ public class FreezeEntitiesManager : MonoBehaviour
     [SerializeField] private BasicEventObject FreezeStartRequestStream;
     [SerializeField] private BasicEventObject FreezeEndRequestStream;
     private bool _frozen; // for sanity-checking
+    int freezeCount = 0;
 
     void OnEnable()
     {
@@ -25,17 +26,19 @@ public class FreezeEntitiesManager : MonoBehaviour
     }
     public void StartFreeze()
     {
-        Debug.Log("Starting freeze.");
-        if (!_frozen) FreezeStream.RaiseEvent(1);
-        else Debug.Log("Tried to freeze when already frozen!");
-        _frozen = true;
+        freezeCount++;
+        // if (!_frozen) FreezeStream.RaiseEvent(1);
+        // else Debug.Log("Tried to freeze when already frozen!");
+        // _frozen = true;
+        FreezeStream.RaiseEvent(freezeCount);
     }
     
     public void EndFreeze()
     {
-        Debug.Log("Starting freeze.");
-        if (_frozen) FreezeStream.RaiseEvent(0);
-        else Debug.Log("Tried to unfreeze when not frozen!");
-        _frozen = false;
+        freezeCount--;
+        // if (_frozen) FreezeStream.RaiseEvent(0);
+        // else Debug.Log("Tried to unfreeze when not frozen!");
+        // _frozen = false;
+        FreezeStream.RaiseEvent(freezeCount);
     }
 }

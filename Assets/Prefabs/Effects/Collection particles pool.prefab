@@ -45,4 +45,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DustPool
   prefabWithParticleSystem: {fileID: 4536993714847565861, guid: 46e48f1434361436494a7855806e1742, type: 3}
-  poolSize: 1
+  poolSize: 2

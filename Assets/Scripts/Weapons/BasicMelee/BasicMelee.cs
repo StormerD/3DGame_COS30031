@@ -21,6 +21,8 @@ public class BasicMelee : Weapon2D
         _enemyLayerMask = LayerMask.GetMask("Enemy");
         _contactFilter = new();
         _contactFilter.SetLayerMask(_enemyLayerMask);
+        _contactFilter.useLayerMask = true;
+        _contactFilter.useTriggers = true;
         _basicHits = new RaycastHit2D[basicAttackRaycastAmount];
     }
 
