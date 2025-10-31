@@ -35,8 +35,6 @@ public class BasicMelee3D : Weapon3D
         _doBasicAttack = false;
         BasicVisuals();
 
-        Debug.Log("basci atack");
-
         float angleStep = 0;
         if (basicAttackRaycastAmount > 1) angleStep = attackWidthDegrees * 2 / (basicAttackRaycastAmount - 1);
         float startAngle = -attackWidthDegrees;

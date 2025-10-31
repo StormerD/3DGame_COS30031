@@ -161,7 +161,6 @@ public class DialogueScreen : MonoBehaviour, IPointerClickHandler
             }
             else
             {
-                Debug.Log("Quitting!");
                 _textboxAnimator.SetTrigger("ExitDialogue");
                 yield return new WaitForSeconds(_boxExitTime);
             }
