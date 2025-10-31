@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.SceneManagement; // for scene change detection
+
 
 [RequireComponent(typeof(AudioSource))]
 public class AudioManager : MonoBehaviour
@@ -62,11 +64,13 @@ public class AudioManager : MonoBehaviour
 
     void OnEnable()
     {
+        SceneManager.sceneLoaded += OnSceneLoaded; // add scene listener
         requestEmitAudioValues.RegisterListener(EmitRequestRecieved);
         audioValueChanged.RegisterListener(SetMixerGroupVolume);
     }
     void OnDisable()
     {
+        SceneManager.sceneLoaded -= OnSceneLoaded; // remove listener
         requestEmitAudioValues.UnregisterListener(EmitRequestRecieved);
         audioValueChanged.UnregisterListener(SetMixerGroupVolume);
     }
@@ -146,6 +150,27 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // Stop music/ambient if we are NOT in Level1
+        if (scene.name != "Level1")
+        {
+            StopMusic();
+            if (ambientAudio.isPlaying)
+                ambientAudio.Stop();
+        }
+
+
+        // Optional: auto-play MainMenu music when entering MainMenu
+        if (scene.name == "MainMenu")
+        {
+            StopMusic();
+            if (ambientAudio.isPlaying)
+                ambientAudio.Stop();
+            PlayMainMenuMusic();
+        }
+    }
+
 
     public void StopMusic()
     {
@@ -154,19 +179,24 @@ public class AudioManager : MonoBehaviour
     }
 
 
-    public void PlayMainMenuMusic()
-    {
+   public void PlayMainMenuMusic()
+{
         if (mainMenuMusic != null)
         {
+            // Stop any ambient audio first
+            if (ambientAudio.isPlaying)
+                ambientAudio.Stop();
+
             musicAudio.clip = mainMenuMusic;
             musicAudio.loop = true; // keeps it playing
             musicAudio.Play();
         }
         else
         {
-        Debug.LogWarning("Main menu music clip not assigned!");
+            Debug.LogWarning("Main menu music clip not assigned!");
         }
     }
+
 
     public void PlayPurchaseSuccess()
     {
