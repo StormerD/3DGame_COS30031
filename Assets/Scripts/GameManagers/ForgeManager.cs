@@ -21,10 +21,10 @@ public class ForgeManager : MonoBehaviour
 
     [SerializeField] private BasicEventObject FreezeRequestStartStream;
     [SerializeField] private BasicEventObject FreezeRequestEndStream;
+    [SerializeField] private StringEventObject equippingStream;
 
     public event Action<string, bool> OnListingPurchaseStateChange; // <string> is the weaponId purchased, bool is true if purchased, false if not
     public event Action<string, bool> OnListingUnlockedStateChange;
-    public event Action<string> OnListingEquipped; // same as above.
     public event Action OnForgeOpened;
     public event Action OnForgeClosed;
 
@@ -116,7 +116,7 @@ public class ForgeManager : MonoBehaviour
             return;
         }
         Debug.Log("Equipping item " + id);
-        OnListingEquipped?.Invoke(id);
+        equippingStream.RaiseEvent(id);
     }
     // given a test to perform on a WeaponPurchaseData, return true if ID satisfies
     private bool DoesListingSatisfy(string id, Predicate<WeaponPurchaseData> test)
@@ -145,8 +145,8 @@ public class ForgeManager : MonoBehaviour
         }
 
         // also emit a weapon is equipped if necessary
-        string equippedWeapon = GameManager.instance.GetEquippedWeapon() ?? "";
-        if (equippedWeapon.Length != 0) OnListingEquipped?.Invoke(equippedWeapon);
+        string equippedWeapon = GameManager.instance.GetEquippedWeapon(true) ?? "";
+        if (equippedWeapon.Length != 0) equippingStream.RaiseEvent(equippedWeapon);
     }
     // this is not the best option here to just have a hardset default weapon data for a few reasons...
     // the worst of which is that the weapon ids for melee1 and ranged1 are hardcoded. if we ever change those

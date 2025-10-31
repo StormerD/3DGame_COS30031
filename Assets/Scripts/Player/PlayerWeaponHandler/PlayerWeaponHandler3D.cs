@@ -38,7 +38,7 @@ public class PlayerWeaponHandler3D : PlayerWeaponHandlerBase
 
         if (GameManager.instance != null)
         {
-            string equippedWeapon = GameManager.instance.GetEquippedWeapon();
+            string equippedWeapon = GameManager.instance.GetEquippedWeapon(true) ?? "";
             GameObject weapon3D = Get3DWeapon(equippedWeapon);
             if (weapon3D != null)
             {

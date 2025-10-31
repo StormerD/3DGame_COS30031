@@ -283,6 +283,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerWeaponHandler2D
   weaponInstantiationTransform: {fileID: 0}
+  weaponEquippingStream: {fileID: 11400000, guid: 0eb7d19b272fb4671aa599e94b702d0f, type: 2}
 --- !u!114 &3315614239186590958
 MonoBehaviour:
   m_ObjectHideFlags: 0

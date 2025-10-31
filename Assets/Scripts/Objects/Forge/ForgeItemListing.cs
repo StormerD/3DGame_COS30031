@@ -12,6 +12,7 @@ public class ForgeItemListing : MonoBehaviour, IPointerClickHandler, IPointerEnt
     // true == hovered, false == not hovered
     public event Action<bool> OnHoverChanged;
     public event Action<string> OnPurchaseWeapon;
+    [SerializeField] private StringEventObject equippedWeaponStream;
 
     [Tooltip("This MUST be the same ID as the weapon ID set in the Weapon's WeaponData ScriptableObject.")]
     public WeaponPurchaseData weaponListing;
@@ -32,14 +33,21 @@ public class ForgeItemListing : MonoBehaviour, IPointerClickHandler, IPointerEnt
         lockedVersion.SetActive(!weaponListing.isUnlocked);
     }
 
-    private void OnEnable() => _playerCurrencyStream.RegisterListener(CurrencyUpdate);
-    private void OnDisable() =>  _playerCurrencyStream.UnregisterListener(CurrencyUpdate);
+    private void OnEnable()
+    {
+        _playerCurrencyStream.RegisterListener(CurrencyUpdate);
+        equippedWeaponStream.RegisterListener(SomeWeaponEquipped);
+    }
+    private void OnDisable()
+    {
+        _playerCurrencyStream.UnregisterListener(CurrencyUpdate);
+        equippedWeaponStream.UnregisterListener(SomeWeaponEquipped);
+    }
     private void CurrencyUpdate(CurrencyValues to) => _playerCurrency = to;
 
     void Start()
     {
         ForgeManager.instance.OnListingPurchaseStateChange += SomeWeaponPurchased;
-        ForgeManager.instance.OnListingEquipped += SomeWeaponEquipped;
         ForgeManager.instance.OnForgeOpened += SetForgeOpen;
         ForgeManager.instance.OnForgeClosed += SetForgeClosed;
     }

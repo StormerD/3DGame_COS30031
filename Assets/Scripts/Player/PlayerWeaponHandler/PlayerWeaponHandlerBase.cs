@@ -6,16 +6,25 @@ using static UnityEngine.InputSystem.InputAction;
 public abstract class PlayerWeaponHandlerBase : MonoBehaviour, IFighter
 {
     public Transform weaponInstantiationTransform;
+    [SerializeField] private StringEventObject weaponEquippingStream;
     protected GameObject _equippedWeapon;
     protected WeaponBase _weaponScript;
-    
+
+    void OnEnable()
+    {
+        weaponEquippingStream.RegisterListener(EquipWeapon);
+    }
+    void OnDisable()
+    {
+        weaponEquippingStream.UnregisterListener(EquipWeapon);
+    }
+
     protected virtual void Start()
     {
         PlayerInput inp = GetComponent<PlayerInput>();
         inp.attack.performed += Attack;
         inp.secondary.performed += Secondary;
         
-        if (ForgeManager.instance != null) ForgeManager.instance.OnListingEquipped += EquipWeapon;
         if (GameManager.instance != null) GameManager.instance.OnLoadComplete += SetEquippedWeapon;
 
         if (weaponInstantiationTransform == null) weaponInstantiationTransform = transform;
@@ -24,9 +33,9 @@ public abstract class PlayerWeaponHandlerBase : MonoBehaviour, IFighter
     }
 
     #region Equipping
-    private void SetEquippedWeapon()
+    protected void SetEquippedWeapon()
     {
-        EquipWeapon(GameManager.instance.GetEquippedWeapon());
+        EquipWeapon(GameManager.instance.GetEquippedWeapon(true));
     }
     public void EquipWeapon(string to)
     {
@@ -34,17 +43,15 @@ public abstract class PlayerWeaponHandlerBase : MonoBehaviour, IFighter
     }
     public virtual void EquipWeapon(GameObject to)
     {
-        if (_equippedWeapon != null) { Debug.Log("destroying equipped."); Destroy(_equippedWeapon); }
+        if (_equippedWeapon != null) { Destroy(_equippedWeapon); }
         if (to == null)
         {
-            Debug.Log("weapon is null.");
             _equippedWeapon = null;
             _weaponScript = null;
             return;
         }
         if (this is PlayerWeaponHandler3D) to = (this as PlayerWeaponHandler3D).Get3DWeapon(to.GetComponent<WeaponBase>().weaponData.weaponId);
         _equippedWeapon = Instantiate(to, weaponInstantiationTransform);
-        Debug.Log("equipped weapon: " + _equippedWeapon.name);
         _weaponScript = _equippedWeapon.GetComponent<WeaponBase>();
     }
     public string GetEquippedWeapon() => _weaponScript?.GetWeaponData().weaponId;

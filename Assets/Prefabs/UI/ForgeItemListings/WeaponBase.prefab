@@ -152,6 +152,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   priceText: {fileID: 0}
+  equippedWeaponStream: {fileID: 11400000, guid: 0eb7d19b272fb4671aa599e94b702d0f, type: 2}
   weaponListing:
     weaponId: 
     isPurchased: 0
@@ -162,6 +163,8 @@ MonoBehaviour:
     mythic: 0
   unlockedVersion: {fileID: 4353140876843477261}
   lockedVersion: {fileID: 8423473795117215188}
+  _playerCurrencyStream: {fileID: 0}
+  _playerCostsStream: {fileID: 0}
 --- !u!114 &2975294939809092942
 MonoBehaviour:
   m_ObjectHideFlags: 0

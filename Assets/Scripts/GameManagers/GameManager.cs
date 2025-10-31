@@ -256,8 +256,13 @@ public class GameManager : MonoBehaviour
 	#region Getters
 	// separate distinct pieces into individual getters so that components can get as needed (no reason for scene manager to have anything but furthest unlocked level, for instance)
 	public int GetFurthestUnlockedLevel() => ConfirmDataLoaded() ? _currentSaveData.furthestUnlockedLevel : 1;
-	public string GetEquippedWeapon()
+	public string GetEquippedWeapon(bool overrideToActive = false)
 	{
+		if (overrideToActive)
+		{
+			if (_activePlayerData != null && _activePlayerData.GetEquippedWeapon() != "") { return _activePlayerData.GetEquippedWeapon(); }
+			else if (_previousPlayerData != null && _previousPlayerData.GetEquippedWeapon() != "") {  return _previousPlayerData.GetEquippedWeapon(); }
+        }
 		if (!ConfirmDataLoaded()) return "";
 		if (_currentSaveData.equippedWeapon != null && _currentSaveData.equippedWeapon != "") return _currentSaveData.equippedWeapon;
 		if (_activePlayerData != null) return _activePlayerData.GetEquippedWeapon();
