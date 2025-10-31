@@ -61,7 +61,7 @@ public class GameManager : MonoBehaviour
 	private void OnActiveSceneChanged(Scene current, Scene next)
 	{
 		LevelInformation levelInformation = FindFirstObjectByType<LevelInformation>();
-		if (levelInformation == null) { Debug.LogWarning("Could not find level information for new scene."); return; }
+		if (levelInformation == null) { Debug.LogWarning("Could not find level information for new scene."); StartCoroutine(DelayedParamlessActionInvoke(OnDoneLoadingNewScene, transitionWaitDelay)); return; }
 
 		if (_currentLevel == -1) { _currentLevel = levelInformation.levelNumber; }
 		else
