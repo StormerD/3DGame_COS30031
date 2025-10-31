@@ -44,7 +44,7 @@ public class WorldChanger : MonoBehaviour
         if (spawner != null)
         {
             spawner.StopAndClear(destroy: true);
-            spawner.FreezeActions();
+            spawner.PermaDisable();
         }
     }
 }
