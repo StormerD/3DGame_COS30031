@@ -150,13 +150,9 @@ public class AudioManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        // Stop all audio if not in Level1
-        if (scene.name != "Level1")
-        {
-            StopMusic();
-            if (ambientAudio.isPlaying)
-                ambientAudio.Stop();
-        }
+        StopMusic();
+        if (ambientAudio.isPlaying)
+            ambientAudio.Stop();
 
         // Play MainMenu music
         if (scene.name == "MainMenu")
