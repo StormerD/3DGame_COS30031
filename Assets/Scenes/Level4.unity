@@ -197,6 +197,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1322613066847301552, guid: f9eb68d2bedd2384881f450ea5420795, type: 3}
   m_PrefabInstance: {fileID: 1407042}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &36232337 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7881404080001631209, guid: e7badf7ae2bbe418e8d7b05f0a35d78d, type: 3}
+  m_PrefabInstance: {fileID: 1618033736}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &55161694
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -275,7 +280,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 2061543211281930604, guid: 0162b9599c7470642bf79cc5b3101f0f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 36232337}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 3480353612095256453, guid: 0162b9599c7470642bf79cc5b3101f0f, type: 3}
       insertIndex: -1
@@ -4476,6 +4484,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 08c41a05118df465b94957011c431998, type: 3}
+--- !u!4 &1408148317 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2061543211281930604, guid: 0162b9599c7470642bf79cc5b3101f0f, type: 3}
+  m_PrefabInstance: {fileID: 55161694}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1411907820
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5139,6 +5152,63 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1322613066847301552, guid: f9eb68d2bedd2384881f450ea5420795, type: 3}
   m_PrefabInstance: {fileID: 1617348146}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1618033736
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1408148317}
+    m_Modifications:
+    - target: {fileID: 4031752658481073270, guid: e7badf7ae2bbe418e8d7b05f0a35d78d, type: 3}
+      propertyPath: m_Name
+      value: 3D Trash Lid
+      objectReference: {fileID: 0}
+    - target: {fileID: 7881404080001631209, guid: e7badf7ae2bbe418e8d7b05f0a35d78d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7881404080001631209, guid: e7badf7ae2bbe418e8d7b05f0a35d78d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7881404080001631209, guid: e7badf7ae2bbe418e8d7b05f0a35d78d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7881404080001631209, guid: e7badf7ae2bbe418e8d7b05f0a35d78d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7881404080001631209, guid: e7badf7ae2bbe418e8d7b05f0a35d78d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7881404080001631209, guid: e7badf7ae2bbe418e8d7b05f0a35d78d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7881404080001631209, guid: e7badf7ae2bbe418e8d7b05f0a35d78d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7881404080001631209, guid: e7badf7ae2bbe418e8d7b05f0a35d78d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7881404080001631209, guid: e7badf7ae2bbe418e8d7b05f0a35d78d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7881404080001631209, guid: e7badf7ae2bbe418e8d7b05f0a35d78d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e7badf7ae2bbe418e8d7b05f0a35d78d, type: 3}
 --- !u!1001 &1632466442
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6230,6 +6300,7 @@ MonoBehaviour:
   _maxHealthStream: {fileID: 11400000, guid: c7fe9ad0653f142e9abff5ad0e8ad567, type: 2}
   healthStats: {fileID: 11400000, guid: 6f248de3bd5ff4836bd2369c128197cc, type: 2}
   _playerDeathStream: {fileID: 11400000, guid: 7613c1fff96694aaa9d7e53fa978d0e7, type: 2}
+  _playerUndeathStream: {fileID: 0}
 --- !u!1 &2062922068
 GameObject:
   m_ObjectHideFlags: 0
