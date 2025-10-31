@@ -39,13 +39,12 @@ public class WorldChanger : MonoBehaviour
             AudioManager.Instance.PlayNatureAmbience();
         }
 
-
-
         // destroy enemies
         var spawner = FindFirstObjectByType<SpawnManager>();
         if (spawner != null)
         {
             spawner.StopAndClear(destroy: true);
+            spawner.PermaDisable();
         }
     }
 }

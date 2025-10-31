@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem.LowLevel;
 using UnityEngine.Pool;
 
 public class SpawnManager : MonoBehaviour
@@ -12,6 +13,7 @@ public class SpawnManager : MonoBehaviour
 
     [SerializeField] private float _timeBetweenSpawns = 5f;
     [SerializeField] private bool _disabled = false;
+    private bool permaDisable = false;
     private float _timeSinceLastSpawn;
 
     [SerializeField] private Enemy _enemyPrefab;
@@ -51,6 +53,8 @@ public class SpawnManager : MonoBehaviour
         _freezeStream.UnregisterListener(FreezeEvent);
     }
 
+    public void PermaDisable() { _disabled = true; permaDisable = true; } 
+
     private void FreezeEvent(int state)
     {
         if (state == 0) UnfreezeActions();
@@ -64,7 +68,8 @@ public class SpawnManager : MonoBehaviour
 
     public void UnfreezeActions()
     {
-        _disabled = false;
+        if (permaDisable) _disabled = true; 
+        else _disabled = false;
     }
 
     private void OnGet(Enemy enemy)
